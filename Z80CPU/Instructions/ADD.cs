@@ -24,10 +24,16 @@ namespace Z80CPU.Instructions
                 
                 new Opcode("ADD A,(IX+o)", 0xDD, 0x86, OpcodeParameter.EightBitOffset, (z80) =>
                 {
-                    var ix = z80.Memory.Get(z80.IX.Value);
+                    var offset = z80.Memory.Get(z80.PC.Value);
+                    var ix_offset = z80.IX.Value + offset;
+                    var ix_offset_value = z80.Memory.Get((ushort)ix_offset);
+                    var a = z80.A.Value;
+                    var result = a + ix_offset_value;
 
+                    z80.A.Value = (byte)result;
 
-
+                    z80.F.SetZero(z80.A.Value);
+                    z80.F.SetSubtraction(false);
                 }),
                 /*
                 new Opcode("ADD A,(IY+o)", 0xDD, 0x86, OpcodeParameter.EightBitOffset),
