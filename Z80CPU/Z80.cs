@@ -48,7 +48,7 @@ namespace Z80CPU
         public Flag F { get; private set; }
         public Flag _F_ { get; private set; }
 
-        public InstructionSet1 Instructions { get; private set; }
+        public Instructions.Instructions InstructionSet { get; private set; }
 
         public Z80(Memory memory)
         {
@@ -102,8 +102,7 @@ namespace Z80CPU
 
         public void Cycle()
         {
-            Instruction_OLD instruction = null;
-            List<byte> bytes = new List<byte>();
+            var bytes = new List<byte>();
 
             while (true)
             {
@@ -113,35 +112,24 @@ namespace Z80CPU
                 //Increment the program counter
                 PC.Increment();
 
-                //add byte to tempory list - only if instruction is null, 
-                //i.e. we are not getting bytes for the current instruction
-                if(instruction == null)
-                {
-                    bytes.Add(data);
-                }
-                else
-                {
-                    instruction.AddParameter(data);
-                }
-
                 //check if we have have complete command yet
                 var filteredInstructions = Instructions.Filter(bytes);
-                if (instruction != null || filteredInstructions.Count == 1)
+                if (opcode != null || filteredInstructions.Count == 1)
                 {
                     //oh good we do, so lets assign it to the local instruction
-                    if(instruction == null)
+                    if(opcode == null)
                     {
-                        instruction = filteredInstructions[0];
+                        opcode = filteredInstructions[0];
                     }
 
                     //and now check if we've also loaded the required parameters
-                    if(instruction.ParametersRequired == instruction.Parameters.Count)
+                    if(opcode.ParametersRequired == opcode.Parameters.Count)
                     {
                         //run the code
-                        instruction.Execute(this);
+                        opcode.Execute(this);
 
                         //clear out local variables
-                        instruction = null;
+                        opcode = null;
                         bytes.Clear();
                     }
                 }

@@ -6,6 +6,7 @@ namespace Z80CPU.Instructions
 {
     public enum OpcodeParameter
     {
+        None,
         EightBitValue,
         EightBitOffset,
         Register,
