@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Z80CPU
+namespace Z80CPU.Instructions
 {
     public class Add
     {
