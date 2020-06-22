@@ -50,6 +50,8 @@ namespace Z80CPU
 
         public InstructionSet InstructionSet { get; private set; }
 
+        public IList<byte> Buffer { get; }
+
         public Z80(Memory memory)
         {
             Memory = memory;
@@ -75,7 +77,6 @@ namespace Z80CPU
             H_ = new Register8("H");
             L_ = new Register8("L");
 
-
             I = new Register8("I");
             R = new Register8("R");
 
@@ -92,6 +93,8 @@ namespace Z80CPU
             HL_ = new Register16(H_, L_);
 
             InstructionSet = new InstructionSet();
+
+            Buffer = new List<byte>();
         }
 
         public void Boot()

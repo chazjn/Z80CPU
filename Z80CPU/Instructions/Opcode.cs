@@ -9,9 +9,9 @@ namespace Z80CPU.Instructions
         public byte? Byte2 { get; }
         public OpcodeParameter OpcodeParameter { get; }
 
-        private Action<Z80, byte[]> Action { get; }
+        private Action<Z80> Action { get; }
 
-        public Opcode(string name, byte byte1, byte? byte2, OpcodeParameter opcodeParameter, Action<Z80, byte[]> action)
+        public Opcode(string name, byte byte1, byte? byte2, OpcodeParameter opcodeParameter, Action<Z80> action)
         {
             Name = name;
             Byte1 = byte1;
@@ -20,9 +20,9 @@ namespace Z80CPU.Instructions
             Action = action;
         }
 
-        public void Execute(Z80 z80, byte[] buffer)
+        public void Execute(Z80 z80)
         {
-            Action.Invoke(z80, buffer);
+            Action.Invoke(z80);
         }
     }
 }
