@@ -1,4 +1,5 @@
-﻿using Z80CPU.Instructions;
+﻿using System;
+using Z80CPU.Instructions;
 
 namespace Z80CPU.UnitTests
 {
@@ -13,20 +14,23 @@ namespace Z80CPU.UnitTests
             Z80 = new Z80(Memory);
         }
 
-        public void InjectInstructions(params Instruction_OLD[] instructions)
+        public void InjectInstructions(params Opcode[] opcodes)
         {
-            InjectInstructions(0, instructions);
+            InjectInstructions(0, opcodes);
         }
 
-        public void InjectInstructions(ushort location, params Instruction_OLD[] instructions)
+        public void InjectInstructions(ushort location, params Opcode[] opcodes)
         {
-            foreach(var instruction in instructions)
+            foreach(var opcode in opcodes)
             {
+                throw new NotImplementedException();
+                /*
                foreach(var rawByte in instruction.RawBytes)
                {
                     Memory.Set(location, rawByte);
                     location++;
                }
+               */
             }
         }
 

@@ -99,42 +99,30 @@ namespace Z80CPU
 
         public void Boot()
         {
-            PC.Value = 0;
+            PC.Value = 0x0;
+            SP.Value = 0xFFFF;
+
+            Buffer.Clear();
             Cycle();
         }
 
         public void Cycle()
         {
-            var bytes = new List<byte>();
-
             while (true)
             {
-                //Get byte from memory
+                //Get byte from memory and add to buffer
                 var data = Memory.Get(PC.Value);
+                Buffer.Add(data);
 
                 //Increment the program counter
                 PC.Increment();
 
                 //check if we have have complete command yet
-                var filteredInstructions = Instructions.Filter(bytes);
-                if (opcode != null || filteredInstructions.Count == 1)
+                var filteredInstructions = InstructionSet.Filter(Buffer);
+                if (filteredInstructions.Count == 1)
                 {
-                    //oh good we do, so lets assign it to the local instruction
-                    if(opcode == null)
-                    {
-                        opcode = filteredInstructions[0];
-                    }
-
-                    //and now check if we've also loaded the required parameters
-                    if(opcode.ParametersRequired == opcode.Parameters.Count)
-                    {
-                        //run the code
-                        opcode.Execute(this);
-
-                        //clear out local variables
-                        opcode = null;
-                        bytes.Clear();
-                    }
+                    filteredInstructions[0].Execute(this);
+                    Buffer.Clear();
                 }
             }
         }

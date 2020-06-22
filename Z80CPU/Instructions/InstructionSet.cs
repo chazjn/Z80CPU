@@ -13,7 +13,7 @@ namespace Z80CPU.Instructions
             Opcodes.AddRange(new Add().Opcodes);
         }
 
-        public List<Opcode> Filter(byte[] bytes)
+        public List<Opcode> Filter(IList<byte> bytes)
         {
             throw new NotImplementedException();
 
