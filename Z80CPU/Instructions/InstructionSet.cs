@@ -1,12 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Z80CPU.Instructions
 {
-    public class Instructions
+    public class InstructionSet
     {
         public List<Opcode> Opcodes { get; }
 
-        public Instructions()
+        public InstructionSet()
         {
             Opcodes = new List<Opcode>();
             Opcodes.AddRange(new Add().Opcodes);
@@ -14,7 +15,7 @@ namespace Z80CPU.Instructions
 
         public List<Opcode> Filter(byte[] bytes)
         {
-
+            throw new NotImplementedException();
 
         }
     }

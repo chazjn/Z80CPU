@@ -10,7 +10,7 @@ namespace Z80CPU.Instructions
         {
             Opcodes = new List<Opcode>()
             {
-                new Opcode("ADD A,(HL)", 0x86, null, OpcodeParameter.None, (z80) => 
+                new Opcode("ADD A,(HL)", 0x86, null, OpcodeParameter.None, (z80, buffer) => 
                 {
                     var hl = z80.Memory.Get(z80.HL.Value);
                     var a = z80.A.Value;
@@ -22,7 +22,7 @@ namespace Z80CPU.Instructions
                     z80.F.SetSubtraction(false);
                 }),
                 
-                new Opcode("ADD A,(IX+o)", 0xDD, 0x86, OpcodeParameter.EightBitOffset, (z80) =>
+                new Opcode("ADD A,(IX+o)", 0xDD, 0x86, OpcodeParameter.EightBitOffset, (z80, buffer) =>
                 {
                     var offset = z80.Memory.Get(z80.PC.Value);
                     var ix_offset = z80.IX.Value + offset;

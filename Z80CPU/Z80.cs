@@ -18,13 +18,13 @@ namespace Z80CPU
         public Register8 H { get; private set; }
         public Register8 L { get; private set; }
 
-        public Register8 _A_ { get; private set; }
-        public Register8 _B_ { get; private set; }
-        public Register8 _C_ { get; private set; }
-        public Register8 _D_ { get; private set; }
-        public Register8 _E_ { get; private set; }
-        public Register8 _H_ { get; private set; }
-        public Register8 _L_ { get; private set; }
+        public Register8 A_ { get; private set; }
+        public Register8 B_ { get; private set; }
+        public Register8 C_ { get; private set; }
+        public Register8 D_ { get; private set; }
+        public Register8 E_ { get; private set; }
+        public Register8 H_ { get; private set; }
+        public Register8 L_ { get; private set; }
 
 
         public Register8 I { get; private set; }
@@ -35,10 +35,10 @@ namespace Z80CPU
         public Register16 DE { get; private set; }
         public Register16 HL { get; private set; }
 
-        public Register16 _AF_ { get; private set; }
-        public Register16 _BC_ { get; private set; }
-        public Register16 _DE_ { get; private set; }
-        public Register16 _HL_ { get; private set; }
+        public Register16 AF_ { get; private set; }
+        public Register16 BC_ { get; private set; }
+        public Register16 DE_ { get; private set; }
+        public Register16 HL_ { get; private set; }
 
         public Register16 IX { get; private set; }
         public Register16 IY { get; private set; }
@@ -46,16 +46,16 @@ namespace Z80CPU
         public ProgramCounter PC { get; private set; }
         public Register16 SP { get; private set; }
         public Flag F { get; private set; }
-        public Flag _F_ { get; private set; }
+        public Flag F_ { get; private set; }
 
-        public Instructions.Instructions InstructionSet { get; private set; }
+        public InstructionSet InstructionSet { get; private set; }
 
         public Z80(Memory memory)
         {
             Memory = memory;
 
             F = new Flag();
-            _F_ = new Flag();
+            F_ = new Flag();
             PC = new ProgramCounter();
             SP = new Register16("SP");
 
@@ -67,13 +67,13 @@ namespace Z80CPU
             H = new Register8("H");
             L = new Register8("L");
 
-            _A_ = new Register8("A");
-            _B_ = new Register8("B");
-            _C_ = new Register8("C");
-            _D_ = new Register8("D");
-            _E_ = new Register8("E");
-            _H_ = new Register8("H");
-            _L_ = new Register8("L");
+            A_ = new Register8("A");
+            B_ = new Register8("B");
+            C_ = new Register8("C");
+            D_ = new Register8("D");
+            E_ = new Register8("E");
+            H_ = new Register8("H");
+            L_ = new Register8("L");
 
 
             I = new Register8("I");
@@ -86,12 +86,12 @@ namespace Z80CPU
             IX = new Register16("IX");
             IY = new Register16("IY");
 
-            _AF_ = new Register16(_A_, _F_);
-            _BC_ = new Register16(_B_, _C_);
-            _DE_ = new Register16(_D_, _E_);
-            _HL_ = new Register16(_H_, _L_);
+            AF_ = new Register16(A_, F_);
+            BC_ = new Register16(B_, C_);
+            DE_ = new Register16(D_, E_);
+            HL_ = new Register16(H_, L_);
 
-            Instructions = new InstructionSet1();
+            InstructionSet = new InstructionSet();
         }
 
         public void Boot()

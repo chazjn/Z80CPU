@@ -14,7 +14,7 @@ namespace Z80CPU.UnitTests.InstructionsB
         [Test]
         public void Test1()
         {
-            var instruction = new ADD_86();
+            var instructions = new Add();
 
             var computer = new TestComputer();
             computer.InjectInstructions(instruction);
