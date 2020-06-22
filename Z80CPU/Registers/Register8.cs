@@ -5,6 +5,7 @@
         protected byte _value;
 
         public string Name { get; }
+
         public virtual byte Value
         {
             get

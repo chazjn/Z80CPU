@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Z80CPU.Instructions;
 using Z80CPU.Registers;
 
 namespace Z80CPU

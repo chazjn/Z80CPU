@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Z80CPU.Instructions
+namespace Z80CPU
 {
     public class InstructionSet
     {

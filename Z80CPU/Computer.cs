@@ -1,6 +1,4 @@
 ﻿using Z80CPU.ROMS;
-using Z80CPU.Instructions;
-
 namespace Z80CPU
 {
     public class Computer
