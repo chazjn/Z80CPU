@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Z80CPU
+﻿namespace Z80CPU
 {
-    public enum OpcodeParameter
+    public class OpcodeParameter
     {
-        None,
-        EightBitValue,
-        EightBitOffset,
-        Register,
-        High,
-        Low,
+        public int Index { get; }
+
+        public OpcodeParameter(int index)
+        {
+            Index = index;
+        }
     }
 }

@@ -23,7 +23,7 @@ namespace Z80CPU.Instructions
                     z80.F.SetSubtraction(false);
                 }),
                 
-                new Opcode("ADD A,(IX+o)", new byte[]{ 0xDD, 0x86 }, OpcodeParameter.EightBitOffset, (z80) =>
+                new Opcode("ADD A,(IX+o)", new byte[]{ 0xDD, 0x86 }, new OpcodeParameter(2), (z80) =>
                 {
                     var offset = z80.Buffer[2];
                     var ix_offset = z80.IX.Value + offset;
@@ -37,7 +37,7 @@ namespace Z80CPU.Instructions
                     z80.F.SetSubtraction(false);
                 }),
                 
-                new Opcode("ADD A,(IY+o)", new byte[]{0xFD, 0x86 }, OpcodeParameter.EightBitOffset, (z80) =>
+                new Opcode("ADD A,(IY+o)", new byte[]{0xFD, 0x86 }, new OpcodeParameter(2), (z80) =>
                 {
                     var offset = z80.Buffer[2];
                     var iy_offset = z80.IY.Value + offset;
@@ -51,7 +51,7 @@ namespace Z80CPU.Instructions
                     z80.F.SetSubtraction(false);
                 }),
                 
-                new Opcode("ADD A,n", 0xC6, OpcodeParameter.EightBitValue, (z80) =>
+                new Opcode("ADD A,n", 0xC6, new OpcodeParameter(1), (z80) =>
                 {
                     var result = z80.A.Value + z80.Buffer[1];
                     z80.A.Value = (byte)result;

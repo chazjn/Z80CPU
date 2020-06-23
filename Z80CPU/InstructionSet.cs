@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Z80CPU.Instructions;
 
 namespace Z80CPU
@@ -14,10 +15,11 @@ namespace Z80CPU
             Opcodes.AddRange(new Add().Opcodes);
         }
 
-        public List<Opcode> Filter(IList<byte> bytes)
+        public Opcode GetOpcode(IList<byte> bytes)
         {
             throw new NotImplementedException();
-
+            
+            
         }
     }
 }

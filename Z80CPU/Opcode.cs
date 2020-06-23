@@ -9,14 +9,13 @@ namespace Z80CPU
         public string Name { get; }
         public IList<byte> Bytes { get; }
         public OpcodeParameter OpcodeParameter { get; }
-
         private Action<Z80> Action { get; }
 
         public Opcode(string name, byte byte1, Action<Z80> action)
         {
             Name = name;
             Bytes = new List<byte> { byte1 };
-            OpcodeParameter = OpcodeParameter.None;
+            OpcodeParameter = new OpcodeParameter(-1);
             Action = action;
         }
 
@@ -24,7 +23,7 @@ namespace Z80CPU
         {
             Name = name;
             Bytes = bytes.ToList();
-            OpcodeParameter = OpcodeParameter.None;
+            OpcodeParameter = new OpcodeParameter(-1);
             Action = action;
         }
 

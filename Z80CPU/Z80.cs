@@ -117,10 +117,10 @@ namespace Z80CPU
                 PC.Increment();
 
                 //check if we have have complete command yet
-                var filteredInstructions = InstructionSet.Filter(Buffer);
-                if (filteredInstructions.Count == 1)
+                var opcode = InstructionSet.GetOpcode(Buffer);
+                if (opcode != null)
                 {
-                    filteredInstructions[0].Execute(this);
+                    opcode.Execute(this);
                     Buffer.Clear();
                 }
             }
