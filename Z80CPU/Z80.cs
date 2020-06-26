@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Z80CPU.Registers;
 
@@ -117,10 +118,10 @@ namespace Z80CPU
                 PC.Increment();
 
                 //check if we have have complete command yet
-                var opcode = InstructionSet.GetOpcode(Buffer);
-                if (opcode != null)
+                var opcodes = InstructionSet.GetOpcodeCandidates(Buffer);
+                if (opcodes.Count == 1)
                 {
-                    opcode.Execute(this);
+                    opcodes.First().Execute(this);
                     Buffer.Clear();
                 }
             }

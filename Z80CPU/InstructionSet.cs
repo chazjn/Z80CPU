@@ -15,73 +15,39 @@ namespace Z80CPU
             Opcodes.AddRange(new Add().Opcodes);
         }
 
-        public Opcode GetOpcode(IList<byte> bytes)
+        public IList<Opcode> GetOpcodeCandidates(IList<byte> bytes)
         {
-            if(bytes.Count == 1)
+            //initially add all the opcodes to the candidate list 
+            var candidates = new List<Opcode>(Opcodes);
+
+            foreach (var opcode in Opcodes)
             {
-                var matched = Opcodes.Where(o => o.Bytes.Count == 1 
-                                              && o.OpcodeParameter.Index == -1 
-                                              && o.Bytes[0] == bytes[0]);
-
-                if(matched.Count() == 1)
+                //skip if the byte count is not the same
+                if(opcode.Bytes.Count() != bytes.Count)
                 {
-                    return matched.First();
+                    candidates.Remove(opcode);
+                    continue;
                 }
-                else
+
+                //same byte count so check the bytes are the same
+                for (int i = 0; i < bytes.Count; i++)
                 {
-                    return null;
-                }
-            }
-            
+                    //skip comparing parameter bytes
+                    if (opcode.Bytes[i].IsParameter)
+                    {
+                        continue;
+                    }
 
-
-
-            if(bytes.Count == 2)
-            {
-                var matched = Opcodes.Where(o => (o.Bytes.Count == 2
-                                              && o.OpcodeParameter.Index == -1
-                                              && o.Bytes[0] == bytes[0]
-                                              && o.Bytes[1] == bytes[1])
-                                              || (o.Bytes.Count == 1
-                                              && o.OpcodeParameter.Index == 1
-                                              && o.Bytes[0] == bytes[0]));
-
-                if(matched.Count() == 1)
-                {
-                    return matched.First();
-                }
-                else
-                {
-                    return null;
+                    //break if the bytes don't match
+                    if (opcode.Bytes[i].Value != bytes[i])
+                    {
+                        candidates.Remove(opcode);
+                        break;
+                    }
                 }
             }
 
-
-            if(bytes.Count == 3)
-            {
-                var matched = Opcodes.Where(o => (o.Bytes.Count == 3
-                                               && o.OpcodeParameter.Index == -1
-                                               && o.Bytes[0] == bytes[0]
-                                               && o.Bytes[1] == bytes[1])
-                                               && o.Bytes[2] == bytes[2]
-                                               || (o.Bytes.Count == 2
-                                               && o.OpcodeParameter.Index == 2
-                                               && o.Bytes[0] == bytes[0]
-                                               && o.Bytes[1] == bytes[1]));
-
-                if (matched.Count() == 1)
-                {
-                    return matched.First();
-                }
-                else
-                {
-                    return null;
-                }
-            }
-
-
-
-
+            return candidates;
         }
     }
 }

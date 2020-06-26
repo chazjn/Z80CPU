@@ -1,45 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Z80CPU
 {
     public class Opcode
     {
         public string Name { get; }
-        public IList<byte> Bytes { get; }
-        public OpcodeParameter OpcodeParameter { get; }
+        public IList<OpcodeByte> Bytes { get; }
         private Action<Z80> Action { get; }
 
-        public Opcode(string name, byte byte1, Action<Z80> action)
+        public Opcode(string name, OpcodeByte opcodeByte, Action<Z80> action)
         {
             Name = name;
-            Bytes = new List<byte> { byte1 };
-            OpcodeParameter = new OpcodeParameter(-1);
+            Bytes = new List<OpcodeByte> { opcodeByte };
             Action = action;
         }
 
-        public Opcode(string name, byte[] bytes, Action<Z80> action)
+        public Opcode(string name, OpcodeByte[] opcodeBytes, Action<Z80> action)
         {
             Name = name;
-            Bytes = bytes.ToList();
-            OpcodeParameter = new OpcodeParameter(-1);
-            Action = action;
-        }
-
-        public Opcode(string name, byte byte1, OpcodeParameter opcodeParameter, Action<Z80> action)
-        {
-            Name = name;
-            Bytes = new List<byte> { byte1 };
-            OpcodeParameter = opcodeParameter;
-            Action = action;
-        }
-
-        public Opcode(string name, byte[] bytes, OpcodeParameter opcodeParameter, Action<Z80> action)
-        {
-            Name = name;
-            Bytes = bytes.ToList();
-            OpcodeParameter = opcodeParameter;
+            Bytes = new List<OpcodeByte>(opcodeBytes);
             Action = action;
         }
 
