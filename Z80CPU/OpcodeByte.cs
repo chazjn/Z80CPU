@@ -2,7 +2,7 @@
 {
     public class OpcodeByte
     {
-        public byte Value { get; }
+        public byte? Value { get; }
         public bool IsParameter { get; }
 
         public OpcodeByte(byte value)
@@ -13,7 +13,7 @@
 
         public OpcodeByte()
         {
-            Value = 0;
+            Value = null;
             IsParameter = true;
         }
     }
