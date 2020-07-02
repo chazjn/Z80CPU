@@ -3,11 +3,11 @@ using System.Linq;
 
 namespace Z80CPU.Instructions
 {
-    public class Add
+    public class ADD
     {
-        public IList<Opcode> Opcodes { get; set; }
+        public IList<Opcode> Opcodes { get; }
 
-        public Add()
+        public ADD()
         {
             Opcodes = new List<Opcode>()
             {

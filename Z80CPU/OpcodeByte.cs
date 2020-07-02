@@ -1,20 +1,36 @@
-﻿namespace Z80CPU
+﻿using System.Collections.Generic;
+
+namespace Z80CPU
 {
     public class OpcodeByte
     {
-        public byte? Value { get; }
-        public bool IsParameter { get; }
+        public byte Value { get; }
+        public List<byte> AlternativeValues { get; }
 
-        public OpcodeByte(byte value)
+        public bool HasAlternatives
         {
-            Value = value;
-            IsParameter = false;
+            get
+            {
+                if (AlternativeValues.Count > 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
         }
 
-        public OpcodeByte()
+        public OpcodeByte(byte value, params byte[] alterativeValues)
         {
-            Value = null;
-            IsParameter = true;
+            Value = value;
+            AlternativeValues = new List<byte>(alterativeValues);
+        }
+
+        public OpcodeByte(byte start, byte end)
+        {
+
         }
     }
 }

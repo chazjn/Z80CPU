@@ -12,7 +12,8 @@ namespace Z80CPU
         public InstructionSet()
         {
             Opcodes = new List<Opcode>();
-            Opcodes.AddRange(new Add().Opcodes);
+            Opcodes.AddRange(new ADD().Opcodes);
+            Opcodes.AddRange(new BIT().Opcodes);
         }
 
         public IList<Opcode> GetOpcodeCandidates(IList<byte> bytes)
@@ -33,7 +34,7 @@ namespace Z80CPU
                 for (int i = 0; i < bytes.Count; i++)
                 {
                     //skip comparing parameter bytes
-                    if (opcode.Bytes[i].IsParameter)
+                    if (opcode.Bytes[i].HasAlternatives)
                     {
                         continue;
                     }
