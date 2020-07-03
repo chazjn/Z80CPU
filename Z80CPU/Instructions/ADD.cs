@@ -11,7 +11,7 @@ namespace Z80CPU.Instructions
         {
             Opcodes = new List<Opcode>()
             {
-                new Opcode("ADD A,(HL)", new OpcodeByte(0x86), (z80) => 
+                new Opcode("ADD A,(HL)", new byte[]{ 0x86 }, (z80) => 
                 {
                     var hl = z80.Memory.Get(z80.HL.Value);
                     var a = z80.A.Value;
@@ -23,7 +23,7 @@ namespace Z80CPU.Instructions
                     z80.F.SetSubtraction(false);
                 }),
                 
-                new Opcode("ADD A,(IX+o)", new OpcodeByte[]{ new OpcodeByte(0xDD), new OpcodeByte(0x86) }, (z80) =>
+                new Opcode("ADD A,(IX+o)", new byte[]{ 0xDD, 0x86 }, (z80) =>
                 {
                     var offset = z80.Buffer[2];
                     var ix_offset = z80.IX.Value + offset;
@@ -37,7 +37,7 @@ namespace Z80CPU.Instructions
                     z80.F.SetSubtraction(false);
                 }),
                 
-                new Opcode("ADD A,(IY+o)", new OpcodeByte[]{ new OpcodeByte(0xFD), new OpcodeByte(0x86), new OpcodeByte() }, (z80) =>
+                new Opcode("ADD A,(IY+o)", new[]{ new ByteValue(0xFD), new ByteValue(0x86), ByteValue.Any }, (z80) =>
                 {
                     var offset = z80.Buffer[2];
                     var iy_offset = z80.IY.Value + offset;
@@ -51,7 +51,7 @@ namespace Z80CPU.Instructions
                     z80.F.SetSubtraction(false);
                 }),
                 
-                new Opcode("ADD A,n", new OpcodeByte[]{ new OpcodeByte(0xC6), new OpcodeByte() }, (z80) =>
+                new Opcode("ADD A,n", new ByteValue[]{ new ByteValue(0xC6), ByteValue.Any }, (z80) =>
                 {
                     var result = z80.A.Value + z80.Buffer[1];
                     z80.A.Value = (byte)result;
@@ -60,7 +60,7 @@ namespace Z80CPU.Instructions
                     z80.F.SetSubtraction(false);
                 }),
 
-                new Opcode("ADD A,A", new OpcodeByte(0x87), (z80) =>
+                new Opcode("ADD A,A", new byte[]{ 0x87 }, (z80) =>
                 {
                     var result = z80.A.Value + z80.A.Value;
                     z80.A.Value = (byte)result;
@@ -69,7 +69,7 @@ namespace Z80CPU.Instructions
                     z80.F.SetSubtraction(false);
                 }),
 
-                new Opcode("ADD A,B", new OpcodeByte(0x80), (z80) =>
+                new Opcode("ADD A,B", new byte[]{ 0x80 }, (z80) =>
                 {
                     var result = z80.A.Value + z80.B.Value;
                     z80.A.Value = (byte)result;
@@ -78,7 +78,7 @@ namespace Z80CPU.Instructions
                     z80.F.SetSubtraction(false);
                 }),
 
-                new Opcode("ADD A,C", new OpcodeByte(0x81), (z80) =>
+                new Opcode("ADD A,C", new byte[] { 0x81 }, (z80) =>
                 {
                     var result = z80.A.Value + z80.C.Value;
                     z80.A.Value = (byte)result;
@@ -87,7 +87,7 @@ namespace Z80CPU.Instructions
                     z80.F.SetSubtraction(false);
                 }),
 
-                new Opcode("ADD A,D", new OpcodeByte(0x82), (z80) =>
+                new Opcode("ADD A,D", new byte[]{ 0x82 }, (z80) =>
                 {
                     var result = z80.A.Value + z80.D.Value;
                     z80.A.Value = (byte)result;
@@ -96,7 +96,7 @@ namespace Z80CPU.Instructions
                     z80.F.SetSubtraction(false);
                 }),
 
-                new Opcode("ADD A,E", new OpcodeByte(0x83), (z80) =>
+                new Opcode("ADD A,E", new byte[]{ 0x83 }, (z80) =>
                 {
                     var result = z80.A.Value + z80.E.Value;
                     z80.A.Value = (byte)result;
@@ -105,7 +105,7 @@ namespace Z80CPU.Instructions
                     z80.F.SetSubtraction(false);
                 }),
 
-                new Opcode("ADD A,H", new OpcodeByte(0x84), (z80) =>
+                new Opcode("ADD A,H", new byte[]{ 0x84 }, (z80) =>
                 {
                     var result = z80.A.Value + z80.H.Value;
                     z80.A.Value = (byte)result;
@@ -114,7 +114,7 @@ namespace Z80CPU.Instructions
                     z80.F.SetSubtraction(false);
                 }),
 
-                new Opcode("ADD A,L", new OpcodeByte(0x85), (z80) =>
+                new Opcode("ADD A,L", new byte[]{ 0x85 }, (z80) =>
                 {
                     var result = z80.A.Value + z80.L.Value;
                     z80.A.Value = (byte)result;
@@ -123,12 +123,12 @@ namespace Z80CPU.Instructions
                     z80.F.SetSubtraction(false);
                 }),   
                 
-                new Opcode("ADD A,IX low", new OpcodeByte[]{ new OpcodeByte(0xDD), new OpcodeByte(0x85) }, (z80) =>
+                new Opcode("ADD A,IX low", new[]{ new ByteValue(0xDD), new ByteValue(0x85) }, (z80) =>
                 {
 
                 }),
 
-                new Opcode("ADD A,IX high", new OpcodeByte[]{ new OpcodeByte(0xDD), new OpcodeByte(0x84) }, (z80) =>
+                new Opcode("ADD A,IX high", new[]{ new ByteValue(0xDD), new ByteValue(0x84) }, (z80) =>
                 {
 
                 })

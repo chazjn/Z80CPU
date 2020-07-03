@@ -6,21 +6,26 @@ namespace Z80CPU
     public class Opcode
     {
         public string Name { get; }
-        public IList<OpcodeByte> Bytes { get; }
+        public IList<ByteValue> Bytes { get; }
         private Action<Z80> Action { get; }
 
-        public Opcode(string name, OpcodeByte opcodeByte, Action<Z80> action)
+        public Opcode(string name, ByteValue[] bytes, Action<Z80> action)
         {
             Name = name;
-            Bytes = new List<OpcodeByte> { opcodeByte };
             Action = action;
+            Bytes = bytes;
         }
 
-        public Opcode(string name, OpcodeByte[] opcodeBytes, Action<Z80> action)
+        public Opcode(string name, byte[] bytes, Action<Z80> action)
         {
             Name = name;
-            Bytes = new List<OpcodeByte>(opcodeBytes);
             Action = action;
+
+            Bytes = new List<ByteValue>();
+            foreach (var _byte in bytes)
+            {
+                Bytes.Add(new ByteValue(_byte));
+            }
         }
 
         public void Execute(Z80 z80)
