@@ -28,6 +28,16 @@ namespace Z80CPU
             }
         }
 
+        public Opcode(string name, byte value, Action<Z80> action)
+        {
+            Name = name;
+            Action = action;
+            Bytes = new List<ByteValue>
+            {
+                new ByteValue(value)
+            };
+        }
+
         public bool IsMatch(IList<byte> bytes)
         {
             bool isMatch = false;

@@ -14,12 +14,12 @@ namespace Z80CPU.UnitTests
             Z80 = new Z80(Memory);
         }
 
-        public void InjectInstructions(params Opcode[] opcodes)
+        public void InjectInstructions(params Z80CPU.Opcode[] opcodes)
         {
             InjectInstructions(0, opcodes);
         }
 
-        public void InjectInstructions(ushort location, params Opcode[] opcodes)
+        public void InjectInstructions(ushort location, params Z80CPU.Opcode[] opcodes)
         {
             foreach(var opcode in opcodes)
             {

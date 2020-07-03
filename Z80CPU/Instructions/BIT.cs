@@ -12,10 +12,7 @@ namespace Z80CPU.Instructions
         {
             Opcodes = new List<Opcode>
             {
-                new Opcode("BIT b,(HL)", new OpcodeByte[]{new OpcodeByte(0xCB)}, (z80) =>
-                {
-
-                })
+                
             };
         }
     }
