@@ -18,33 +18,13 @@ namespace Z80CPU
 
         public IList<Opcode> GetOpcodeCandidates(IList<byte> bytes)
         {
-            //initially add all the opcodes to the candidate list 
-            var candidates = new List<Opcode>(Opcodes);
+            var candidates = new List<Opcode>();
 
             foreach (var opcode in Opcodes)
             {
-                //skip if the byte count is not the same
-                if(opcode.Bytes.Count() != bytes.Count)
+                if (opcode.IsMatch(bytes))
                 {
-                    candidates.Remove(opcode);
-                    continue;
-                }
-
-                //same byte count so check the bytes are the same
-                for (int i = 0; i < bytes.Count; i++)
-                {
-                    //skip comparing parameter bytes
-                    if (opcode.Bytes[i].HasAlternatives)
-                    {
-                        continue;
-                    }
-
-                    //break if the bytes don't match
-                    if (opcode.Bytes[i].Value != bytes[i])
-                    {
-                        candidates.Remove(opcode);
-                        break;
-                    }
+                    candidates.Add(opcode);
                 }
             }
 

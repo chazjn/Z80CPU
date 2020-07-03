@@ -28,6 +28,39 @@ namespace Z80CPU
             }
         }
 
+        public bool IsMatch(IList<byte> bytes)
+        {
+            bool isMatch = false;
+
+            for (int i = 0; i < bytes.Count; i++)
+            {
+                //first check there is a byte at this position to compare
+                if(Bytes.Count -1 < i)
+                {
+                    break;
+                }
+                
+                //second check if it is an 'Any' byte
+                if (Bytes[i].IsAny)
+                {
+                    continue;
+                }
+
+                //third, compare the byte
+                if(Bytes[i].Value == bytes[i])
+                {
+                    isMatch = true;
+                }
+                else
+                {
+                    isMatch = false;
+                    break;
+                }
+            }
+          
+            return isMatch;
+        }
+
         public void Execute(Z80 z80)
         {
             Action.Invoke(z80);
