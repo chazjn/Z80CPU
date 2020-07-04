@@ -6,25 +6,25 @@ namespace Z80CPU
     public class Opcode
     {
         public string Name { get; }
-        public IList<ByteValue> Bytes { get; }
+        public IList<ByteValue> Values { get; }
         private Action<Z80> Action { get; }
 
-        public Opcode(string name, ByteValue[] bytes, Action<Z80> action)
+        public Opcode(string name, ByteValue[] values, Action<Z80> action)
         {
             Name = name;
             Action = action;
-            Bytes = bytes;
+            Values = values;
         }
 
-        public Opcode(string name, byte[] bytes, Action<Z80> action)
+        public Opcode(string name, byte[] values, Action<Z80> action)
         {
             Name = name;
             Action = action;
 
-            Bytes = new List<ByteValue>();
-            foreach (var _byte in bytes)
+            Values = new List<ByteValue>();
+            foreach (var value in values)
             {
-                Bytes.Add(new ByteValue(_byte));
+                Values.Add(new ByteValue(value));
             }
         }
 
@@ -32,7 +32,7 @@ namespace Z80CPU
         {
             Name = name;
             Action = action;
-            Bytes = new List<ByteValue>
+            Values = new List<ByteValue>
             {
                 new ByteValue(value)
             };
@@ -45,19 +45,19 @@ namespace Z80CPU
             for (int i = 0; i < bytes.Count; i++)
             {
                 //first check there is a byte at this position to compare
-                if(Bytes.Count -1 < i)
+                if(Values.Count -1 < i)
                 {
                     break;
                 }
                 
                 //second check if it is an 'Any' byte
-                if (Bytes[i].IsAny)
+                if (Values[i].IsAny)
                 {
                     continue;
                 }
 
                 //third, compare the byte
-                if(Bytes[i].Value == bytes[i])
+                if(Values[i].Value == bytes[i])
                 {
                     isMatch = true;
                 }

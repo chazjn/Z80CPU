@@ -6,7 +6,7 @@ namespace Z80CPU
 {
     public class ByteValue
     {
-        public byte Value { get; }
+        public byte? Value { get; }
         public bool IsAny { get; }
         public static ByteValue Any 
         {
@@ -24,6 +24,7 @@ namespace Z80CPU
 
         private ByteValue()
         {
+            Value = null;
             IsAny = true;
         }
     }
