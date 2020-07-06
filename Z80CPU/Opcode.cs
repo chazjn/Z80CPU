@@ -5,11 +5,12 @@ namespace Z80CPU
 {
     public class Opcode
     {
+        public string Instruction => Name.Split(' ')[0];
         public string Name { get; }
-        public IList<ByteValue> Values { get; }
+        public IList<Oprand> Values { get; }
         private Action<Z80> Action { get; }
-
-        public Opcode(string name, ByteValue[] values, Action<Z80> action)
+        
+        public Opcode(string name, Oprand[] values, Action<Z80> action)
         {
             Name = name;
             Action = action;
@@ -21,10 +22,10 @@ namespace Z80CPU
             Name = name;
             Action = action;
 
-            Values = new List<ByteValue>();
+            Values = new List<Oprand>();
             foreach (var value in values)
             {
-                Values.Add(new ByteValue(value));
+                Values.Add(new Oprand(value));
             }
         }
 
@@ -32,9 +33,9 @@ namespace Z80CPU
         {
             Name = name;
             Action = action;
-            Values = new List<ByteValue>
+            Values = new List<Oprand>
             {
-                new ByteValue(value)
+                new Oprand(value)
             };
         }
 

@@ -45,19 +45,20 @@ namespace Z80CPU
 
         public ProgramCounter PC { get; private set; }
         public Register16 SP { get; private set; }
-        public Flag F { get; private set; }
-        public Flag F_ { get; private set; }
+        public Flags F { get; private set; }
+        public Flags F_ { get; private set; }
 
         public InstructionSet InstructionSet { get; private set; }
 
         public IList<byte> Buffer { get; }
+        public Opcode CurrentOpcode { get; private set; }
 
         public Z80(Memory memory)
         {
             Memory = memory;
 
-            F = new Flag();
-            F_ = new Flag();
+            F = new Flags();
+            F_ = new Flags();
             PC = new ProgramCounter();
             SP = new Register16("SP");
 
@@ -121,7 +122,8 @@ namespace Z80CPU
                 var opcodes = InstructionSet.GetOpcodeCandidates(Buffer);
                 if (opcodes.Count == 1)
                 {
-                    opcodes.First().Execute(this);
+                    CurrentOpcode = opcodes.First();
+                    CurrentOpcode.Execute(this);
                     Buffer.Clear();
                 }
             }

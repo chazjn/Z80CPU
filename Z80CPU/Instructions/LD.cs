@@ -26,14 +26,14 @@ namespace Z80CPU.Instructions
                     z80.Memory.Set(de, a);
                 }),
 
-                new Opcode("LD (HL), n", new[]{ new ByteValue(0x36), ByteValue.Any }, (z80) =>
+                new Opcode("LD (HL), n", new[]{ new Oprand(0x36), Oprand.Any }, (z80) =>
                 {
                     var hl = z80.HL.Value;
                     var value = z80.Buffer[1];
                     z80.Memory.Set(hl, value);
                 }),
 
-                new Opcode("LD (HL), B", new[]{ new ByteValue(0x77) }, (z80) =>
+                new Opcode("LD (HL), B", new[]{ new Oprand(0x77) }, (z80) =>
                 {
                     var hl = z80.HL.Value;
                     var value = z80.Memory.Get(hl);

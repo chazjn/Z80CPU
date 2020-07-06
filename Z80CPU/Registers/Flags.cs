@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Z80CPU.Registers
 {
-    public class Flag : Register8
+    public class Flags : Register8
     {
         /* 7 |  S  | Sign             | 0 = positive, 1 = negative
          * 6 |  Z  | Zero             | 0 = non zero, 1 = zero
@@ -16,20 +16,25 @@ namespace Z80CPU.Registers
          * 0 |  C  | Carry            | Holds to carry
          */
 
-        public bool Sign { get { return BitHelper.IsSet(_value, 7); } set { SetBit(7, value); } }
+        public bool Sign { get { return BitHelper.IsSet(Value, 7); } set { SetBit(7, value); } }
 
-        public bool Zero { get { return BitHelper.IsSet(_value, 6); } set { SetBit(6, value); } }
+        public bool Zero { get { return BitHelper.IsSet(Value, 6); } set { SetBit(6, value); } }
 
-        public bool HalfCarry { get { return BitHelper.IsSet(_value, 4); } set { SetBit(4, value); } }
+        public bool HalfCarry { get { return BitHelper.IsSet(Value, 4); } set { SetBit(4, value); } }
 
-        public bool ParityOverflow { get { return BitHelper.IsSet(_value, 2); } set { SetBit(2, value); } }
+        public bool ParityOrOverflow { get { return BitHelper.IsSet(Value, 2); } set { SetBit(2, value); } }
 
-        public bool Subtraction { get { return BitHelper.IsSet(_value, 1); } set { SetBit(1, value); } }
+        public bool Subtraction { get { return BitHelper.IsSet(Value, 1); } set { SetBit(1, value); } }
 
-        public bool Carry { get { return BitHelper.IsSet(_value, 0); } set { SetBit(0, value); } }
+        public bool Carry { get { return BitHelper.IsSet(Value, 0); } set { SetBit(0, value); } }
 
-        public Flag() : base("F")
+        public Flags() : base("F")
         {
+        }
+
+        public void SetSign(byte value)
+        {
+            Sign = BitHelper.IsSet(value, 7);
         }
 
         public void SetZero(byte value)
@@ -37,9 +42,31 @@ namespace Z80CPU.Registers
             Zero = value == 0 ? true : false;
         }
 
+        public void SetHalfCarry(byte before, byte after)
+        {
+
+        }
+
         public void SetSubtraction(bool value)
         {
             Subtraction = value;
+        }
+
+        public void SetCarry()
+        {
+
+        }
+
+        private void SetBit(int index, bool value)
+        {
+            if (value == true)
+            {
+                Value = (byte)(Value | (1 << index));
+            }
+            else
+            {
+                Value = (byte)(Value & ~(1 << index));
+            }
         }
     }
 }

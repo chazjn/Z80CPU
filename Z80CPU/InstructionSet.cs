@@ -14,6 +14,8 @@ namespace Z80CPU
             Opcodes = new List<Opcode>();
             Opcodes.AddRange(new ADD().Opcodes);
             Opcodes.AddRange(new BIT().Opcodes);
+            Opcodes.AddRange(new JP().Opcodes);
+            Opcodes.AddRange(new LD().Opcodes);
         }
 
         public IList<Opcode> GetOpcodeCandidates(IList<byte> bytes)

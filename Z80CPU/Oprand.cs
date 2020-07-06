@@ -4,25 +4,25 @@ using System.Text;
 
 namespace Z80CPU
 {
-    public class ByteValue
+    public class Oprand
     {
         public byte? Value { get; }
         public bool IsAny { get; }
-        public static ByteValue Any 
+        public static Oprand Any 
         {
             get
             {
-                return new ByteValue();
+                return new Oprand();
             }
        }
 
-        public ByteValue(byte value)
+        public Oprand(byte value)
         {
             Value = value;
             IsAny = false;
         }
 
-        private ByteValue()
+        private Oprand()
         {
             Value = null;
             IsAny = true;
