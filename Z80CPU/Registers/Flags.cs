@@ -32,31 +32,6 @@ namespace Z80CPU.Registers
         {
         }
 
-        public void SetSign(byte value)
-        {
-            Sign = BitHelper.IsSet(value, 7);
-        }
-
-        public void SetZero(byte value)
-        {
-            Zero = value == 0 ? true : false;
-        }
-
-        public void SetHalfCarry(byte before, byte after)
-        {
-
-        }
-
-        public void SetSubtraction(bool value)
-        {
-            Subtraction = value;
-        }
-
-        public void SetCarry()
-        {
-
-        }
-
         private void SetBit(int index, bool value)
         {
             if (value == true)

@@ -101,7 +101,7 @@ namespace Z80CPU
         public void Boot()
         {
             PC.Value = 0x0;
-            SP.Value = 0xFFFF;
+            SP.Value = 32768;
 
             Buffer.Clear();
             Cycle();

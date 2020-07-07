@@ -4,8 +4,8 @@ namespace Z80CPU.Registers
 {
     public class Register16
     {
-        Register8 _lsb;
-        Register8 _msb;
+        private readonly Register8 _lsb;
+        private readonly Register8 _msb;
 
         public string Name { get; private set; }
         public ushort Value

@@ -17,6 +17,27 @@ namespace Z80CPU
             Values = values;
         }
 
+        public Opcode(string name, byte value, Action<Z80> action)
+        {
+            Name = name;
+            Action = action;
+            Values = new List<Oprand>
+            {
+                new Oprand(value)
+            };
+        }
+
+        public Opcode(string name, byte value1, byte value2, Action<Z80> action)
+        {
+            Name = name;
+            Action = action;
+            Values = new List<Oprand>
+            {
+                new Oprand(value1),
+                new Oprand(value2)
+            };
+        }
+
         public Opcode(string name, byte[] values, Action<Z80> action)
         {
             Name = name;
@@ -27,16 +48,6 @@ namespace Z80CPU
             {
                 Values.Add(new Oprand(value));
             }
-        }
-
-        public Opcode(string name, byte value, Action<Z80> action)
-        {
-            Name = name;
-            Action = action;
-            Values = new List<Oprand>
-            {
-                new Oprand(value)
-            };
         }
 
         public bool IsMatch(IList<byte> bytes)

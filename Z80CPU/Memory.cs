@@ -12,9 +12,9 @@ namespace Z80CPU
             Bytes = new byte[length];
         }
 
-        public virtual byte Get(ushort index)
+        public virtual byte Get(int index)
         {
-            if(index > Bytes.Length - 1)
+            if(index < 0 || index > Bytes.Length - 1)
             {
                 throw new ArgumentOutOfRangeException("index", "Out of range of memory size");
             }
