@@ -12,6 +12,11 @@ namespace Z80CPU.Instructions
         {
             Opcodes = new List<Opcode>
             {
+                new Opcode("LD A, n", new[]{ new Oprand(0x3E), Oprand.Any }, (z80) =>
+                {
+                    z80.A.Value = z80.Buffer[1];
+                }),
+                
                 new Opcode("LD (BC), A", 0x02, (z80) => 
                 {
                     var bc = z80.BC.Value;

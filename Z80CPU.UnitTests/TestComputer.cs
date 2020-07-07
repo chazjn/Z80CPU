@@ -14,23 +14,17 @@ namespace Z80CPU.UnitTests
             Z80 = new Z80(Memory);
         }
 
-        public void InjectInstructions(params Z80CPU.Opcode[] opcodes)
+        public void InjectInstructions(params byte[] bytes)
         {
-            InjectInstructions(0, opcodes);
+            InjectInstructions(0, bytes);
         }
 
-        public void InjectInstructions(ushort location, params Z80CPU.Opcode[] opcodes)
+        public void InjectInstructions(ushort location, params byte[] bytes)
         {
-            foreach(var opcode in opcodes)
+            for (int i = 0; i < bytes.Length; i++)
             {
-                throw new NotImplementedException();
-                /*
-               foreach(var rawByte in instruction.RawBytes)
-               {
-                    Memory.Set(location, rawByte);
-                    location++;
-               }
-               */
+                var memoryLocation = (ushort)(location + i);
+                Memory.Set(memoryLocation, bytes[i]);
             }
         }
 

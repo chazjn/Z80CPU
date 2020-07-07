@@ -5,7 +5,6 @@ namespace Z80CPU
 {
     public class Opcode
     {
-        public string Instruction => Name.Split(' ')[0];
         public string Name { get; }
         public IList<Oprand> Values { get; }
         private Action<Z80> Action { get; }
@@ -54,21 +53,22 @@ namespace Z80CPU
         {
             bool isMatch = false;
 
+            //check the number of bytes match
+            if(bytes.Count != Values.Count)
+            {
+                return isMatch;
+            }
+
+            //now we know we have an equal number of bytes to compare
             for (int i = 0; i < bytes.Count; i++)
             {
-                //first check there is a byte at this position to compare
-                if(Values.Count -1 < i)
-                {
-                    break;
-                }
-                
-                //second check if it is an 'Any' byte
+                //first check if it is an 'Any' byte
                 if (Values[i].IsAny)
                 {
                     continue;
                 }
 
-                //third, compare the byte
+                //second, compare the byte
                 if(Values[i].Value == bytes[i])
                 {
                     isMatch = true;

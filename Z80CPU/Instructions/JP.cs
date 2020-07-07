@@ -10,7 +10,7 @@ namespace Z80CPU.Instructions
 
         public JP()
         {
-
+            Opcodes = new List<Opcode>();
         }
     }
 }

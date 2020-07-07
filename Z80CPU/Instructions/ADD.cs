@@ -44,7 +44,7 @@ namespace Z80CPU.Instructions
                     z80.A.Value = result;
                 }),
                 
-                new Opcode("ADD A,  n", new[]{ new Oprand(0xC6), Oprand.Any }, (z80) =>
+                new Opcode("ADD A, n", new[]{ new Oprand(0xC6), Oprand.Any }, (z80) =>
                 {
                     var result = (byte)(z80.A.Value + z80.Buffer[1]);
 
