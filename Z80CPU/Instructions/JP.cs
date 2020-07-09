@@ -91,7 +91,7 @@ namespace Z80CPU.Instructions
                 new Opcode("JP (IY)", 0xFD, 0xE9, (z80) =>
                 {
                     z80.PC.Value = z80.IY.Value;
-                }),
+                })
             }); 
         }
 
