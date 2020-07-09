@@ -16,7 +16,6 @@
                 z80.F.HalfCarry = false;
                 z80.F.ParityOrOverflow = z80.BC.Value == 0 ? false : true;
                 z80.F.Subtraction = false;
-
             }));
         }
     }
