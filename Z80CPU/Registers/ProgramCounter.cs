@@ -10,5 +10,10 @@
         {
             Value = (ushort)(Value + 1);
         }
+
+        public void Decrement()
+        {
+            Value = (ushort)(Value - 1);
+        }
     }
 }
