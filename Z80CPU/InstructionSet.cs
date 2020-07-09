@@ -1,32 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using Z80CPU.Instructions;
 
 namespace Z80CPU
 {
     public class InstructionSet
     {
-        public List<Opcode> Opcodes { get; }
+        public List<Instruction> Instructions { get; }
 
         public InstructionSet()
         {
-            Opcodes = new List<Opcode>();
-            Opcodes.AddRange(new ADD().Opcodes);
-            Opcodes.AddRange(new BIT().Opcodes);
-            Opcodes.AddRange(new JP().Opcodes);
-            Opcodes.AddRange(new LD().Opcodes);
+            Instructions = new List<Instruction>
+            {
+                new ADD(),
+                new BIT(),
+                new JP(),
+                new LD()
+            };
         }
 
         public IList<Opcode> GetOpcodeCandidates(IList<byte> bytes)
         {
             var candidates = new List<Opcode>();
 
-            foreach (var opcode in Opcodes)
+            foreach (var instruction in Instructions)
             {
-                if (opcode.IsMatch(bytes))
+                foreach (var opcode in instruction.Opcodes)
                 {
-                    candidates.Add(opcode);
+                    if (opcode.IsMatch(bytes))
+                    {
+                        candidates.Add(opcode);
+                    }
                 }
             }
 

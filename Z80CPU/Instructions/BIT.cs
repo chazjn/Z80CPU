@@ -4,16 +4,11 @@ using System.Text;
 
 namespace Z80CPU.Instructions
 {
-    public class BIT
+    public class BIT : Instruction
     {
-        public IList<Opcode> Opcodes { get; }
-
         public BIT()
         {
-            Opcodes = new List<Opcode>
-            {
-                
-            };
+            
         }
     }
 }

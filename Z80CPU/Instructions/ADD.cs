@@ -2,13 +2,11 @@
 
 namespace Z80CPU.Instructions
 {
-    public class ADD
+    public class ADD : Instruction
     {
-        public IList<Opcode> Opcodes { get; }
-
         public ADD()
         {
-            Opcodes = new List<Opcode>
+            Opcodes.AddRange(new List<Opcode>
             {
                 new Opcode("ADD A, (HL)", 0x86, (z80) => 
                 {
@@ -205,7 +203,7 @@ namespace Z80CPU.Instructions
                     SetFlags(z80, z80.IY.Value, z80.SP.Value, result);
                     z80.IY.Value = result;
                 }),
-            };
+            });
         }
 
         private void SetFlags(Z80 z80, byte original, byte addition, byte result)

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Z80CPU.Instructions;
 using Z80CPU.Registers;
 
 namespace Z80CPU
@@ -120,7 +121,15 @@ namespace Z80CPU
 
                 //check if we have have complete command yet
                 var opcodes = InstructionSet.GetOpcodeCandidates(Buffer);
-                if (opcodes.Count == 1)
+
+               
+                if(opcodes.Count == 0) //no instruction match - bad byte? excute a nop to skip over it
+                {
+                    CurrentOpcode = new NOP().Opcodes.First();
+                    CurrentOpcode.Execute(this);
+                    Buffer.Clear();
+                }
+                else if (opcodes.Count == 1) //we have a single match - execute it!
                 {
                     CurrentOpcode = opcodes.First();
                     CurrentOpcode.Execute(this);

@@ -4,13 +4,11 @@ using System.Text;
 
 namespace Z80CPU.Instructions
 {
-    public class LD
+    public class LD : Instruction
     {
-        public IList<Opcode> Opcodes { get; }
-
         public LD()
         {
-            Opcodes = new List<Opcode>
+            Opcodes.AddRange(new List<Opcode>
             {
                 new Opcode("LD A, n", new[]{ new Oprand(0x3E), Oprand.Any }, (z80) =>
                 {
@@ -44,7 +42,7 @@ namespace Z80CPU.Instructions
                     var value = z80.Memory.Get(hl);
                     z80.BC.Value = value;
                 })
-            };
+            });
         }
     }
 }
