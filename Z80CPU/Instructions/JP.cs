@@ -72,6 +72,26 @@ namespace Z80CPU.Instructions
                         Jump(z80);
                     }
                 }),
+
+                new Opcode("JP pq", new[]{ new Oprand(0xC3), Oprand.Any, Oprand.Any }, (z80) =>
+                {
+                    Jump(z80);
+                }),
+
+                new Opcode("JP (HL)", new[]{ new Oprand(0xE9), Oprand.Any, Oprand.Any }, (z80) =>
+                {
+                    z80.PC.Value = z80.HL.Value;
+                }),
+
+                new Opcode("JP (IX)", 0xDD, 0xE9, (z80) =>
+                {
+                    z80.PC.Value = z80.IX.Value;
+                }),
+
+                new Opcode("JP (IY)", 0xFD, 0xE9, (z80) =>
+                {
+                    z80.PC.Value = z80.IY.Value;
+                }),
             }); 
         }
 
