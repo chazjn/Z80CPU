@@ -102,13 +102,13 @@ namespace Z80CPU
         public void Boot()
         {
             PC.Value = 0x0;
-            SP.Value = 32768;
+            SP.Value = 0XFFFF;
 
             Buffer.Clear();
             Cycle();
         }
 
-        public void Cycle()
+        private void Cycle()
         {
             while (true)
             {
@@ -129,11 +129,16 @@ namespace Z80CPU
                     CurrentOpcode.Execute(this);
                     Buffer.Clear();
                 }
-                else if (opcodes.Count == 1) //we have a single match - execute it!
+                else if (opcodes.Count == 1) //we have a single match 
                 {
-                    CurrentOpcode = opcodes.First();
-                    CurrentOpcode.Execute(this);
-                    Buffer.Clear();
+                    // we have enough oprands, let's execute it
+                    if(opcodes.First().Values.Count() == Buffer.Count)
+                    {
+                        CurrentOpcode = opcodes.First();
+                        CurrentOpcode.Execute(this);
+                        Buffer.Clear();
+                    }
+                    //nope, we have a match but we need to get some more bytes from memory
                 }
             }
         }
