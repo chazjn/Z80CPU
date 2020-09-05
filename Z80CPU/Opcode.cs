@@ -51,36 +51,32 @@ namespace Z80CPU
 
         public bool IsMatch(IList<byte> bytes)
         {
-            bool isMatch = false;
-
-            //check the number of bytes match
-            if(bytes.Count != Values.Count)
+            // if we have too many bytes then this will never match
+            if (bytes.Count > Values.Count)
             {
-                return isMatch;
+                return false;
             }
 
-            //now we know we have an equal number of bytes to compare
-            for (int i = 0; i < bytes.Count; i++)
+            // if we have less or equal bytes, then let's check if this is a contender
+            if (bytes.Count <= Values.Count)
             {
-                //first check if it is an 'Any' byte
-                if (Values[i].IsAny)
+                for (int i = 0; i < bytes.Count; i++)
                 {
-                    continue;
-                }
+                    //first check if it is an 'Any' byte
+                    if (Values[i].IsAny)
+                    {
+                        continue;
+                    }
 
-                //second, compare the byte
-                if(Values[i].Value == bytes[i])
-                {
-                    isMatch = true;
-                }
-                else
-                {
-                    isMatch = false;
-                    break;
+                    //second, compare the byte
+                    if (Values[i].Value != bytes[i])
+                    {
+                        return false;
+                    }
                 }
             }
-          
-            return isMatch;
+
+            return true;
         }
 
         public void Execute(Z80 z80)

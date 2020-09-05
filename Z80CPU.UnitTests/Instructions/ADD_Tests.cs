@@ -17,8 +17,7 @@ namespace Z80CPU.UnitTests.Instructions
         {
             var computer = new TestComputer();
             computer.InjectInstructions(0x3E, 0x10, 0xC6, 0x01);
-
-            computer.PowerOn();
+            computer.Tick(4);
 
             Assert.IsTrue(computer.Z80.A.Value == 0x11);
 

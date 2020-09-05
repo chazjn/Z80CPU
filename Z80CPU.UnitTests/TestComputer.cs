@@ -28,9 +28,12 @@ namespace Z80CPU.UnitTests
             }
         }
 
-        public void PowerOn()
+        public void Tick(int cycles)
         {
-            Z80.Boot();
+            for (int i = 0; i < cycles; i++)
+            {
+                Z80.Tick();
+            }
         }
     }
 }

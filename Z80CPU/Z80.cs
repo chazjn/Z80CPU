@@ -97,49 +97,42 @@ namespace Z80CPU
             InstructionSet = new InstructionSet();
 
             Buffer = new List<byte>();
-        }
 
-        public void Boot()
-        {
             PC.Value = 0x0;
             SP.Value = 0XFFFF;
 
             Buffer.Clear();
-            Cycle();
         }
 
-        private void Cycle()
+        public void Tick()
         {
-            while (true)
+            //Get byte from memory and add to buffer
+            var data = Memory.Get(PC.Value);
+            Buffer.Add(data);
+
+            //Increment the program counter
+            PC.Increment();
+
+            //check if we have have complete command yet
+            var opcodes = InstructionSet.GetOpcodeCandidates(Buffer);
+
+
+            if (opcodes.Count == 0) //no instruction match - bad byte? excute a nop to skip over it
             {
-                //Get byte from memory and add to buffer
-                var data = Memory.Get(PC.Value);
-                Buffer.Add(data);
-
-                //Increment the program counter
-                PC.Increment();
-
-                //check if we have have complete command yet
-                var opcodes = InstructionSet.GetOpcodeCandidates(Buffer);
-
-               
-                if(opcodes.Count == 0) //no instruction match - bad byte? excute a nop to skip over it
+                CurrentOpcode = new NOP().Opcodes.First();
+                CurrentOpcode.Execute(this);
+                Buffer.Clear();
+            }
+            else if (opcodes.Count == 1) 
+            {
+                // we have enough oprands, let's execute it
+                if (opcodes.First().Values.Count() == Buffer.Count)
                 {
-                    CurrentOpcode = new NOP().Opcodes.First();
+                    CurrentOpcode = opcodes.First();
                     CurrentOpcode.Execute(this);
                     Buffer.Clear();
                 }
-                else if (opcodes.Count == 1) //we have a single match 
-                {
-                    // we have enough oprands, let's execute it
-                    if(opcodes.First().Values.Count() == Buffer.Count)
-                    {
-                        CurrentOpcode = opcodes.First();
-                        CurrentOpcode.Execute(this);
-                        Buffer.Clear();
-                    }
-                    //nope, we have a match but we need to get some more bytes from memory
-                }
+                //nope, we have a match but we need to get some more bytes from memory
             }
         }
     }

@@ -14,10 +14,5 @@ namespace Z80CPU
             Memory = new MemoryManager(rom, ram);
             Z80 = new Z80(Memory);
         }
-
-        public void PowerOn()
-        {
-            Z80.Boot();
-        }
     }
 }
