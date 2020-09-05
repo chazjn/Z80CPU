@@ -49,10 +49,10 @@ namespace Z80CPU
         public Flags F { get; private set; }
         public Flags F_ { get; private set; }
 
-        public InstructionSet InstructionSet { get; private set; }
+        internal InstructionSet InstructionSet { get; private set; }
 
-        public IList<byte> Buffer { get; }
-        public Opcode CurrentOpcode { get; private set; }
+        internal IList<byte> Buffer { get; }
+        internal Opcode CurrentOpcode { get; private set; }
 
         public Z80(Memory memory)
         {
