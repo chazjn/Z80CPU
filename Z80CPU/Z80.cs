@@ -49,6 +49,9 @@ namespace Z80CPU
         public Flags F { get; private set; }
         public Flags F_ { get; private set; }
 
+        public int InteruptMode { get; internal set; }
+        public bool InteruptsEnabled { get; internal set;}
+
         internal InstructionSet InstructionSet { get; private set; }
 
         internal IList<byte> Buffer { get; }
