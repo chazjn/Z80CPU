@@ -1,6 +1,6 @@
-ADC
-ADD
-AND
+ADC		Started
+ADD		Completed but can be improved 
+AND		TODO
 BIT
 CALL
 CCF
