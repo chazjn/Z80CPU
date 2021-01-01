@@ -44,7 +44,7 @@ namespace Z80CPU
         public Register16 IX { get; private set; }
         public Register16 IY { get; private set; }
 
-        public ProgramCounter PC { get; private set; }
+        public Register16 PC { get; private set; }
         public Register16 SP { get; private set; }
         public Flags F { get; private set; }
         public Flags F_ { get; private set; }
@@ -63,7 +63,7 @@ namespace Z80CPU
 
             F = new Flags();
             F_ = new Flags();
-            PC = new ProgramCounter();
+            PC = new Register16("PC");
             SP = new Register16("SP");
 
             A = new Register8("A");

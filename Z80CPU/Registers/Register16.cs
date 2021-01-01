@@ -34,5 +34,15 @@ namespace Z80CPU.Registers
             High = high;
             Low = low;
         }
+
+        public void Increment()
+        {
+            Value = (ushort)(Value + 1);
+        }
+
+        public void Decrement()
+        {
+            Value = (ushort)(Value - 1);
+        }
     }
 }
