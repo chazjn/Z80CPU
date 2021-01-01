@@ -35,9 +35,10 @@ namespace Z80CPU.Instructions
 
         private void Push(Z80 z80, Register16 register)
         {
-            //TODO: Finish this
             z80.SP.Value--;
-            //var high = z80.Memory.Get()
+            z80.Memory.Set(z80.SP.Value, register.High.Value);
+            z80.SP.Value--;
+            z80.Memory.Set(z80.SP.Value, register.Low.Value);
         }
     }
 }
