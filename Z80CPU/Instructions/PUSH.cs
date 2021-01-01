@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using Z80CPU.Registers;
 
 namespace Z80CPU.Instructions
@@ -29,6 +27,16 @@ namespace Z80CPU.Instructions
                 new Opcode("PUSH AF", 0xF5, (z80) =>
                 {
                     Push(z80, z80.AF);
+                }),
+
+                new Opcode("PUSH IX", 0xDD, 0xE5, (z80) =>
+                {
+                    Push(z80, z80.IX);
+                }),
+
+                new Opcode("PUSH IY", 0xFD, 0xE5, (z80) =>
+                {
+                    Push(z80, z80.IY);
                 }),
             });
         }
