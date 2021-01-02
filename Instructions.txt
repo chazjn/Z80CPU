@@ -1,8 +1,8 @@
 ADC		Started
 ADD		Completed but can be improved 
 AND		TODO
-BIT
-CALL
+BIT		Completed
+CALL	Completed
 CCF
 CP
 CPD
