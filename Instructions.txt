@@ -3,7 +3,7 @@ ADD		Completed but can be improved
 AND		TODO
 BIT		Completed
 CALL	Completed
-CCF
+CCF		Completed
 CP
 CPD
 CPDR
