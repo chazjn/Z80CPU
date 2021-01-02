@@ -1,19 +1,19 @@
 ADC		Started
 ADD		Completed but can be improved 
-AND		TODO
+AND		-
 BIT		Completed
 CALL	Completed
 CCF		Completed
-CP
-CPD
-CPDR
-CPI
-CPIR
-CPL
-DAA
-DEC
-DI
-DJNZ
+CP		-
+CPD		-
+CPDR	-	
+CPI		-
+CPIR	-	
+CPL		-
+DAA		-
+DEC		-
+DI		Completed
+DJNZ	
 EI
 EX
 EXX
