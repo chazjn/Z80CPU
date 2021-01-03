@@ -13,7 +13,7 @@ namespace Z80CPU
             Bytes = data.GetBytes();
         }
 
-        public override void Set(ushort index, byte value)
+        public override void Set(int index, byte value)
         {
             //do nothing you can't write to ROM
         }

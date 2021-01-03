@@ -6,7 +6,7 @@
         {
         }
 
-        public override void Set(ushort index, byte value)
+        public override void Set(int index, byte value)
         {
             Bytes[index] = value;
         }

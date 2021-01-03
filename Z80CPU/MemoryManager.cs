@@ -24,7 +24,7 @@
             }
         }
 
-        public override void Set(ushort index, byte value)
+        public override void Set(int index, byte value)
         {
             //don't do anthing if index inside ROM range
             if (index > _rom.Size - 1)

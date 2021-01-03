@@ -13,9 +13,9 @@ CPL		-
 DAA		-
 DEC		-
 DI		Completed
-DJNZ	
-EI
-EX
+DJNZ	Completed
+EI		Completed
+EX		Completed
 EXX
 HALT
 IM

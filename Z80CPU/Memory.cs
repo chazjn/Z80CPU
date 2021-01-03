@@ -22,6 +22,6 @@ namespace Z80CPU
             return Bytes[index];
         }
 
-        public abstract void Set(ushort index, byte value);
+        public abstract void Set(int index, byte value);
     }
 }
