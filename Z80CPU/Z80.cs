@@ -107,6 +107,15 @@ namespace Z80CPU
             Buffer.Clear();
         }
 
+        public void Reset()
+        {
+            PC.Value = 0;
+            I.Value = 0;
+            R.Value = 0;
+            InteruptsEnabled = false;
+            InteruptMode = 0;
+        }
+
         public void Tick()
         {
             //Get byte from memory and add to buffer

@@ -16,10 +16,10 @@ DI		Completed
 DJNZ	Completed
 EI		Completed
 EX		Completed
-EXX
-HALT
-IM
-IN
+EXX		Completed
+HALT	Started, need to implement interupts and reset
+IM		Completed
+IN		-
 INC
 IND
 INDR
