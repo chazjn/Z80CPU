@@ -52,6 +52,7 @@
     <Compile Include="TestComputer.cs" />
     <Compile Include="OpcodeTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestPorts.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

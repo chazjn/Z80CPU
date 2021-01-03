@@ -21,7 +21,7 @@ HALT	Started, need to implement interupts and reset
 IM		Completed
 IN		-
 INC		Started, need to implement setting flags
-IND
+IND		Started, added very basic 'Ports' implementation
 INDR
 INI
 INIR

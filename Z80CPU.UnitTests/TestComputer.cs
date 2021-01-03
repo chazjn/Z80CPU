@@ -6,12 +6,14 @@ namespace Z80CPU.UnitTests
     public class TestComputer
     {
         public Memory Memory { get; private set; }
+        public Ports Ports { get; set; }
         public Z80 Z80 { get; private set; }
 
         public TestComputer()
         {
             Memory = new RAM(16384);
-            Z80 = new Z80(Memory);
+            Ports = new TestPorts();
+            Z80 = new Z80(Memory, Ports);
         }
 
         public void InjectInstructions(params byte[] bytes)

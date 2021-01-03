@@ -10,6 +10,7 @@ namespace Z80CPU
     public class Z80
     {
         public Memory Memory { get; set; }
+        public Ports Ports { get; set; }
 
         public Register8 A { get; private set; }
         public Register8 B { get; private set; }
@@ -57,9 +58,10 @@ namespace Z80CPU
         internal IList<byte> Buffer { get; }
         internal Opcode CurrentOpcode { get; private set; }
 
-        public Z80(Memory memory)
+        public Z80(Memory memory, Ports ports)
         {
             Memory = memory;
+            Ports = ports;
 
             F = new Flags();
             F_ = new Flags();
