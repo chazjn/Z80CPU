@@ -119,15 +119,11 @@ namespace Z80CPU
         public void Tick()
         {
             //Get byte from memory and add to buffer
-            var data = Memory.Get(PC.Value);
-            Buffer.Add(data);
-
-            //Increment the program counter
-            PC.Increment();
+            var value = GetByte();
+            Buffer.Add(value);
 
             //check if we have have complete command yet
             var opcodes = InstructionSet.GetOpcodeCandidates(Buffer);
-
 
             if (opcodes.Count == 0) //no instruction match - bad byte? excute a nop to skip over it
             {
@@ -146,6 +142,14 @@ namespace Z80CPU
                 }
                 //nope, we have a match but we need to get some more bytes from memory
             }
+        }
+
+        internal byte GetByte()
+        {
+            var value = Memory.Get(PC.Value);
+            PC.Increment();
+
+            return value;
         }
     }
 }

@@ -20,7 +20,7 @@ EXX		Completed
 HALT	Started, need to implement interupts and reset
 IM		Completed
 IN		-
-INC
+INC		Started, need to implement setting flags
 IND
 INDR
 INI
