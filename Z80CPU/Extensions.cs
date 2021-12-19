@@ -11,5 +11,15 @@ namespace Z80CPU
             return (byteValue >> position) & 1;
         }
 
+        public static int ShiftLeftBy(this byte byteValue, int position)
+        {
+            return byteValue << position;
+        }
+
+        public static int ShiftRight(this byte byteValue, int position)
+        {
+            return byteValue >> position;
+        }
+
     }
 }

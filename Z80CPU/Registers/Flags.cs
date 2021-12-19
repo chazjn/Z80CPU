@@ -16,17 +16,17 @@ namespace Z80CPU.Registers
          * 0 |  C  | Carry            | Holds to carry
          */
 
-        public bool Sign { get { return BitHelper.IsSet(Value, 7); } set { SetBit(7, value); } }
+        public bool Sign { get { return ByteHelper.IsSet(Value, 7); } set { SetBit(7, value); } }
 
-        public bool Zero { get { return BitHelper.IsSet(Value, 6); } set { SetBit(6, value); } }
+        public bool Zero { get { return ByteHelper.IsSet(Value, 6); } set { SetBit(6, value); } }
 
-        public bool HalfCarry { get { return BitHelper.IsSet(Value, 4); } set { SetBit(4, value); } }
+        public bool HalfCarry { get { return ByteHelper.IsSet(Value, 4); } set { SetBit(4, value); } }
 
-        public bool ParityOrOverflow { get { return BitHelper.IsSet(Value, 2); } set { SetBit(2, value); } }
+        public bool ParityOrOverflow { get { return ByteHelper.IsSet(Value, 2); } set { SetBit(2, value); } }
 
-        public bool Subtraction { get { return BitHelper.IsSet(Value, 1); } set { SetBit(1, value); } }
+        public bool Subtraction { get { return ByteHelper.IsSet(Value, 1); } set { SetBit(1, value); } }
 
-        public bool Carry { get { return BitHelper.IsSet(Value, 0); } set { SetBit(0, value); } }
+        public bool Carry { get { return ByteHelper.IsSet(Value, 0); } set { SetBit(0, value); } }
 
         public Flags() : base("F")
         {

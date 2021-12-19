@@ -2,7 +2,7 @@
 
 namespace Z80CPU
 {
-    public static class BitHelper
+    public static class ByteHelper
     {
         public static bool IsSet(byte value, int index)
         {
@@ -22,6 +22,13 @@ namespace Z80CPU
             }
 
             return ((value >> index) & 1) == 1;
+        }
+
+        public static ushort CreateUShort(byte high, byte low)
+        {
+            var value = high + (low << 8);
+
+            return (ushort)value;
         }
     }
 }
