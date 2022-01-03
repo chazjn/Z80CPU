@@ -38,7 +38,7 @@ namespace Z80CPU.Instructions
                 {
                 }),
 
-                new Opcode("ADC A, n", new[] { new Oprand(0xCE), Oprand.Any }, z80 =>
+                new Opcode("ADC A, n", 0xCE, Oprand.Any, z80 =>
                 {
                 }),
 
@@ -46,14 +46,19 @@ namespace Z80CPU.Instructions
                 {
                 }),
                 
-                new Opcode("ADC A, (IX + d)", new[] { new Oprand(0xDD), new Oprand(0x8E), Oprand.Any }, z80 =>
+                new Opcode("ADC A, (IX + d)", 0xDD, 0x8E, Oprand.Any, z80 =>
                 {
                 }),
 
-                new Opcode("ADC A, (IY + d)", new[] { new Oprand(0xFD), new Oprand(0x8E), Oprand.Any }, z80 =>
+                new Opcode("ADC A, (IY + d)", 0xFD, 0x8E, Oprand.Any, z80 =>
                 {
                 }),
             });
+        }
+
+        protected override void AddOpcodes()
+        {
+            throw new NotImplementedException();
         }
     }
 }

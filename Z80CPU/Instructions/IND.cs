@@ -1,30 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Z80CPU.Flags;
 
 namespace Z80CPU.Instructions
 {
+    [Flag(Name.Sign, Affect.Undefined)]
+    [Flag(Name.Zero, Affect.CalculatedInOpcode)]
+    [Flag(Name.HalfCarry, Affect.Undefined)]
+    [Flag(Name.ParityOrOverflow, Affect.Undefined)]
+    [Flag(Name.Subraction, Affect.One)]
     public class IND : Instruction
     {
-        public IND()
+        protected override void AddOpcodes()
         {
-            Opcodes.AddRange(new List<Opcode>
+            Opcodes.Add(new Opcode("IND", 0xED, 0xAA, (z80) =>
             {
-                new Opcode("IND", 0xED, 0xAA, (z80) => 
-                {
-                    var value = z80.Ports.GetByte(z80.C.Value);
-                    z80.Memory.Set(z80.HL.Value, value);
+                var value = z80.Ports.GetByte(z80.C.Value);
+                z80.Memory.Set(z80.HL.Value, value);
 
-                    z80.HL.Value--;
-                    z80.B.Value--;
+                z80.HL.Value--;
+                z80.B.Value--;
 
-                    var random = new Random();
-                    z80.F.Sign = random.Next(2) == 0;
-                    z80.F.Zero = z80.B.Value == 0;
-                    z80.F.HalfCarry = random.Next(2) == 0;
-                    z80.F.ParityOrOverflow = random.Next(2) == 0;
-                    z80.F.Sign = true;
-                })
-            });
+                z80.F.Zero = z80.B.Value.IsZero();
+
+                return TStates.Count(16);
+            }));
         }
     }
 }

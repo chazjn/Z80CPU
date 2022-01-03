@@ -24,5 +24,10 @@
                 }
             }));
         }
+
+        protected override void AddOpcodes()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

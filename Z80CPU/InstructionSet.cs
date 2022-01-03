@@ -12,9 +12,9 @@ namespace Z80CPU
             Instructions = new List<Instruction>
             {
                 new ADD(),
-                new BIT(),
-                new JP(),
-                new LD()
+                //new BIT(),
+                //new JP(),
+                //new LD()
             };
         }
 
@@ -24,13 +24,8 @@ namespace Z80CPU
 
             foreach (var instruction in Instructions)
             {
-                foreach (var opcode in instruction.Opcodes)
-                {
-                    if (opcode.IsMatch(bytes))
-                    {
-                        candidates.Add(opcode);
-                    }
-                }
+                var matches = instruction.GetMatches(bytes);
+                candidates.AddRange(matches);
             }
 
             return candidates;

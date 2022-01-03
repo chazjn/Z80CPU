@@ -47,8 +47,8 @@ namespace Z80CPU
 
         public Register16 PC { get; private set; }
         public Register16 SP { get; private set; }
-        public Flags F { get; private set; }
-        public Flags F_ { get; private set; }
+        public Registers.Flags F { get; private set; }
+        public Registers.Flags F_ { get; private set; }
 
         public int InteruptMode { get; internal set; }
         public bool InteruptsEnabled { get; internal set;}
@@ -63,8 +63,8 @@ namespace Z80CPU
             Memory = memory;
             Ports = ports;
 
-            F = new Flags();
-            F_ = new Flags();
+            F = new Registers.Flags();
+            F_ = new Registers.Flags();
             PC = new Register16("PC");
             SP = new Register16("SP");
 
@@ -139,7 +139,13 @@ namespace Z80CPU
                 if (opcodes.First().Values.Count() == Buffer.Count)
                 {
                     CurrentOpcode = opcodes.First();
-                    CurrentOpcode.Execute(this);
+                    var cloneOfA = A.Clone(); //clone so we can compare value afterwards
+                    var tStates = CurrentOpcode.Execute(this);
+                    //
+
+                    var flagsCalculator = new FlagsCalculator(this);
+                    flagsCalculator.SetFlags(cloneOfA);
+
                     Buffer.Clear();
                 }
                 //nope, we have a match but we need to get some more bytes from memory

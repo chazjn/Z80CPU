@@ -10,7 +10,7 @@ namespace Z80CPU.Instructions
         {
             Opcodes.AddRange(new List<Opcode>
             {
-                new Opcode("LD A, n", new[]{ new Oprand(0x3E), Oprand.Any }, (z80) =>
+                new Opcode("LD A, n", 0x3E, Oprand.Any, (z80) =>
                 {
                     z80.A.Value = z80.Buffer[1];
                 }),
@@ -29,20 +29,25 @@ namespace Z80CPU.Instructions
                     z80.Memory.Set(de, a);
                 }),
 
-                new Opcode("LD (HL), n", new[]{ new Oprand(0x36), Oprand.Any }, (z80) =>
+                new Opcode("LD (HL), n", 0x36, Oprand.Any, (z80) =>
                 {
                     var hl = z80.HL.Value;
                     var value = z80.Buffer[1];
                     z80.Memory.Set(hl, value);
                 }),
 
-                new Opcode("LD (HL), B", new[]{ new Oprand(0x77) }, (z80) =>
+                new Opcode("LD (HL), B", 0x70, (z80) =>
                 {
                     var hl = z80.HL.Value;
                     var value = z80.Memory.Get(hl);
                     z80.BC.Value = value;
                 })
             });
+        }
+
+        protected override void AddOpcodes()
+        {
+            throw new NotImplementedException();
         }
     }
 }

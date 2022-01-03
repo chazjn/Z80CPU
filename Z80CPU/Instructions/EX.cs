@@ -5,7 +5,7 @@ namespace Z80CPU.Instructions
 {
     public class EX : Instruction
     {
-        public EX()
+        protected override void AddOpcodes()
         {
             Opcodes.AddRange(new List<Opcode>
             {

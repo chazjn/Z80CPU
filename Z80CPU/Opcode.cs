@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Z80CPU.Flags;
 
 namespace Z80CPU
 {
@@ -7,81 +8,88 @@ namespace Z80CPU
     {
         public string Name { get; }
         public IList<Oprand> Values { get; }
-        private Action<Z80> Action { get; }
+        public Func<Z80, TStates> Action { get; internal set; }
+
+        public Affect? FlagSign { get; internal set; }
+        public Affect? FlagZero { get; internal set; }
+        public Affect? FlagHalfCarry { get; internal set; }
+        public Affect? FlagParity { get; internal set; }
+        public Affect? FlagOverflow { get; internal set; }
+        public Affect? FlagSubtraction { get; internal set; }
+        public Affect? FlagCarry { get; internal set; }
+
+        public Opcode(string name, byte value, Func<Z80, TStates> action)
+        {
+            Name = name;
+            Action = action;
+            Values = new List<Oprand>
+            {
+                Oprand.Parse(value)
+            };
+        }
+
+        public Opcode(string name, byte value1, byte value2, Func<Z80, TStates> action)
+        {
+            Name = name;
+            Action = action;
+            Values = new List<Oprand>
+            {
+                Oprand.Parse(value1),
+                Oprand.Parse(value2)
+            };
+        }
+
+        public Opcode(string name, byte value1, Oprand value2, Func<Z80, TStates> action)
+        {
+            Name = name;
+            Action = action;
+            Values = new List<Oprand>
+            {
+                Oprand.Parse(value1),
+                value2
+            };
+        }
+
+        public Opcode(string name, byte value1, byte value2, Oprand value3, Func<Z80, TStates> action)
+        {
+            Name = name;
+            Action = action;
+            Values = new List<Oprand>
+            {
+                Oprand.Parse(value1),
+                Oprand.Parse(value2),
+                value3
+            };
+        }
+
+        public Opcode(string name, byte value1, Oprand value2, Oprand value3, Func<Z80, TStates> action)
+        {
+            Name = name;
+            Action = action;
+            Values = new List<Oprand>
+            {
+                Oprand.Parse(value1),
+                value2,
+                value3
+            };
+        }
+
+        public Opcode(string name, byte value1, byte value2, Oprand value3, byte value4, Func<Z80, TStates> action)
+        {
+            Name = name;
+            Values = new List<Oprand>
+            {
+                Oprand.Parse(value1),
+                Oprand.Parse(value2),
+                value3,
+                Oprand.Parse(value4)
+            };
+            Action = action;    
+        }
         
-        public Opcode(string name, Oprand[] values, Action<Z80> action)
+        public TStates Execute(Z80 z80)
         {
-            Name = name;
-            Action = action;
-            Values = values;
-        }
-
-        public Opcode(string name, byte value, Action<Z80> action)
-        {
-            Name = name;
-            Action = action;
-            Values = new List<Oprand>
-            {
-                new Oprand(value)
-            };
-        }
-
-        public Opcode(string name, byte value1, byte value2, Action<Z80> action)
-        {
-            Name = name;
-            Action = action;
-            Values = new List<Oprand>
-            {
-                new Oprand(value1),
-                new Oprand(value2)
-            };
-        }
-
-        public Opcode(string name, byte[] values, Action<Z80> action)
-        {
-            Name = name;
-            Action = action;
-
-            Values = new List<Oprand>();
-            foreach (var value in values)
-            {
-                Values.Add(new Oprand(value));
-            }
-        }
-
-        public bool IsMatch(IList<byte> bytes)
-        {
-            // if we have too many bytes then this will never match
-            if (bytes.Count > Values.Count)
-            {
-                return false;
-            }
-
-            // if we have less or equal bytes, then let's check if this is a contender
-            if (bytes.Count <= Values.Count)
-            {
-                for (int i = 0; i < bytes.Count; i++)
-                {
-                    //first check if it is an 'Any' byte
-                    if (Values[i].IsAny)
-                    {
-                        continue;
-                    }
-
-                    //second, compare the byte
-                    if (Values[i].Value != bytes[i])
-                    {
-                        return false;
-                    }
-                }
-            }
-
-            return true;
-        }
-
-        public void Execute(Z80 z80)
-        {
-            Action.Invoke(z80);
+            return Action.Invoke(z80);
         }
     }
 }

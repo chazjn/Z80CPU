@@ -10,7 +10,7 @@ namespace Z80CPU.Instructions
         {
             Opcodes.AddRange(new List<Opcode>
             {
-                new Opcode("JR NZ, e", new[]{new Oprand(0x20), Oprand.Any}, (z80) =>
+                new Opcode("JR NZ, e", 0x20, Oprand.Any, (z80) =>
                 {
                     if(z80.F.Zero == false)
                     {
@@ -18,7 +18,7 @@ namespace Z80CPU.Instructions
                     }
                 }),
 
-                new Opcode("JR Z, e", new[]{new Oprand(0x28), Oprand.Any}, (z80) =>
+                new Opcode("JR Z, e", 0x28, Oprand.Any, (z80) =>
                 {
                     if(z80.F.Zero == true)
                     {
@@ -26,7 +26,7 @@ namespace Z80CPU.Instructions
                     }
                 }),
 
-                new Opcode("JR NC, e", new[]{new Oprand(0x30), Oprand.Any}, (z80) =>
+                new Opcode("JR NC, e", 0x30, Oprand.Any, (z80) =>
                 {
                     if(z80.F.Carry == false)
                     {
@@ -34,7 +34,7 @@ namespace Z80CPU.Instructions
                     }
                 }),
 
-                new Opcode("JR C, e", new[]{new Oprand(0x38), Oprand.Any}, (z80) =>
+                new Opcode("JR C, e", 0x38, Oprand.Any, (z80) =>
                 {
                     if(z80.F.Carry == true)
                     {
@@ -42,11 +42,16 @@ namespace Z80CPU.Instructions
                     }
                 }),
 
-                new Opcode("JR e", new[]{new Oprand(0x18), Oprand.Any}, (z80) =>
+                new Opcode("JR e", 0x18, Oprand.Any, (z80) =>
                 {
                     Jump(z80);
                 }),
             });
+        }
+
+        protected override void AddOpcodes()
+        {
+            throw new NotImplementedException();
         }
 
         private void Jump(Z80 z80)

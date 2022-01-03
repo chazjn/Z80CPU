@@ -25,5 +25,10 @@ namespace Z80CPU.Instructions
 
             });
         }
+
+        protected override void AddOpcodes()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

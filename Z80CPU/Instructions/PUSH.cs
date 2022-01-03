@@ -41,6 +41,11 @@ namespace Z80CPU.Instructions
             });
         }
 
+        protected override void AddOpcodes()
+        {
+            throw new System.NotImplementedException();
+        }
+
         private void Push(Z80 z80, Register16 register)
         {
             z80.SP.Value--;

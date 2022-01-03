@@ -31,5 +31,10 @@ namespace Z80CPU.Instructions
             //TODO: set flags
             destination.Value = value;
         }
+
+        protected override void AddOpcodes()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

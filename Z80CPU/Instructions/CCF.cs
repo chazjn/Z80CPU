@@ -1,20 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using Z80CPU.Flags;
 
 namespace Z80CPU.Instructions
 {
+    [Flag(Name.Carry, Affect.Invert)]
+    [Flag(Name.HalfCarry, Affect.Invert)]
+    [Flag(Name.Subraction, Affect.Zero)]
     public class CCF : Instruction
     {
-        public CCF()
+        protected override void AddOpcodes()
         {
-            Opcodes.AddRange(new List<Opcode>
+            Opcodes.Add(new Opcode("CCF", 0x3F, (z80) => 
             {
-                new Opcode("CCF", 0x3F, (z80) =>
-                {
-                    z80.F.HalfCarry = z80.F.Carry;
-                    z80.F.Subtraction = false;
-                    z80.F.Carry = !z80.F.Carry;
-                })
-            });
+                return TStates.Count(4);
+            }));
         }
     }
 }

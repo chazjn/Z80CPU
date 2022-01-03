@@ -9,7 +9,7 @@ namespace Z80CPU.Instructions
         {
             Opcodes.AddRange(new List<Opcode>
             {
-                new Opcode("JP NZ, pq", new[]{ new Oprand(0xC2), Oprand.Any, Oprand.Any }, (z80) =>
+                new Opcode("JP NZ, pq", 0xC2, Oprand.Any, Oprand.Any, (z80) =>
                 {
                     if(z80.F.Zero == false)
                     {
@@ -17,7 +17,7 @@ namespace Z80CPU.Instructions
                     }
                 }),
 
-                new Opcode("JP Z, pq", new[]{ new Oprand(0xCA), Oprand.Any, Oprand.Any }, (z80) =>
+                new Opcode("JP Z, pq", 0xCA, Oprand.Any, Oprand.Any, (z80) =>
                 {
                     if(z80.F.Zero == true)
                     {
@@ -25,7 +25,7 @@ namespace Z80CPU.Instructions
                     }
                 }),
 
-                new Opcode("JP NC, pq", new[]{ new Oprand(0xD2), Oprand.Any, Oprand.Any }, (z80) =>
+                new Opcode("JP NC, pq", 0xD2, Oprand.Any, Oprand.Any, (z80) =>
                 {
                     if(z80.F.Carry == false)
                     {
@@ -33,7 +33,7 @@ namespace Z80CPU.Instructions
                     }
                 }),
 
-                new Opcode("JP C, pq", new[]{ new Oprand(0xDA), Oprand.Any, Oprand.Any }, (z80) =>
+                new Opcode("JP C, pq", 0xDA, Oprand.Any, Oprand.Any, (z80) =>
                 {
                     if(z80.F.Carry == true)
                     {
@@ -41,7 +41,7 @@ namespace Z80CPU.Instructions
                     }
                 }),
 
-                new Opcode("JP PO, pq", new[]{ new Oprand(0xE2), Oprand.Any, Oprand.Any }, (z80) =>
+                new Opcode("JP PO, pq", 0xE2, Oprand.Any, Oprand.Any, (z80) =>
                 {
                     if(z80.F.ParityOrOverflow == false)
                     {
@@ -49,7 +49,7 @@ namespace Z80CPU.Instructions
                     }
                 }),
 
-                new Opcode("JP PE, pq", new[]{ new Oprand(0xEA), Oprand.Any, Oprand.Any }, (z80) =>
+                new Opcode("JP PE, pq", 0xEA, Oprand.Any, Oprand.Any, (z80) =>
                 {
                     if(z80.F.ParityOrOverflow == true)
                     {
@@ -57,7 +57,7 @@ namespace Z80CPU.Instructions
                     }
                 }),
 
-                new Opcode("JP P, pq", new[]{ new Oprand(0xF2), Oprand.Any, Oprand.Any }, (z80) =>
+                new Opcode("JP P, pq", 0xF2, Oprand.Any, Oprand.Any, (z80) =>
                 {
                     if(z80.F.Sign == false)
                     {
@@ -65,7 +65,7 @@ namespace Z80CPU.Instructions
                     }
                 }),
 
-                new Opcode("JP O, pq", new[]{ new Oprand(0xFA), Oprand.Any, Oprand.Any }, (z80) =>
+                new Opcode("JP O, pq", 0xFA, Oprand.Any, Oprand.Any, (z80) =>
                 {
                     if(z80.F.Sign == true)
                     {
@@ -73,12 +73,12 @@ namespace Z80CPU.Instructions
                     }
                 }),
 
-                new Opcode("JP pq", new[]{ new Oprand(0xC3), Oprand.Any, Oprand.Any }, (z80) =>
+                new Opcode("JP pq", 0xC3, Oprand.Any, Oprand.Any, (z80) =>
                 {
                     Jump(z80);
                 }),
 
-                new Opcode("JP (HL)", new[]{ new Oprand(0xE9), Oprand.Any, Oprand.Any }, (z80) =>
+                new Opcode("JP (HL)", 0xE9, Oprand.Any, Oprand.Any, (z80) =>
                 {
                     z80.PC.Value = z80.HL.Value;
                 }),
@@ -93,6 +93,11 @@ namespace Z80CPU.Instructions
                     z80.PC.Value = z80.IY.Value;
                 })
             }); 
+        }
+
+        protected override void AddOpcodes()
+        {
+            throw new NotImplementedException();
         }
 
         private void Jump(Z80 z80)

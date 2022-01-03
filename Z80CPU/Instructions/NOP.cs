@@ -2,11 +2,11 @@
 {
     public class NOP : Instruction
     {
-        public NOP()
+        protected override void AddOpcodes()
         {
             Opcodes.Add(new Opcode("NOP", 0x0, (z80) =>
             {
-                //do nothing
+                return TStates.Count(4);
             }));
         }
     }

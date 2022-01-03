@@ -1,14 +1,17 @@
-﻿namespace Z80CPU.Instructions
+﻿using Z80CPU.Flags;
+
+namespace Z80CPU.Instructions
 {
+    [Flag(Name.Carry, Affect.One)]
+    [Flag(Name.HalfCarry, Affect.Zero)]
+    [Flag(Name.Subraction, Affect.Zero)]
     public class SCF : Instruction
     {
-        public SCF()
+        protected override void AddOpcodes()
         {
-            Opcodes.Add(new Opcode("SCF", 0x37, (z80) =>
+            Opcodes.Add(new Opcode("SCF", 0x37, (z80) => 
             {
-                z80.F.HalfCarry = false;
-                z80.F.Sign = false;
-                z80.F.Carry = true;
+                return TStates.Count(4);
             }));
         }
     }

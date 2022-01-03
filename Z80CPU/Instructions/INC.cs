@@ -59,5 +59,10 @@ namespace Z80CPU.Instructions
 
             //set flags
         }
+
+        protected override void AddOpcodes()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

@@ -8,24 +8,17 @@ namespace Z80CPU
     {
         public byte? Value { get; }
         public bool IsAny { get; }
-        public static Oprand Any 
-        {
-            get
-            {
-                return new Oprand();
-            }
-       }
+        public static Oprand Any => new Oprand(null, true);
 
-        public Oprand(byte value)
+        private Oprand(byte? value, bool isAny)
         {
             Value = value;
-            IsAny = false;
+            IsAny = isAny;
         }
 
-        private Oprand()
+        public static Oprand Parse(byte value)
         {
-            Value = null;
-            IsAny = true;
+            return new Oprand(value, false);
         }
     }
 }

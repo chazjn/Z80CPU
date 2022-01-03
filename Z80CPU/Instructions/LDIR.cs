@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Z80CPU.Flags;
 
 namespace Z80CPU.Instructions
 {
+    [Flag(Name.HalfCarry, Affect.Zero)]
+    [Flag(Name.ParityOrOverflow, Affect.Zero)]
+    [Flag(Name.Subraction, Affect.Zero)]
     public class LDIR : Instruction
     {
-        public LDIR()
+        protected override void AddOpcodes()
         {
             Opcodes.Add(new Opcode("LDIR", 0xED, 0xB0, (z80) =>
             {
@@ -17,14 +18,15 @@ namespace Z80CPU.Instructions
                 z80.HL.Value++;
                 z80.BC.Value--;
 
-                z80.F.HalfCarry = false;
-                z80.F.ParityOrOverflow = false;
-                z80.F.Subtraction = false;
-
-                if(z80.BC.Value != 0)
+                if (z80.BC.Value.IsZero())
+                {
+                    return TStates.Count(16);
+                }
+                else
                 {
                     z80.PC.Value--;
                     z80.PC.Value--;
+                    return TStates.Count(21);
                 }
             }));
         }

@@ -1,8 +1,13 @@
-﻿namespace Z80CPU.Instructions
+﻿using Z80CPU.Flags;
+
+namespace Z80CPU.Instructions
 {
+    [Flag(Name.HalfCarry, Affect.Zero)]
+    [Flag(Name.ParityOrOverflow, Affect.CalculatedInOpcode)]
+    [Flag(Name.Subraction, Affect.Zero)]
     public class LDI : Instruction
     {
-        public LDI()
+        protected override void AddOpcodes()
         {
             Opcodes.Add(new Opcode("LDI", 0xED, 0xA0, (z80) =>
             {
@@ -13,9 +18,8 @@
                 z80.HL.Value++;
                 z80.BC.Value--;
 
-                z80.F.HalfCarry = false;
-                z80.F.ParityOrOverflow = z80.BC.Value == 0 ? false : true;
-                z80.F.Subtraction = false;
+                z80.F.ParityOrOverflow = !z80.BC.Value.IsZero();
+                return TStates.Count(16);
             }));
         }
     }

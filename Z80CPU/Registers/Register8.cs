@@ -10,5 +10,13 @@
         {
             Name = name;
         }
+
+        public Register8 Clone()
+        {
+            return new Register8(Name)
+            {
+                Value = Value
+            };
+        }
     }
 }
