@@ -26,5 +26,10 @@
         {
             return value == 0;
         }
+
+        public static bool IsNotZero(this ushort value)
+        {
+            return value != 0;
+        }
     }
 }

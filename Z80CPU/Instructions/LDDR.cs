@@ -1,33 +1,32 @@
-﻿namespace Z80CPU.Instructions
+﻿using Z80CPU.Flags;
+
+namespace Z80CPU.Instructions
 {
+    [Flag(Name.HalfCarry, Affect.Zero)]
+    [Flag(Name.ParityOrOverflow, Affect.Zero)]
+    [Flag(Name.Subraction, Affect.Zero)]
     public class LDDR : Instruction
     {
-        public LDDR()
+        protected override void AddOpcodes()
         {
             Opcodes.Add(new Opcode("LDDR", 0xED, 0xB8, (z80) =>
             {
-                var value = z80.Memory.Get(z80.HL.Value);
-                z80.Memory.Set(z80.DE.Value, value);
+                var value = z80.Memory.Get(z80.HL);
+                z80.Memory.Set(z80.DE, value);
 
-                z80.DE.Value--;
-                z80.HL.Value--;
-                z80.BC.Value--;
+                z80.DE.Decrement();
+                z80.HL.Decrement();
+                z80.BC.Decrement();
 
-                z80.F.HalfCarry = false;
-                z80.F.ParityOrOverflow = false;
-                z80.F.Subtraction = false;
-
-                if(z80.BC.Value != 0)
+                if (z80.BC.IsNotZero)
                 {
-                    z80.PC.Value--;
-                    z80.PC.Value--;
+                    z80.PC.Decrement();
+                    z80.PC.Decrement();
+                    return TStates.Count(21);
                 }
-            }));
-        }
 
-        protected override void AddOpcodes()
-        {
-            throw new System.NotImplementedException();
+                return TStates.Count(16);
+            }));
         }
     }
 }

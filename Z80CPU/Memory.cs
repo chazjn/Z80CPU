@@ -1,4 +1,5 @@
 ﻿using System;
+using Z80CPU.Registers;
 
 namespace Z80CPU
 {
@@ -12,6 +13,11 @@ namespace Z80CPU
             Bytes = new byte[length];
         }
 
+        public byte Get(Register16 register)
+        {
+            return Get(register.Value);
+        }
+
         public virtual byte Get(int index)
         {
             if(index < 0 || index > Bytes.Length - 1)
@@ -20,6 +26,11 @@ namespace Z80CPU
             }
 
             return Bytes[index];
+        }
+
+        public void Set(Register16 index, byte value)
+        {
+            Set(index.Value, value);
         }
 
         public abstract void Set(int index, byte value);
