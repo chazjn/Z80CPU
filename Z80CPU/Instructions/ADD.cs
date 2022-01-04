@@ -7,7 +7,7 @@ namespace Z80CPU.Instructions
     [Flag(Name.Sign, Affect.DefaultCalculation)]
     [Flag(Name.Zero, Affect.DefaultCalculation)]
     [Flag(Name.HalfCarry, Affect.DefaultCalculation)]
-    [Flag(Name.Overflow, Affect.DefaultCalculation)]
+    [Flag(Name.ParityOrOverflow, Affect.DefaultCalculation)]
     [Flag(Name.Subraction, Affect.Zero)]
     [Flag(Name.Carry, Affect.DefaultCalculation)]
     public class ADD : Instruction

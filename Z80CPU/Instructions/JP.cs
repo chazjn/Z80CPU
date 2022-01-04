@@ -5,105 +5,32 @@ namespace Z80CPU.Instructions
 {
     public class JP : Instruction
     {
-        public JP()
+        protected override void AddOpcodes()
         {
             Opcodes.AddRange(new List<Opcode>
             {
-                new Opcode("JP NZ, pq", 0xC2, Oprand.Any, Oprand.Any, (z80) =>
-                {
-                    if(z80.F.Zero == false)
-                    {
-                         Jump(z80);
-                    }
-                }),
-
-                new Opcode("JP Z, pq", 0xCA, Oprand.Any, Oprand.Any, (z80) =>
-                {
-                    if(z80.F.Zero == true)
-                    {
-                        Jump(z80);
-                    }
-                }),
-
-                new Opcode("JP NC, pq", 0xD2, Oprand.Any, Oprand.Any, (z80) =>
-                {
-                    if(z80.F.Carry == false)
-                    {
-                        Jump(z80);
-                    }
-                }),
-
-                new Opcode("JP C, pq", 0xDA, Oprand.Any, Oprand.Any, (z80) =>
-                {
-                    if(z80.F.Carry == true)
-                    {
-                        Jump(z80);
-                    }
-                }),
-
-                new Opcode("JP PO, pq", 0xE2, Oprand.Any, Oprand.Any, (z80) =>
-                {
-                    if(z80.F.ParityOrOverflow == false)
-                    {
-                        Jump(z80);
-                    }
-                }),
-
-                new Opcode("JP PE, pq", 0xEA, Oprand.Any, Oprand.Any, (z80) =>
-                {
-                    if(z80.F.ParityOrOverflow == true)
-                    {
-                        Jump(z80);
-                    }
-                }),
-
-                new Opcode("JP P, pq", 0xF2, Oprand.Any, Oprand.Any, (z80) =>
-                {
-                    if(z80.F.Sign == false)
-                    {
-                        Jump(z80);
-                    }
-                }),
-
-                new Opcode("JP O, pq", 0xFA, Oprand.Any, Oprand.Any, (z80) =>
-                {
-                    if(z80.F.Sign == true)
-                    {
-                        Jump(z80);
-                    }
-                }),
-
-                new Opcode("JP pq", 0xC3, Oprand.Any, Oprand.Any, (z80) =>
-                {
-                    Jump(z80);
-                }),
-
-                new Opcode("JP (HL)", 0xE9, Oprand.Any, Oprand.Any, (z80) =>
-                {
-                    z80.PC.Value = z80.HL.Value;
-                }),
-
-                new Opcode("JP (IX)", 0xDD, 0xE9, (z80) =>
-                {
-                    z80.PC.Value = z80.IX.Value;
-                }),
-
-                new Opcode("JP (IY)", 0xFD, 0xE9, (z80) =>
-                {
-                    z80.PC.Value = z80.IY.Value;
-                })
-            }); 
+                new Opcode("JP NZ, pq", 0xC2, Oprand.Any, Oprand.Any, (z80) => { Jump(z80, !z80.F.Zero); return TStates.Count(10); }),
+                new Opcode("JP Z, pq",  0xCA, Oprand.Any, Oprand.Any, (z80) => { Jump(z80, z80.F.Zero); return TStates.Count(10); }),
+                new Opcode("JP NC, pq", 0xD2, Oprand.Any, Oprand.Any, (z80) => { Jump(z80, !z80.F.Carry); return TStates.Count(10); }),
+                new Opcode("JP C, pq",  0xDA, Oprand.Any, Oprand.Any, (z80) => { Jump(z80, z80.F.Carry); return TStates.Count(10); }),
+                new Opcode("JP PO, pq", 0xE2, Oprand.Any, Oprand.Any, (z80) => { Jump(z80, !z80.F.ParityOrOverflow); return TStates.Count(10); }),
+                new Opcode("JP PE, pq", 0xEA, Oprand.Any, Oprand.Any, (z80) => { Jump(z80, z80.F.ParityOrOverflow); return TStates.Count(10); }),
+                new Opcode("JP P, pq",  0xF2, Oprand.Any, Oprand.Any, (z80) => { Jump(z80, !z80.F.Sign); return TStates.Count(10); }),
+                new Opcode("JP M, pq",  0xFA, Oprand.Any, Oprand.Any, (z80) => { Jump(z80, z80.F.Sign); return TStates.Count(10); }),
+                new Opcode("JP pq",     0xC3, Oprand.Any, Oprand.Any, (z80) => { Jump(z80, true); return TStates.Count(10); }),
+                new Opcode("JP (HL)",   0xE9, (z80) => { z80.PC.Value = z80.HL.Value; return TStates.Count(4); }),
+                new Opcode("JP (IX)",   0xDD, 0xE9, (z80) => { z80.PC.Value = z80.IX.Value; return TStates.Count(8); }),
+                new Opcode("JP (IY)",   0xFD, 0xE9, (z80) => { z80.PC.Value = z80.IY.Value; return TStates.Count(8); })
+            });
         }
 
-        protected override void AddOpcodes()
+        private void Jump(Z80 z80, bool performJump)
         {
-            throw new NotImplementedException();
-        }
-
-        private void Jump(Z80 z80)
-        {
-            var address = BitConverter.ToUInt16(new[] { z80.Buffer[2], z80.Buffer[1] }, 0);
-            z80.PC.Value = address;
+            if (performJump)
+            {
+                var address = BitConverter.ToUInt16(new[] { z80.Buffer[2], z80.Buffer[1] }, 0);
+                z80.PC.Value = address;
+            }
         }
     }
 }

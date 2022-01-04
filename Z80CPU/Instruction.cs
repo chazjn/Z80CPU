@@ -57,7 +57,7 @@ namespace Z80CPU
                 opcode.FlagZero = opcode.FlagZero ?? GetFlagAffect(Name.Zero, flagAttributes);
                 opcode.FlagHalfCarry = opcode.FlagHalfCarry ?? GetFlagAffect(Name.HalfCarry, flagAttributes);
                 opcode.FlagParity = opcode.FlagParity ?? GetFlagAffect(Name.ParityOrOverflow, flagAttributes);
-                opcode.FlagOverflow = opcode.FlagOverflow ?? GetFlagAffect(Name.Overflow, flagAttributes);
+                opcode.FlagOverflow = opcode.FlagOverflow ?? GetFlagAffect(Name.ParityOrOverflow, flagAttributes);
                 opcode.FlagSubtraction = opcode.FlagSubtraction ?? GetFlagAffect(Name.Subraction, flagAttributes);
                 opcode.FlagCarry = opcode.FlagCarry ?? GetFlagAffect(Name.Carry, flagAttributes);
             }
