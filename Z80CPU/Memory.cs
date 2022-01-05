@@ -18,7 +18,7 @@ namespace Z80CPU
             return Get(register.Value);
         }
 
-        public virtual byte Get(int index)
+        public virtual byte Get(ushort index)
         {
             if(index < 0 || index > Bytes.Length - 1)
             {
@@ -33,6 +33,6 @@ namespace Z80CPU
             Set(index.Value, value);
         }
 
-        public abstract void Set(int index, byte value);
+        public abstract void Set(ushort index, byte value);
     }
 }

@@ -18,5 +18,15 @@
                 Value = Value
             };
         }
+
+        public void Increment()
+        {
+            Value++;
+        }
+
+        public void Decrement()
+        {
+            Value--;
+        }
     }
 }
