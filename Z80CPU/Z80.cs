@@ -50,7 +50,7 @@ namespace Z80CPU
         public Registers.Flags F { get; private set; }
         public Registers.Flags F_ { get; private set; }
 
-        public int InteruptMode { get; internal set; }
+        public InterruptMode InteruptMode { get; internal set; }
         public bool InteruptsEnabled { get; internal set;}
 
         internal InstructionSet InstructionSet { get; private set; }

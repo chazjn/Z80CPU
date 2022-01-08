@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using Z80CPU.Flags;
 
 namespace Z80CPU.Instructions
 {
+    [Flag(Affect.None)]
     public class CALL : Instruction
     {
         protected override void AddOpcodes()
@@ -27,22 +29,18 @@ namespace Z80CPU.Instructions
             z80.PC.Increment();
             z80.PC.Increment();
 
-            if (performCall)
-            {
-                z80.SP.Decrement();
-                z80.Memory.Set(z80.SP.Value, z80.PC.High.Value);
-                z80.SP.Decrement();
-                z80.Memory.Set(z80.SP.Value, z80.PC.Low.Value);
-
-                z80.PC.Low.Value = z80.Memory.Get(z80.PC.Value - 1);
-                z80.PC.High.Value = z80.Memory.Get(z80.PC.Value - 2);
-
-                return TStates.Count(17);
-            }
-            else
-            {
+            if(!performCall)
                 return TStates.Count(10);
-            }
+
+            z80.SP.Decrement();
+            z80.Memory.Set(z80.SP.Value, z80.PC.High.Value);
+            z80.SP.Decrement();
+            z80.Memory.Set(z80.SP.Value, z80.PC.Low.Value);
+
+            z80.PC.Low.Value = z80.Memory.Get((ushort)(z80.PC.Value - 1));
+            z80.PC.High.Value = z80.Memory.Get((ushort)(z80.PC.Value - 2));
+
+            return TStates.Count(17);      
         }
     }
 }

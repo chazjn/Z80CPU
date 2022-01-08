@@ -26,7 +26,7 @@ namespace Z80CPU.Instructions
                 {
                     var offset = z80.GetByte();
                     var ix_offset = z80.IX.Value + offset;
-                    var value = z80.Memory.Get(ix_offset);
+                    var value = z80.Memory.Get((ushort)ix_offset);
                     AddToA(z80, value);
                 }),
 
@@ -34,7 +34,7 @@ namespace Z80CPU.Instructions
                 {
                     var offset = z80.GetByte();
                     var iy_offset = z80.IY.Value + offset;
-                    var value = z80.Memory.Get(iy_offset);
+                    var value = z80.Memory.Get((ushort)iy_offset);
                     AddToA(z80, value);
                 }),
 

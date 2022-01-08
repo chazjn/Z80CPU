@@ -1,23 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using Z80CPU.Flags;
 
 namespace Z80CPU.Instructions
 {
+    [Flag(Affect.None)]
     public class EI : Instruction
     {
-        public EI()
-        {
-            Opcodes.AddRange(new List<Opcode>
-            {
-                new Opcode("EI", 0xFB, (z80) =>
-                {
-                    z80.InteruptsEnabled = true;
-                })
-            });
-        }
-
         protected override void AddOpcodes()
         {
-            throw new System.NotImplementedException();
+            Opcodes.Add(new Opcode("EI", 0xFB, (z80) =>
+            {
+                z80.InteruptsEnabled = true;
+                return TStates.Count(4);
+            }));
         }
     }
 }

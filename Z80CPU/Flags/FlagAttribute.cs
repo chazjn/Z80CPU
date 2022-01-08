@@ -13,5 +13,10 @@ namespace Z80CPU.Flags
             Name = name;
             Affect = affect;
         }
+
+        public FlagAttribute(Affect affect)
+        {
+            Affect = affect;
+        }
     }
 }

@@ -73,6 +73,19 @@ namespace Z80CPU
             };
         }
 
+        public Opcode(string name, byte value1, byte value2, Oprand value3, Oprand value4, Func<Z80, TStates> action)
+        {
+            Name = name;
+            Values = new List<Oprand>
+            {
+                Oprand.Parse(value1),
+                Oprand.Parse(value2),
+                value3,
+                value4
+            };
+            Action = action;
+        }
+
         public Opcode(string name, byte value1, byte value2, Oprand value3, byte value4, Func<Z80, TStates> action)
         {
             Name = name;
