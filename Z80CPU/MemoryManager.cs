@@ -11,7 +11,7 @@
             _ram = ram;
         }
 
-        public override byte Get(int index)
+        public override byte Get(ushort index)
         {
             //We are setting the ROM to start from 0 and the RAM starts after the end of the RAM
             if (index > _rom.Size - 1)
@@ -24,7 +24,7 @@
             }
         }
 
-        public override void Set(int index, byte value)
+        public override void Set(ushort index, byte value)
         {
             //don't do anthing if index inside ROM range
             if (index > _rom.Size - 1)
