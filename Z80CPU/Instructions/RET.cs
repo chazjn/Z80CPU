@@ -24,8 +24,8 @@ namespace Z80CPU.Instructions
         {
             if(invokeReturn)
             {
-                z80.PC.Low.Value = z80.Memory.Get(z80.SP.Value);
-                z80.PC.High.Value = z80.Memory.Get(z80.SP.Value + 1);
+                z80.PC.Low.Value = z80.Memory.Get(z80.SP);
+                z80.PC.High.Value = z80.Memory.Get((ushort)(z80.SP.Value + 1));
 
                 z80.SP.Increment();
                 z80.SP.Increment();
