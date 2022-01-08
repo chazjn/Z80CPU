@@ -4,7 +4,6 @@ using Z80CPU.Flags;
 
 namespace Z80CPU.Instructions
 {
-    //TODO: 16bit register INCS should not affect any flags
     [Flag(Name.Sign, Affect.DefaultCalculation)]
     [Flag(Name.Zero, Affect.DefaultCalculation)]
     [Flag(Name.HalfCarry, Affect.DefaultCalculation)]
@@ -24,17 +23,17 @@ namespace Z80CPU.Instructions
                 new Opcode("INC H", 0x24, (z80) => { z80.H.Increment(); return TStates.Count(4); }),
                 new Opcode("INC L", 0x2C, (z80) => { z80.L.Increment(); return TStates.Count(4); }),
 
-                new Opcode("INC BC", 0x03, (z80) => { z80.BC.Increment(); return TStates.Count(11); }),
-                new Opcode("INC DE", 0x13, (z80) => { z80.DE.Increment(); return TStates.Count(11); }),
-                new Opcode("INC HL", 0x23, (z80) => { z80.HL.Increment(); return TStates.Count(11); }),
-                new Opcode("INC SP", 0x33, (z80) => { z80.SP.Increment(); return TStates.Count(11); }),
+                new Opcode("INC BC", 0x03, (z80) => { z80.BC.Increment(); return TStates.Count(11); }).SetAllFlagsAffectToNone(),
+                new Opcode("INC DE", 0x13, (z80) => { z80.DE.Increment(); return TStates.Count(11); }).SetAllFlagsAffectToNone(),
+                new Opcode("INC HL", 0x23, (z80) => { z80.HL.Increment(); return TStates.Count(11); }).SetAllFlagsAffectToNone(),
+                new Opcode("INC SP", 0x33, (z80) => { z80.SP.Increment(); return TStates.Count(11); }).SetAllFlagsAffectToNone(),
 
                 new Opcode("INC (HL)", 0x34, (z80) => 
                 {
                     var value = z80.Memory.Get(z80.HL);
                     z80.Memory.Set(z80.HL, ++value);
                     return TStates.Count(11);
-                }),
+                }).SetAllFlagsAffectToNone(),
 
                 new Opcode("INC (IX + d)", 0xDD, 0x34, (z80) =>
                 {
@@ -43,7 +42,7 @@ namespace Z80CPU.Instructions
                     var value = z80.Memory.Get(index);
                     z80.Memory.Set(index, ++value);
                     return TStates.Count(23);
-                }),
+                }).SetAllFlagsAffectToNone(),
 
                 new Opcode("INC (IY + d)", 0xFD, 0x34, (z80) =>
                 {
@@ -52,10 +51,10 @@ namespace Z80CPU.Instructions
                     var value = z80.Memory.Get(index);
                     z80.Memory.Set(index, ++value);
                     return TStates.Count(23);
-                }),
+                }).SetAllFlagsAffectToNone(),
 
-                new Opcode("INC IX", 0xDD, 0x23, (z80) => { z80.IX.Increment(); return TStates.Count(10); }),
-                new Opcode("INC IY", 0xFD, 0x23, (z80) => { z80.IY.Increment(); return TStates.Count(10); }),
+                new Opcode("INC IX", 0xDD, 0x23, (z80) => { z80.IX.Increment(); return TStates.Count(10); }).SetAllFlagsAffectToNone(),
+                new Opcode("INC IY", 0xFD, 0x23, (z80) => { z80.IY.Increment(); return TStates.Count(10); }).SetAllFlagsAffectToNone(),
             });
         }
     }

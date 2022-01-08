@@ -13,8 +13,7 @@ namespace Z80CPU
         public Affect? FlagSign { get; internal set; }
         public Affect? FlagZero { get; internal set; }
         public Affect? FlagHalfCarry { get; internal set; }
-        public Affect? FlagParity { get; internal set; }
-        public Affect? FlagOverflow { get; internal set; }
+        public Affect? FlagParityOrOverflow { get; internal set; }
         public Affect? FlagSubtraction { get; internal set; }
         public Affect? FlagCarry { get; internal set; }
 
@@ -87,6 +86,17 @@ namespace Z80CPU
             Action = action;    
         }
         
+        public Opcode SetAllFlagsAffectToNone()
+        {
+            FlagSign = Affect.None;
+            FlagZero = Affect.None;
+            FlagHalfCarry = Affect.None;
+            FlagParityOrOverflow = Affect.None;
+            FlagSubtraction = Affect.None;
+            FlagCarry = Affect.None;
+            return this;
+        }
+
         public TStates Execute(Z80 z80)
         {
             return Action.Invoke(z80);
