@@ -28,5 +28,10 @@
         {
             Value--;
         }
+
+        public void Add(byte value)
+        {
+            Value = (byte)(Value + value);
+        }
     }
 }
