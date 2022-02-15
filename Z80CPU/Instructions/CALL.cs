@@ -10,25 +10,21 @@ namespace Z80CPU.Instructions
         {
             Opcodes.AddRange(new List<Opcode>
             {
-                new Opcode("CALL NZ, pq", 0xC4, (z80) => { return Call(z80, !z80.F.Zero); }),
-                new Opcode("CALL Z,  pq", 0xCC, (z80) => { return Call(z80, z80.F.Zero); }),
-                new Opcode("CALL NC, pq", 0xD4, (z80) => { return Call(z80, !z80.F.Carry); }),
-                new Opcode("CALL C,  pq", 0xE4, (z80) => { return Call(z80, z80.F.Carry); }),
-                new Opcode("CALL PO, pq", 0xE4, (z80) => { return Call(z80, !z80.F.ParityOrOverflow); }),
-                new Opcode("CALL PE, pq", 0xEC, (z80) => { return Call(z80, z80.F.ParityOrOverflow); }),
-                new Opcode("CALL P,  pq", 0xF4, (z80) => { return Call(z80, !z80.F.Sign); }),
-                new Opcode("CALL M,  pq", 0xFC, (z80) => { return Call(z80, z80.F.Sign); }),
+                new Opcode("CALL NZ, pq", 0xC4, Oprand.Any, Oprand.Any, (z80) => { return Call(z80, !z80.F.Zero); }),
+                new Opcode("CALL Z,  pq", 0xCC, Oprand.Any, Oprand.Any, (z80) => { return Call(z80, z80.F.Zero); }),
+                new Opcode("CALL NC, pq", 0xD4, Oprand.Any, Oprand.Any, (z80) => { return Call(z80, !z80.F.Carry); }),
+                new Opcode("CALL C,  pq", 0xE4, Oprand.Any, Oprand.Any, (z80) => { return Call(z80, z80.F.Carry); }),
+                new Opcode("CALL PO, pq", 0xE4, Oprand.Any, Oprand.Any, (z80) => { return Call(z80, !z80.F.ParityOrOverflow); }),
+                new Opcode("CALL PE, pq", 0xEC, Oprand.Any, Oprand.Any, (z80) => { return Call(z80, z80.F.ParityOrOverflow); }),
+                new Opcode("CALL P,  pq", 0xF4, Oprand.Any, Oprand.Any, (z80) => { return Call(z80, !z80.F.Sign); }),
+                new Opcode("CALL M,  pq", 0xFC, Oprand.Any, Oprand.Any, (z80) => { return Call(z80, z80.F.Sign); }),
 
-                new Opcode("CALL pq", 0xCD, (z80) => { return Call(z80, true); }),
+                new Opcode("CALL pq", 0xCD, Oprand.Any, Oprand.Any, (z80) => { return Call(z80, true); }),
             });
         }
 
         public TStates Call(Z80 z80, bool performCall)
         {
-            //jump over pq bytes
-            z80.PC.Increment();
-            z80.PC.Increment();
-
             if(!performCall)
                 return TStates.Count(10);
 
