@@ -2,9 +2,9 @@
 
 namespace Z80CPU.Instructions
 {
-    [Flag(Name.Carry, Affect.One)]
-    [Flag(Name.HalfCarry, Affect.Zero)]
-    [Flag(Name.Subraction, Affect.Zero)]
+    [Flag(Name.Carry, Affect.Set)]
+    [Flag(Name.HalfCarry, Affect.Reset)]
+    [Flag(Name.Subraction, Affect.Reset)]
     public class SCF : Instruction
     {
         protected override void AddOpcodes()

@@ -8,7 +8,7 @@ namespace Z80CPU.Instructions
     [Flag(Name.Zero, Affect.DefaultCalculation)]
     [Flag(Name.HalfCarry, Affect.DefaultCalculation)]
     [Flag(Name.ParityOrOverflow, Affect.DefaultCalculation)]
-    [Flag(Name.Subraction, Affect.Zero)]
+    [Flag(Name.Subraction, Affect.Reset)]
     public class INC : Instruction
     {
         protected override void AddOpcodes()

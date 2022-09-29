@@ -4,8 +4,8 @@ using Z80CPU.Flags;
 namespace Z80CPU.Instructions
 {
     [Flag(Name.Zero, Affect.CalculatedInOpcode)]
-    [Flag(Name.Subraction, Affect.Zero)]
-    [Flag(Name.HalfCarry, Affect.One)]
+    [Flag(Name.Subraction, Affect.Reset)]
+    [Flag(Name.HalfCarry, Affect.Set)]
     [Flag(Name.Sign, Affect.Undefined)]
     [Flag(Name.ParityOrOverflow, Affect.Undefined)]
     public class BIT : Instruction

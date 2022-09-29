@@ -2,9 +2,9 @@
 
 namespace Z80CPU.Instructions
 {
-    [Flag(Name.HalfCarry, Affect.Zero)]
+    [Flag(Name.HalfCarry, Affect.Reset)]
     [Flag(Name.ParityOrOverflow, Affect.CalculatedInOpcode)]
-    [Flag(Name.Subraction, Affect.Zero)]
+    [Flag(Name.Subraction, Affect.Reset)]
     public class LDI : Instruction
     {
         protected override void AddOpcodes()

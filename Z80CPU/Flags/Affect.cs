@@ -3,8 +3,8 @@
     public enum Affect
     {
         None,
-        Zero,
-        One,
+        Reset,
+        Set,
         Invert,
         DefaultCalculation,
         CalculatedInOpcode,

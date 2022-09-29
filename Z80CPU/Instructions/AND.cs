@@ -5,10 +5,10 @@ namespace Z80CPU.Instructions
 {
     [Flag(Name.Sign, Affect.DefaultCalculation)]
     [Flag(Name.Zero, Affect.DefaultCalculation)]
-    [Flag(Name.HalfCarry, Affect.One)]
+    [Flag(Name.HalfCarry, Affect.Set)]
     [Flag(Name.ParityOrOverflow, Affect.DefaultCalculation)]
-    [Flag(Name.Subraction, Affect.Zero)]
-    [Flag(Name.Carry, Affect.Zero)]
+    [Flag(Name.Subraction, Affect.Reset)]
+    [Flag(Name.Carry, Affect.Reset)]
     public class AND : Instruction
     {
         protected override void AddOpcodes()

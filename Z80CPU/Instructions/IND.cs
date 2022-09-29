@@ -6,7 +6,7 @@ namespace Z80CPU.Instructions
     [Flag(Name.Zero, Affect.CalculatedInOpcode)]
     [Flag(Name.HalfCarry, Affect.Undefined)]
     [Flag(Name.ParityOrOverflow, Affect.Undefined)]
-    [Flag(Name.Subraction, Affect.One)]
+    [Flag(Name.Subraction, Affect.Set)]
     public class IND : Instruction
     {
         protected override void AddOpcodes()

@@ -53,12 +53,12 @@ namespace Z80CPU
 
             foreach (var opcode in Opcodes)
             {
-                opcode.FlagSign = opcode.FlagSign ?? GetFlagAffect(Name.Sign, flagAttributes);
-                opcode.FlagZero = opcode.FlagZero ?? GetFlagAffect(Name.Zero, flagAttributes);
-                opcode.FlagHalfCarry = opcode.FlagHalfCarry ?? GetFlagAffect(Name.HalfCarry, flagAttributes);
-                opcode.FlagParityOrOverflow = opcode.FlagParityOrOverflow ?? GetFlagAffect(Name.ParityOrOverflow, flagAttributes);
-                opcode.FlagSubtraction = opcode.FlagSubtraction ?? GetFlagAffect(Name.Subraction, flagAttributes);
-                opcode.FlagCarry = opcode.FlagCarry ?? GetFlagAffect(Name.Carry, flagAttributes);
+                opcode.SignAffect = opcode.SignAffect ?? GetFlagAffect(Name.Sign, flagAttributes);
+                opcode.ZeroAffect = opcode.ZeroAffect ?? GetFlagAffect(Name.Zero, flagAttributes);
+                opcode.HalfCarryAffect = opcode.HalfCarryAffect ?? GetFlagAffect(Name.HalfCarry, flagAttributes);
+                opcode.ParityOrOverflowAffect = opcode.ParityOrOverflowAffect ?? GetFlagAffect(Name.ParityOrOverflow, flagAttributes);
+                opcode.SubtractionAffect = opcode.SubtractionAffect ?? GetFlagAffect(Name.Subraction, flagAttributes);
+                opcode.CarryAffect = opcode.CarryAffect ?? GetFlagAffect(Name.Carry, flagAttributes);
             }
         }
 

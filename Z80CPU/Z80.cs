@@ -139,12 +139,11 @@ namespace Z80CPU
                 if (opcodes.First().Values.Count() == Buffer.Count)
                 {
                     CurrentOpcode = opcodes.First();
-                    var cloneOfA = A.Clone(); //clone so we can compare value afterwards
-                    var tStates = CurrentOpcode.Execute(this);
-                    //
+                    var cloneOfA = A.Clone();
 
-                    var flagsCalculator = new FlagsCalculator(this);
-                    flagsCalculator.SetFlags(cloneOfA);
+                    var tStates = CurrentOpcode.Execute(this);
+                    var flagCalculator = new FlagsCalculator(F);
+                    flagCalculator.SetFlags(cloneOfA, A, CurrentOpcode);
 
                     Buffer.Clear();
                 }

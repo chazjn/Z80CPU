@@ -4,7 +4,7 @@ namespace Z80CPU.Instructions
 {
     [Flag(Name.Carry, Affect.Invert)]
     [Flag(Name.HalfCarry, Affect.Invert)]
-    [Flag(Name.Subraction, Affect.Zero)]
+    [Flag(Name.Subraction, Affect.Reset)]
     public class CCF : Instruction
     {
         protected override void AddOpcodes()

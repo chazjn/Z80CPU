@@ -15,7 +15,7 @@ namespace Z80CPU
             Value = value;
             IsAny = isAny;
         }
-
+        
         public static Oprand Parse(byte value)
         {
             return new Oprand(value, false);

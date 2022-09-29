@@ -4,18 +4,23 @@ using Z80CPU.Flags;
 
 namespace Z80CPU
 {
-    public class Opcode
+    public class Opcode : IFlagAffects
     {
-        public string Name { get; }
+        public string Name { get; set; }
         public IList<Oprand> Values { get; }
         public Func<Z80, TStates> Action { get; internal set; }
 
-        public Affect? FlagSign { get; internal set; }
-        public Affect? FlagZero { get; internal set; }
-        public Affect? FlagHalfCarry { get; internal set; }
-        public Affect? FlagParityOrOverflow { get; internal set; }
-        public Affect? FlagSubtraction { get; internal set; }
-        public Affect? FlagCarry { get; internal set; }
+        public Affect? SignAffect { get; internal set; }
+        public Affect? ZeroAffect { get; internal set; }
+        public Affect? HalfCarryAffect { get; internal set; }
+        public Affect? ParityOrOverflowAffect { get; internal set; }
+        public Affect? SubtractionAffect { get; internal set; }
+        public Affect? CarryAffect { get; internal set; }
+
+        public Opcode()
+        {
+
+        }
 
         public Opcode(string name, byte value, Func<Z80, TStates> action)
         {
@@ -101,12 +106,12 @@ namespace Z80CPU
         
         public Opcode SetAllFlagsAffectToNone()
         {
-            FlagSign = Affect.None;
-            FlagZero = Affect.None;
-            FlagHalfCarry = Affect.None;
-            FlagParityOrOverflow = Affect.None;
-            FlagSubtraction = Affect.None;
-            FlagCarry = Affect.None;
+            SignAffect = Affect.None;
+            ZeroAffect = Affect.None;
+            HalfCarryAffect = Affect.None;
+            ParityOrOverflowAffect = Affect.None;
+            SubtractionAffect = Affect.None;
+            CarryAffect = Affect.None;
             return this;
         }
 
