@@ -1,10 +1,10 @@
 ﻿namespace Z80CPU.Instructions
 {
-    public class DI : Instruction
+    public class DI : Mnemonic
     {
-        protected override void AddOpcodes()
+        protected override void AddInstructions()
         {
-            Opcodes.Add(new Opcode("DI", 0xF3, (z80) => 
+            Instructions.Add(new Instruction("DI", 0xF3, (z80) => 
             { 
                 z80.InteruptsEnabled = false;
                 return TStates.Count(4);

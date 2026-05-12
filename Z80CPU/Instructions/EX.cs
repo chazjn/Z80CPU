@@ -5,18 +5,18 @@ using Z80CPU.Registers;
 namespace Z80CPU.Instructions
 {
     [Flag(Affect.None)]
-    public class EX : Instruction
+    public class EX : Mnemonic
     {
-        protected override void AddOpcodes()
+        protected override void AddInstructions()
         {
-            Opcodes.AddRange(new List<Opcode>
+            Instructions.AddRange(new List<Instruction>
             {
-                new Opcode("EX AF, AF'", 0x08, (z80) => { return ExchangeRegisters(z80.AF, z80.AF_); }),
-                new Opcode("EX DE, HL",  0xEB, (z80) => { return ExchangeRegisters(z80.DE, z80.HL); }),
+                new Instruction("EX AF, AF'", 0x08, (z80) => { return ExchangeRegisters(z80.AF, z80.AF_); }),
+                new Instruction("EX DE, HL",  0xEB, (z80) => { return ExchangeRegisters(z80.DE, z80.HL); }),
 
-                new Opcode("EX (SP), HL", 0xE3,       (z80) => { return ExchangeStackPointer(z80, z80.HL); }),
-                new Opcode("EX (SP), IX", 0xDD, 0xE3, (z80) => { return ExchangeStackPointer(z80, z80.IX); }),
-                new Opcode("EX (SP), IY", 0xFD, 0xE3, (z80) => { return ExchangeStackPointer(z80, z80.IY); })
+                new Instruction("EX (SP), HL", 0xE3,       (z80) => { return ExchangeStackPointer(z80, z80.HL); }),
+                new Instruction("EX (SP), IX", 0xDD, 0xE3, (z80) => { return ExchangeStackPointer(z80, z80.IX); }),
+                new Instruction("EX (SP), IY", 0xFD, 0xE3, (z80) => { return ExchangeStackPointer(z80, z80.IY); })
             });
         }
 

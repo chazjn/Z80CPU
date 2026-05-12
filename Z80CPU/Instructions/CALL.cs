@@ -4,22 +4,22 @@ using Z80CPU.Flags;
 namespace Z80CPU.Instructions
 {
     [Flag(Affect.None)]
-    public class CALL : Instruction
+    public class CALL : Mnemonic
     {
-        protected override void AddOpcodes()
+        protected override void AddInstructions()
         {
-            Opcodes.AddRange(new List<Opcode>
+            Instructions.AddRange(new List<Instruction>
             {
-                new Opcode("CALL NZ, pq", 0xC4, Oprand.Any, Oprand.Any, (z80) => { return Call(z80, !z80.F.Zero); }),
-                new Opcode("CALL Z,  pq", 0xCC, Oprand.Any, Oprand.Any, (z80) => { return Call(z80, z80.F.Zero); }),
-                new Opcode("CALL NC, pq", 0xD4, Oprand.Any, Oprand.Any, (z80) => { return Call(z80, !z80.F.Carry); }),
-                new Opcode("CALL C,  pq", 0xE4, Oprand.Any, Oprand.Any, (z80) => { return Call(z80, z80.F.Carry); }),
-                new Opcode("CALL PO, pq", 0xE4, Oprand.Any, Oprand.Any, (z80) => { return Call(z80, !z80.F.ParityOrOverflow); }),
-                new Opcode("CALL PE, pq", 0xEC, Oprand.Any, Oprand.Any, (z80) => { return Call(z80, z80.F.ParityOrOverflow); }),
-                new Opcode("CALL P,  pq", 0xF4, Oprand.Any, Oprand.Any, (z80) => { return Call(z80, !z80.F.Sign); }),
-                new Opcode("CALL M,  pq", 0xFC, Oprand.Any, Oprand.Any, (z80) => { return Call(z80, z80.F.Sign); }),
+                new Instruction("CALL NZ, pq", 0xC4, EncodingByte.Variable, EncodingByte.Variable, (z80) => { return Call(z80, !z80.F.Zero); }),
+                new Instruction("CALL Z,  pq", 0xCC, EncodingByte.Variable, EncodingByte.Variable, (z80) => { return Call(z80, z80.F.Zero); }),
+                new Instruction("CALL NC, pq", 0xD4, EncodingByte.Variable, EncodingByte.Variable, (z80) => { return Call(z80, !z80.F.Carry); }),
+                new Instruction("CALL C,  pq", 0xE4, EncodingByte.Variable, EncodingByte.Variable, (z80) => { return Call(z80, z80.F.Carry); }),
+                new Instruction("CALL PO, pq", 0xE4, EncodingByte.Variable, EncodingByte.Variable, (z80) => { return Call(z80, !z80.F.ParityOrOverflow); }),
+                new Instruction("CALL PE, pq", 0xEC, EncodingByte.Variable, EncodingByte.Variable, (z80) => { return Call(z80, z80.F.ParityOrOverflow); }),
+                new Instruction("CALL P,  pq", 0xF4, EncodingByte.Variable, EncodingByte.Variable, (z80) => { return Call(z80, !z80.F.Sign); }),
+                new Instruction("CALL M,  pq", 0xFC, EncodingByte.Variable, EncodingByte.Variable, (z80) => { return Call(z80, z80.F.Sign); }),
 
-                new Opcode("CALL pq", 0xCD, Oprand.Any, Oprand.Any, (z80) => { return Call(z80, true); }),
+                new Instruction("CALL pq", 0xCD, EncodingByte.Variable, EncodingByte.Variable, (z80) => { return Call(z80, true); }),
             });
         }
 

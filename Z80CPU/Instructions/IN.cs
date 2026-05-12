@@ -10,21 +10,21 @@ namespace Z80CPU.Instructions
     [Flag(Name.ParityOrOverflow, Affect.DefaultCalculation)]
     [Flag(Name.Subraction, Affect.Reset)]
     [Flag(Name.Carry, Affect.None)]
-    public class IN : Instruction
+    public class IN : Mnemonic
     {
-        protected override void AddOpcodes()
+        protected override void AddInstructions()
         {
-            Opcodes.AddRange(new List<Opcode>
+            Instructions.AddRange(new List<Instruction>
             {
-                new Opcode("IN A, (C)", 0xED, 0x78, (z80) => { return SetRegister(z80, z80.A); }),
-                new Opcode("IN B, (C)", 0xED, 0x40, (z80) => { return SetRegister(z80, z80.B); }),
-                new Opcode("IN C, (C)", 0xED, 0x48, (z80) => { return SetRegister(z80, z80.C); }),
-                new Opcode("IN D, (C)", 0xED, 0x50, (z80) => { return SetRegister(z80, z80.D); }),
-                new Opcode("IN E, (C)", 0xED, 0x58, (z80) => { return SetRegister(z80, z80.E); }),
-                new Opcode("IN H, (C)", 0xED, 0x60, (z80) => { return SetRegister(z80, z80.H); }),
-                new Opcode("IN L, (C)", 0xED, 0x68, (z80) => { return SetRegister(z80, z80.L); }),
+                new Instruction("IN A, (C)", 0xED, 0x78, (z80) => { return SetRegister(z80, z80.A); }),
+                new Instruction("IN B, (C)", 0xED, 0x40, (z80) => { return SetRegister(z80, z80.B); }),
+                new Instruction("IN C, (C)", 0xED, 0x48, (z80) => { return SetRegister(z80, z80.C); }),
+                new Instruction("IN D, (C)", 0xED, 0x50, (z80) => { return SetRegister(z80, z80.D); }),
+                new Instruction("IN E, (C)", 0xED, 0x58, (z80) => { return SetRegister(z80, z80.E); }),
+                new Instruction("IN H, (C)", 0xED, 0x60, (z80) => { return SetRegister(z80, z80.H); }),
+                new Instruction("IN L, (C)", 0xED, 0x68, (z80) => { return SetRegister(z80, z80.L); }),
 
-                new Opcode("IN A, (N)", 0xDB, Oprand.Any, (z80) => { return SetA(z80); }).SetAllFlagsAffectToNone()
+                new Instruction("IN A, (N)", 0xDB, EncodingByte.Variable, (z80) => { return SetA(z80); }).SetAllFlagsAffectToNone()
             });
         }
 

@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Z80CPU.Instructions;
 using Z80CPU.Registers;
 
@@ -56,7 +54,7 @@ namespace Z80CPU
         internal InstructionSet InstructionSet { get; private set; }
 
         internal IList<byte> Buffer { get; }
-        internal Opcode CurrentOpcode { get; private set; }
+        internal Instruction CurrentInstruction { get; private set; }
 
         public Z80(Memory memory, Ports ports)
         {
@@ -125,25 +123,25 @@ namespace Z80CPU
             Buffer.Add(value);
 
             //check if we have have complete command yet
-            var opcodes = InstructionSet.GetOpcodeCandidates(Buffer);
+            var candidateInstructions = InstructionSet.GetCandidates(Buffer);
 
-            if (opcodes.Count == 0) //no instruction match - bad byte? excute a nop to skip over it
+            if (candidateInstructions.Count == 0) //no instruction match - bad byte? excute a nop to skip over it
             {
-                CurrentOpcode = new NOP().Opcodes.First();
-                CurrentOpcode.Execute(this);
+                CurrentInstruction = new NOP().Instructions.First();
+                CurrentInstruction.Execute(this);
                 Buffer.Clear();
             }
-            else if (opcodes.Count == 1) 
+            else if (candidateInstructions.Count == 1) 
             {
                 // we have enough oprands, let's execute it
-                if (opcodes.First().Values.Count() == Buffer.Count)
+                if (candidateInstructions.First().Values.Count() == Buffer.Count)
                 {
-                    CurrentOpcode = opcodes.First();
+                    CurrentInstruction = candidateInstructions.First();
                     var cloneOfA = A.Clone();
 
-                    var tStates = CurrentOpcode.Execute(this);
+                    var tStates = CurrentInstruction.Execute(this);
                     var flagCalculator = new FlagsCalculator(F);
-                    flagCalculator.SetFlags(cloneOfA, A, CurrentOpcode);
+                    flagCalculator.SetFlags(cloneOfA, A, CurrentInstruction);
 
                     Buffer.Clear();
                 }

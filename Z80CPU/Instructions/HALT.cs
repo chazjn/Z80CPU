@@ -2,13 +2,13 @@
 
 namespace Z80CPU.Instructions
 {
-    public class HALT : Instruction
+    public class HALT : Mnemonic
     {
-        protected override void AddOpcodes()
+        protected override void AddInstructions()
         {
-            Opcodes.Add(new Opcode("HALT", 0x76, z80 =>
+            Instructions.Add(new Instruction("HALT", 0x76, z80 =>
             {
-                var nop = new NOP().Opcodes.First();
+                var nop = new NOP().Instructions.First();
                 while (true)
                 {
                     // excute nop

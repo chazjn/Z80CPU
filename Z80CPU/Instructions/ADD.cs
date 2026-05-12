@@ -9,19 +9,19 @@ namespace Z80CPU.Instructions
     [Flag(Name.ParityOrOverflow, Affect.DefaultCalculation)]
     [Flag(Name.Subraction, Affect.Reset)]
     [Flag(Name.Carry, Affect.DefaultCalculation)]
-    public class ADD : Instruction
+    public class ADD : Mnemonic
     {
-        protected override void AddOpcodes()
+        protected override void AddInstructions()
         {
-            Opcodes.AddRange(new List<Opcode>
+            Instructions.AddRange(new List<Instruction>
             {
-                new Opcode("ADD A, (HL)", 0x86, (z80) => {
+                new Instruction("ADD A, (HL)", 0x86, (z80) => {
                     var value = z80.Memory.Get(z80.HL);
                     z80.A.Add(value);
                     return TStates.Count(7);
                 }),
 
-                new Opcode("ADD A, (IX + d)", 0xDD, 0x86, Oprand.Any, (z80) =>
+                new Instruction("ADD A, (IX + d)", 0xDD, 0x86, EncodingByte.Variable, (z80) =>
                 {
                     var offset = z80.Buffer[2];
                     var ix_offset = z80.IX.Value + offset;
@@ -30,7 +30,7 @@ namespace Z80CPU.Instructions
                     return TStates.Count(17);
                 }),
 
-                new Opcode("ADD A, (IY + d)", 0xFD, 0x86, Oprand.Any, (z80) =>
+                new Instruction("ADD A, (IY + d)", 0xFD, 0x86, EncodingByte.Variable, (z80) =>
                 {
                     var offset = z80.Buffer[2];
                     var iy_offset = z80.IY.Value + offset;
@@ -39,14 +39,14 @@ namespace Z80CPU.Instructions
                     return TStates.Count(17);
                 }),
 
-                new Opcode("ADD A, n", 0xC6, Oprand.Any, (z80) => { z80.A.Add(z80.Buffer[1]); return TStates.Count(7); }),
-                new Opcode("ADD A, A", 0x87, (z80) => { z80.A.Add(z80.A.Value); return TStates.Count(4); }),
-                new Opcode("ADD A, B", 0x80, (z80) => { z80.A.Add(z80.B.Value); return TStates.Count(4); }),
-                new Opcode("ADD A, C", 0x81, (z80) => { z80.A.Add(z80.C.Value); return TStates.Count(4); }),
-                new Opcode("ADD A, D", 0x82, (z80) => { z80.A.Add(z80.D.Value); return TStates.Count(4); }),
-                new Opcode("ADD A, E", 0x83, (z80) => { z80.A.Add(z80.E.Value); return TStates.Count(4); }),
-                new Opcode("ADD A, H", 0x84, (z80) => { z80.A.Add(z80.H.Value); return TStates.Count(4); }),
-                new Opcode("ADD A, L", 0x85, (z80) => { z80.A.Add(z80.L.Value); return TStates.Count(4); }),
+                new Instruction("ADD A, n", 0xC6, EncodingByte.Variable, (z80) => { z80.A.Add(z80.Buffer[1]); return TStates.Count(7); }),
+                new Instruction("ADD A, A", 0x87, (z80) => { z80.A.Add(z80.A.Value); return TStates.Count(4); }),
+                new Instruction("ADD A, B", 0x80, (z80) => { z80.A.Add(z80.B.Value); return TStates.Count(4); }),
+                new Instruction("ADD A, C", 0x81, (z80) => { z80.A.Add(z80.C.Value); return TStates.Count(4); }),
+                new Instruction("ADD A, D", 0x82, (z80) => { z80.A.Add(z80.D.Value); return TStates.Count(4); }),
+                new Instruction("ADD A, E", 0x83, (z80) => { z80.A.Add(z80.E.Value); return TStates.Count(4); }),
+                new Instruction("ADD A, H", 0x84, (z80) => { z80.A.Add(z80.H.Value); return TStates.Count(4); }),
+                new Instruction("ADD A, L", 0x85, (z80) => { z80.A.Add(z80.L.Value); return TStates.Count(4); }),
 
                 /*
                 new Opcode("ADD HL, BC", 0x09, (z80) => { AddToRegister(z80, z80.HL, z80.BC.Value); }),

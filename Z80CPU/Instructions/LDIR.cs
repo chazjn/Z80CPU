@@ -5,11 +5,11 @@ namespace Z80CPU.Instructions
     [Flag(Name.HalfCarry, Affect.Reset)]
     [Flag(Name.ParityOrOverflow, Affect.Reset)]
     [Flag(Name.Subraction, Affect.Reset)]
-    public class LDIR : Instruction
+    public class LDIR : Mnemonic
     {
-        protected override void AddOpcodes()
+        protected override void AddInstructions()
         {
-            Opcodes.Add(new Opcode("LDIR", 0xED, 0xB0, (z80) =>
+            Instructions.Add(new Instruction("LDIR", 0xED, 0xB0, (z80) =>
             {
                 var value = z80.Memory.Get(z80.HL.Value);
                 z80.Memory.Set(z80.DE.Value, value);

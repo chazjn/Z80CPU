@@ -7,11 +7,11 @@ namespace Z80CPU.Instructions
     [Flag(Name.HalfCarry, Affect.Undefined)]
     [Flag(Name.ParityOrOverflow, Affect.Undefined)]
     [Flag(Name.Subraction, Affect.Set)]
-    public class IND : Instruction
+    public class IND : Mnemonic
     {
-        protected override void AddOpcodes()
+        protected override void AddInstructions()
         {
-            Opcodes.Add(new Opcode("IND", 0xED, 0xAA, (z80) =>
+            Instructions.Add(new Instruction("IND", 0xED, 0xAA, (z80) =>
             {
                 var value = z80.Ports.GetByte(z80.C.Value);
                 z80.Memory.Set(z80.HL.Value, value);

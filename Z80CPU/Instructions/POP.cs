@@ -4,44 +4,44 @@ using Z80CPU.Registers;
 
 namespace Z80CPU.Instructions
 {
-    public class POP : Instruction
+    public class POP : Mnemonic
     {
         //TODO: check low/high byte orders
-        protected override void AddOpcodes()
+        protected override void AddInstructions()
         {
-            Opcodes.AddRange(new List<Opcode>
+            Instructions.AddRange(new List<Instruction>
             {
-                new Opcode("POP BC", 0xC1, (z80) =>
+                new Instruction("POP BC", 0xC1, (z80) =>
                 {
                     Pop(z80, z80.BC);
                     return TStates.Count(10);
                 }),
 
-                new Opcode("POP DE", 0xD1, (z80) =>
+                new Instruction("POP DE", 0xD1, (z80) =>
                 {
                     Pop(z80, z80.DE);
                     return TStates.Count(10);
                 }),
 
-                new Opcode("POP HL", 0xE1, (z80) =>
+                new Instruction("POP HL", 0xE1, (z80) =>
                 {
                     Pop(z80, z80.HL);
                     return TStates.Count(10);
                 }),
 
-                new Opcode("POP AF", 0x11, (z80) =>
+                new Instruction("POP AF", 0x11, (z80) =>
                 {
                     Pop(z80, z80.AF);
                     return TStates.Count(10);
                 }),
 
-                new Opcode("POP IX", 0xDD, 0xE1, (z80) =>
+                new Instruction("POP IX", 0xDD, 0xE1, (z80) =>
                 {
                     Pop(z80, z80.IX);
                     return TStates.Count(14);
                 }),
 
-                new Opcode("POP IY", 0xDD, 0xE1, (z80) =>
+                new Instruction("POP IY", 0xDD, 0xE1, (z80) =>
                 {
                     Pop(z80, z80.IY);
                     return TStates.Count(14);

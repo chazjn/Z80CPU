@@ -5,11 +5,11 @@ namespace Z80CPU
 {
     public class InstructionSet
     {
-        public List<Instruction> Instructions { get; }
+        public List<Mnemonic> Mnemonics { get; }
 
         public InstructionSet()
         {
-            Instructions = new List<Instruction>
+            Mnemonics = new List<Mnemonic>
             {
                 new ADD(),
                 //new BIT(),
@@ -18,13 +18,13 @@ namespace Z80CPU
             };
         }
 
-        public IList<Opcode> GetOpcodeCandidates(IList<byte> bytes)
+        public IList<Instruction> GetCandidates(IList<byte> bytes)
         {
-            var candidates = new List<Opcode>();
+            var candidates = new List<Instruction>();
 
-            foreach (var instruction in Instructions)
+            foreach (var mnemonic in Mnemonics)
             {
-                var matches = instruction.GetMatches(bytes);
+                var matches = mnemonic.GetMatches(bytes);
                 candidates.AddRange(matches);
             }
 

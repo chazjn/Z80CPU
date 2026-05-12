@@ -1,10 +1,10 @@
 ﻿namespace Z80CPU.Instructions
 {
-    public class DJNZ : Instruction
+    public class DJNZ : Mnemonic
     {        
-        protected override void AddOpcodes()
+        protected override void AddInstructions()
         {
-            Opcodes.Add(new Opcode("DJNZ e", 0x10, (z80) =>
+            Instructions.Add(new Instruction("DJNZ e", 0x10, (z80) =>
             {
                 z80.B.Value--;
 

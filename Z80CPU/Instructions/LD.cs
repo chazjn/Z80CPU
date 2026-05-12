@@ -7,34 +7,34 @@ using Z80CPU.Registers;
 namespace Z80CPU.Instructions
 {
     [Flag(Affect.CalculatedInOpcode)]
-    public class LD : Instruction
+    public class LD : Mnemonic
     {
-        protected override void AddOpcodes()
+        protected override void AddInstructions()
         {
-            Opcodes.AddRange(new List<Opcode>
+            Instructions.AddRange(new List<Instruction>
             {
-                new Opcode("LD BC, (nn)", 0xED, 0x4B, Oprand.Any, Oprand.Any, (z80) => { return LoadFromMemoryIntoRegister(z80, z80.BC); }),
-                new Opcode("LD DE, (nn)", 0xED, 0x5B, Oprand.Any, Oprand.Any, (z80) => { return LoadFromMemoryIntoRegister(z80, z80.DE); }),
-                new Opcode("LD HL, (nn)", 0xED, 0x6B, Oprand.Any, Oprand.Any, (z80) => { return LoadFromMemoryIntoRegister(z80, z80.HL); }),
-                new Opcode("LD SP, (nn)", 0xED, 0x7B, Oprand.Any, Oprand.Any, (z80) => { return LoadFromMemoryIntoRegister(z80, z80.SP); }),
+                new Instruction("LD BC, (nn)", 0xED, 0x4B, EncodingByte.Variable, EncodingByte.Variable, (z80) => { return LoadFromMemoryIntoRegister(z80, z80.BC); }),
+                new Instruction("LD DE, (nn)", 0xED, 0x5B, EncodingByte.Variable, EncodingByte.Variable, (z80) => { return LoadFromMemoryIntoRegister(z80, z80.DE); }),
+                new Instruction("LD HL, (nn)", 0xED, 0x6B, EncodingByte.Variable, EncodingByte.Variable, (z80) => { return LoadFromMemoryIntoRegister(z80, z80.HL); }),
+                new Instruction("LD SP, (nn)", 0xED, 0x7B, EncodingByte.Variable, EncodingByte.Variable, (z80) => { return LoadFromMemoryIntoRegister(z80, z80.SP); }),
 
-                new Opcode("LD A, n", 0x3E, Oprand.Any, (z80) => { z80.A.Value = z80.Buffer[1]; return TStates.Count(7); }),
-                new Opcode("LD B, n", 0x06, Oprand.Any, (z80) => { z80.B.Value = z80.Buffer[1]; return TStates.Count(7); }),
-                new Opcode("LD C, n", 0x0E, Oprand.Any, (z80) => { z80.C.Value = z80.Buffer[1]; return TStates.Count(7); }),
-                new Opcode("LD D, n", 0x16, Oprand.Any, (z80) => { z80.D.Value = z80.Buffer[1]; return TStates.Count(7); }),
-                new Opcode("LD E, n", 0x1E, Oprand.Any, (z80) => { z80.E.Value = z80.Buffer[1]; return TStates.Count(7); }),
-                new Opcode("LD H, n", 0x26, Oprand.Any, (z80) => { z80.H.Value = z80.Buffer[1]; return TStates.Count(7); }),
-                new Opcode("LD L, n", 0x2E, Oprand.Any, (z80) => { z80.L.Value = z80.Buffer[1]; return TStates.Count(7); }),
+                new Instruction("LD A, n", 0x3E, EncodingByte.Variable, (z80) => { z80.A.Value = z80.Buffer[1]; return TStates.Count(7); }),
+                new Instruction("LD B, n", 0x06, EncodingByte.Variable, (z80) => { z80.B.Value = z80.Buffer[1]; return TStates.Count(7); }),
+                new Instruction("LD C, n", 0x0E, EncodingByte.Variable, (z80) => { z80.C.Value = z80.Buffer[1]; return TStates.Count(7); }),
+                new Instruction("LD D, n", 0x16, EncodingByte.Variable, (z80) => { z80.D.Value = z80.Buffer[1]; return TStates.Count(7); }),
+                new Instruction("LD E, n", 0x1E, EncodingByte.Variable, (z80) => { z80.E.Value = z80.Buffer[1]; return TStates.Count(7); }),
+                new Instruction("LD H, n", 0x26, EncodingByte.Variable, (z80) => { z80.H.Value = z80.Buffer[1]; return TStates.Count(7); }),
+                new Instruction("LD L, n", 0x2E, EncodingByte.Variable, (z80) => { z80.L.Value = z80.Buffer[1]; return TStates.Count(7); }),
 
-                new Opcode("LD BC, nn", 0x01, Oprand.Any, Oprand.Any, (z80) => { return LoadIntoRegister(z80, z80.BC); }),
-                new Opcode("LD DE, nn", 0x11, Oprand.Any, Oprand.Any, (z80) => { return LoadIntoRegister(z80, z80.DE); }),
-                new Opcode("LD HL, nn", 0x21, Oprand.Any, Oprand.Any, (z80) => { return LoadIntoRegister(z80, z80.HL); }),
-                new Opcode("LD SP, nn", 0x31, Oprand.Any, Oprand.Any, (z80) => { return LoadIntoRegister(z80, z80.SP); }),
+                new Instruction("LD BC, nn", 0x01, EncodingByte.Variable, EncodingByte.Variable, (z80) => { return LoadIntoRegister(z80, z80.BC); }),
+                new Instruction("LD DE, nn", 0x11, EncodingByte.Variable, EncodingByte.Variable, (z80) => { return LoadIntoRegister(z80, z80.DE); }),
+                new Instruction("LD HL, nn", 0x21, EncodingByte.Variable, EncodingByte.Variable, (z80) => { return LoadIntoRegister(z80, z80.HL); }),
+                new Instruction("LD SP, nn", 0x31, EncodingByte.Variable, EncodingByte.Variable, (z80) => { return LoadIntoRegister(z80, z80.SP); }),
 
                 //page 295
 
 
-                new Opcode("LD (BC), A", 0x02, (z80) =>
+                new Instruction("LD (BC), A", 0x02, (z80) =>
                 {
                     var bc = z80.BC.Value;
                     var a = z80.A.Value;
@@ -42,7 +42,7 @@ namespace Z80CPU.Instructions
                     return TStates.Count(7);
                 }),
 
-                new Opcode("LD (DE), A", 0x12, (z80) =>
+                new Instruction("LD (DE), A", 0x12, (z80) =>
                 {
                     var de = z80.DE.Value;
                     var a = z80.A.Value;
@@ -50,7 +50,7 @@ namespace Z80CPU.Instructions
                     return TStates.Count(7);
                 }),
 
-                new Opcode("LD (HL), n", 0x36, Oprand.Any, (z80) =>
+                new Instruction("LD (HL), n", 0x36, EncodingByte.Variable, (z80) =>
                 {
                     var hl = z80.HL.Value;
                     var value = z80.Buffer[1];
@@ -58,13 +58,13 @@ namespace Z80CPU.Instructions
                     return TStates.Count(10);
                 }),
 
-                new Opcode("LD (HL), A", 0x77, (z80) => { z80.Memory.Set(z80.HL, z80.A.Value); return TStates.Count(7); }),
-                new Opcode("LD (HL), B", 0x70, (z80) => { z80.Memory.Set(z80.HL, z80.B.Value); return TStates.Count(7); }),
-                new Opcode("LD (HL), C", 0x71, (z80) => { z80.Memory.Set(z80.HL, z80.C.Value); return TStates.Count(7); }),
-                new Opcode("LD (HL), D", 0x72, (z80) => { z80.Memory.Set(z80.HL, z80.D.Value); return TStates.Count(7); }),
-                new Opcode("LD (HL), E", 0x73, (z80) => { z80.Memory.Set(z80.HL, z80.E.Value); return TStates.Count(7); }),
-                new Opcode("LD (HL), H", 0x74, (z80) => { z80.Memory.Set(z80.HL, z80.H.Value); return TStates.Count(7); }),
-                new Opcode("LD (HL), L", 0x75, (z80) => { z80.Memory.Set(z80.HL, z80.L.Value); return TStates.Count(7); })
+                new Instruction("LD (HL), A", 0x77, (z80) => { z80.Memory.Set(z80.HL, z80.A.Value); return TStates.Count(7); }),
+                new Instruction("LD (HL), B", 0x70, (z80) => { z80.Memory.Set(z80.HL, z80.B.Value); return TStates.Count(7); }),
+                new Instruction("LD (HL), C", 0x71, (z80) => { z80.Memory.Set(z80.HL, z80.C.Value); return TStates.Count(7); }),
+                new Instruction("LD (HL), D", 0x72, (z80) => { z80.Memory.Set(z80.HL, z80.D.Value); return TStates.Count(7); }),
+                new Instruction("LD (HL), E", 0x73, (z80) => { z80.Memory.Set(z80.HL, z80.E.Value); return TStates.Count(7); }),
+                new Instruction("LD (HL), H", 0x74, (z80) => { z80.Memory.Set(z80.HL, z80.H.Value); return TStates.Count(7); }),
+                new Instruction("LD (HL), L", 0x75, (z80) => { z80.Memory.Set(z80.HL, z80.L.Value); return TStates.Count(7); })
 
             });
 

@@ -4,17 +4,17 @@ using Z80CPU.Flags;
 namespace Z80CPU.Instructions
 {
     [Flag(Affect.None)]
-    public class JR : Instruction
+    public class JR : Mnemonic
     {
-        protected override void AddOpcodes()
+        protected override void AddInstructions()
         {
-            Opcodes.AddRange(new List<Opcode>
+            Instructions.AddRange(new List<Instruction>
             {
-                new Opcode("JR NZ, e", 0x20, Oprand.Any, (z80) => { return Jump(z80, !z80.F.Zero); }),
-                new Opcode("JR Z, e",  0x28, Oprand.Any, (z80) => { return Jump(z80, z80.F.Zero); }),
-                new Opcode("JR NC, e", 0x30, Oprand.Any, (z80) => { return Jump(z80, !z80.F.Carry); }),
-                new Opcode("JR C, e",  0x38, Oprand.Any, (z80) => { return Jump(z80, z80.F.Carry); }),
-                new Opcode("JR e",     0x18, Oprand.Any, (z80) => { return Jump(z80, true); }),
+                new Instruction("JR NZ, e", 0x20, EncodingByte.Variable, (z80) => { return Jump(z80, !z80.F.Zero); }),
+                new Instruction("JR Z, e",  0x28, EncodingByte.Variable, (z80) => { return Jump(z80, z80.F.Zero); }),
+                new Instruction("JR NC, e", 0x30, EncodingByte.Variable, (z80) => { return Jump(z80, !z80.F.Carry); }),
+                new Instruction("JR C, e",  0x38, EncodingByte.Variable, (z80) => { return Jump(z80, z80.F.Carry); }),
+                new Instruction("JR e",     0x18, EncodingByte.Variable, (z80) => { return Jump(z80, true); }),
             });
         }
 

@@ -13,7 +13,7 @@ namespace Z80CPU.UnitTests
         {
             var instructionSet = new InstructionSet();
 
-            var candidates = instructionSet.GetOpcodeCandidates(bytes);
+            var candidates = instructionSet.GetCandidates(bytes);
 
             Assert.IsTrue(candidates.Count > 0);
         }

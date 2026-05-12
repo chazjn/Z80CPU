@@ -3,24 +3,24 @@ using System.Collections.Generic;
 
 namespace Z80CPU.Instructions
 {
-    public class JP : Instruction
+    public class JP : Mnemonic
     {
-        protected override void AddOpcodes()
+        protected override void AddInstructions()
         {
-            Opcodes.AddRange(new List<Opcode>
+            Instructions.AddRange(new List<Instruction>
             {
-                new Opcode("JP NZ, pq", 0xC2, Oprand.Any, Oprand.Any, (z80) => { Jump(z80, !z80.F.Zero); return TStates.Count(10); }),
-                new Opcode("JP Z, pq",  0xCA, Oprand.Any, Oprand.Any, (z80) => { Jump(z80, z80.F.Zero); return TStates.Count(10); }),
-                new Opcode("JP NC, pq", 0xD2, Oprand.Any, Oprand.Any, (z80) => { Jump(z80, !z80.F.Carry); return TStates.Count(10); }),
-                new Opcode("JP C, pq",  0xDA, Oprand.Any, Oprand.Any, (z80) => { Jump(z80, z80.F.Carry); return TStates.Count(10); }),
-                new Opcode("JP PO, pq", 0xE2, Oprand.Any, Oprand.Any, (z80) => { Jump(z80, !z80.F.ParityOrOverflow); return TStates.Count(10); }),
-                new Opcode("JP PE, pq", 0xEA, Oprand.Any, Oprand.Any, (z80) => { Jump(z80, z80.F.ParityOrOverflow); return TStates.Count(10); }),
-                new Opcode("JP P, pq",  0xF2, Oprand.Any, Oprand.Any, (z80) => { Jump(z80, !z80.F.Sign); return TStates.Count(10); }),
-                new Opcode("JP M, pq",  0xFA, Oprand.Any, Oprand.Any, (z80) => { Jump(z80, z80.F.Sign); return TStates.Count(10); }),
-                new Opcode("JP pq",     0xC3, Oprand.Any, Oprand.Any, (z80) => { Jump(z80, true); return TStates.Count(10); }),
-                new Opcode("JP (HL)",   0xE9, (z80) => { z80.PC.Value = z80.HL.Value; return TStates.Count(4); }),
-                new Opcode("JP (IX)",   0xDD, 0xE9, (z80) => { z80.PC.Value = z80.IX.Value; return TStates.Count(8); }),
-                new Opcode("JP (IY)",   0xFD, 0xE9, (z80) => { z80.PC.Value = z80.IY.Value; return TStates.Count(8); })
+                new Instruction("JP NZ, pq", 0xC2, EncodingByte.Variable, EncodingByte.Variable, (z80) => { Jump(z80, !z80.F.Zero); return TStates.Count(10); }),
+                new Instruction("JP Z, pq",  0xCA, EncodingByte.Variable, EncodingByte.Variable, (z80) => { Jump(z80, z80.F.Zero); return TStates.Count(10); }),
+                new Instruction("JP NC, pq", 0xD2, EncodingByte.Variable, EncodingByte.Variable, (z80) => { Jump(z80, !z80.F.Carry); return TStates.Count(10); }),
+                new Instruction("JP C, pq",  0xDA, EncodingByte.Variable, EncodingByte.Variable, (z80) => { Jump(z80, z80.F.Carry); return TStates.Count(10); }),
+                new Instruction("JP PO, pq", 0xE2, EncodingByte.Variable, EncodingByte.Variable, (z80) => { Jump(z80, !z80.F.ParityOrOverflow); return TStates.Count(10); }),
+                new Instruction("JP PE, pq", 0xEA, EncodingByte.Variable, EncodingByte.Variable, (z80) => { Jump(z80, z80.F.ParityOrOverflow); return TStates.Count(10); }),
+                new Instruction("JP P, pq",  0xF2, EncodingByte.Variable, EncodingByte.Variable, (z80) => { Jump(z80, !z80.F.Sign); return TStates.Count(10); }),
+                new Instruction("JP M, pq",  0xFA, EncodingByte.Variable, EncodingByte.Variable, (z80) => { Jump(z80, z80.F.Sign); return TStates.Count(10); }),
+                new Instruction("JP pq",     0xC3, EncodingByte.Variable, EncodingByte.Variable, (z80) => { Jump(z80, true); return TStates.Count(10); }),
+                new Instruction("JP (HL)",   0xE9, (z80) => { z80.PC.Value = z80.HL.Value; return TStates.Count(4); }),
+                new Instruction("JP (IX)",   0xDD, 0xE9, (z80) => { z80.PC.Value = z80.IX.Value; return TStates.Count(8); }),
+                new Instruction("JP (IY)",   0xFD, 0xE9, (z80) => { z80.PC.Value = z80.IY.Value; return TStates.Count(8); })
             });
         }
 

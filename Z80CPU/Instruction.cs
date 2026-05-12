@@ -1,71 +1,123 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Z80CPU.Flags;
 
 namespace Z80CPU
 {
-    public abstract class Instruction
+    public class Instruction : IFlagAffects
     {
-        public List<Opcode> Opcodes { get; }
+        public string Name { get; set; }
+        public IList<EncodingByte> Values { get; }
+        public Func<Z80, TStates> Action { get; internal set; }
+
+        public Affect? SignAffect { get; internal set; }
+        public Affect? ZeroAffect { get; internal set; }
+        public Affect? HalfCarryAffect { get; internal set; }
+        public Affect? ParityOrOverflowAffect { get; internal set; }
+        public Affect? SubtractionAffect { get; internal set; }
+        public Affect? CarryAffect { get; internal set; }
 
         public Instruction()
         {
-            Opcodes = new List<Opcode>();
-            AddOpcodes();
-            SetFlagAffects();
+
         }
 
-        public IList<Opcode> GetMatches(IList<byte> bytes)
+        public Instruction(string name, byte value, Func<Z80, TStates> action)
         {
-            var matches = new List<Opcode>();
-
-            foreach (var opcode in Opcodes)
+            Name = name;
+            Action = action;
+            Values = new List<EncodingByte>
             {
-                // if we have too many bytes then this will never match
-                if (bytes.Count > opcode.Values.Count)
-                    continue;
-
-                // we have less or equal byte so let's check if this is a contender
-                for (int i = 0; i < bytes.Count; i++)
-                {
-                    //first check if it is an 'Any' byte
-                    if (opcode.Values[i].IsAny)
-                        continue;
-
-                    //second, compare the byte
-                    if (opcode.Values[i].Value != bytes[i])
-                        continue;
-                }
-
-                matches.Add(opcode);
-            }
-
-            return matches;
+                EncodingByte.Fixed(value)
+            };
         }
 
-        protected abstract void AddOpcodes();
-
-        private void SetFlagAffects()
+        public Instruction(string name, byte value1, byte value2, Func<Z80, TStates> action)
         {
-            var customAttributes = GetType().GetCustomAttributes(false);    
-            var flagAttributes = Array.ConvertAll(customAttributes, x => (FlagAttribute)x);
-
-            foreach (var opcode in Opcodes)
+            Name = name;
+            Action = action;
+            Values = new List<EncodingByte>
             {
-                opcode.SignAffect = opcode.SignAffect ?? GetFlagAffect(Name.Sign, flagAttributes);
-                opcode.ZeroAffect = opcode.ZeroAffect ?? GetFlagAffect(Name.Zero, flagAttributes);
-                opcode.HalfCarryAffect = opcode.HalfCarryAffect ?? GetFlagAffect(Name.HalfCarry, flagAttributes);
-                opcode.ParityOrOverflowAffect = opcode.ParityOrOverflowAffect ?? GetFlagAffect(Name.ParityOrOverflow, flagAttributes);
-                opcode.SubtractionAffect = opcode.SubtractionAffect ?? GetFlagAffect(Name.Subraction, flagAttributes);
-                opcode.CarryAffect = opcode.CarryAffect ?? GetFlagAffect(Name.Carry, flagAttributes);
-            }
+                EncodingByte.Fixed(value1),
+                EncodingByte.Fixed(value2)
+            };
         }
 
-        private Affect GetFlagAffect(Name name, FlagAttribute[] flagAttributes)
+        public Instruction(string name, byte value1, EncodingByte value2, Func<Z80, TStates> action)
         {
-            var value = flagAttributes.Where(x => x.Name == name).FirstOrDefault();
-            return value?.Affect ?? Affect.None;
+            Name = name;
+            Action = action;
+            Values = new List<EncodingByte>
+            {
+                EncodingByte.Fixed(value1),
+                value2
+            };
+        }
+
+        public Instruction(string name, byte value1, byte value2, EncodingByte value3, Func<Z80, TStates> action)
+        {
+            Name = name;
+            Action = action;
+            Values = new List<EncodingByte>
+            {
+                EncodingByte.Fixed(value1),
+                EncodingByte.Fixed(value2),
+                value3
+            };
+        }
+
+        public Instruction(string name, byte value1, EncodingByte value2, EncodingByte value3, Func<Z80, TStates> action)
+        {
+            Name = name;
+            Action = action;
+            Values = new List<EncodingByte>
+            {
+                EncodingByte.Fixed(value1),
+                value2,
+                value3
+            };
+        }
+
+        public Instruction(string name, byte value1, byte value2, EncodingByte value3, EncodingByte value4, Func<Z80, TStates> action)
+        {
+            Name = name;
+            Values = new List<EncodingByte>
+            {
+                EncodingByte.Fixed(value1),
+                EncodingByte.Fixed(value2),
+                value3,
+                value4
+            };
+            Action = action;
+        }
+
+        public Instruction(string name, byte value1, byte value2, EncodingByte value3, byte value4, Func<Z80, TStates> action)
+        {
+            Name = name;
+            Values = new List<EncodingByte>
+            {
+                EncodingByte.Fixed(value1),
+                EncodingByte.Fixed(value2),
+                value3,
+                EncodingByte.Fixed(value4)
+            };
+            Action = action;    
+        }
+        
+        public Instruction SetAllFlagsAffectToNone()
+        {
+            SignAffect = Affect.None;
+            ZeroAffect = Affect.None;
+            HalfCarryAffect = Affect.None;
+            ParityOrOverflowAffect = Affect.None;
+            SubtractionAffect = Affect.None;
+            CarryAffect = Affect.None;
+            return this;
+        }
+
+        public TStates Execute(Z80 z80)
+        {
+            return Action.Invoke(z80);
         }
     }
 }

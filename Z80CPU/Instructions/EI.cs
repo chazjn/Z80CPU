@@ -3,11 +3,11 @@
 namespace Z80CPU.Instructions
 {
     [Flag(Affect.None)]
-    public class EI : Instruction
+    public class EI : Mnemonic
     {
-        protected override void AddOpcodes()
+        protected override void AddInstructions()
         {
-            Opcodes.Add(new Opcode("EI", 0xFB, (z80) =>
+            Instructions.Add(new Instruction("EI", 0xFB, (z80) =>
             {
                 z80.InteruptsEnabled = true;
                 return TStates.Count(4);

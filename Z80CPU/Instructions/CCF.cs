@@ -5,11 +5,11 @@ namespace Z80CPU.Instructions
     [Flag(Name.Carry, Affect.Invert)]
     [Flag(Name.HalfCarry, Affect.Invert)]
     [Flag(Name.Subraction, Affect.Reset)]
-    public class CCF : Instruction
+    public class CCF : Mnemonic
     {
-        protected override void AddOpcodes()
+        protected override void AddInstructions()
         {
-            Opcodes.Add(new Opcode("CCF", 0x3F, (z80) => 
+            Instructions.Add(new Instruction("CCF", 0x3F, (z80) => 
             {
                 return TStates.Count(4);
             }));

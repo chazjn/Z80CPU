@@ -3,11 +3,11 @@
 namespace Z80CPU.Instructions
 {
     [Flag(Affect.None)]
-    public class EXX : Instruction
+    public class EXX : Mnemonic
     {
-        protected override void AddOpcodes()
+        protected override void AddInstructions()
         {
-            Opcodes.Add(new Opcode("EXX", 0xD9, (z80) =>            
+            Instructions.Add(new Instruction("EXX", 0xD9, (z80) =>            
             {
                 var bc = z80.BC.Value;
                 var de = z80.DE.Value;

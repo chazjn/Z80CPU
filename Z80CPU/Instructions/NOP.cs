@@ -1,10 +1,10 @@
 ﻿namespace Z80CPU.Instructions
 {
-    public class NOP : Instruction
+    public class NOP : Mnemonic
     {
-        protected override void AddOpcodes()
+        protected override void AddInstructions()
         {
-            Opcodes.Add(new Opcode("NOP", 0x0, (z80) =>
+            Instructions.Add(new Instruction("NOP", 0x0, (z80) =>
             {
                 return TStates.Count(4);
             }));

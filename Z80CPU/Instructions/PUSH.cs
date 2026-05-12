@@ -3,18 +3,18 @@ using Z80CPU.Registers;
 
 namespace Z80CPU.Instructions
 {
-    public class PUSH : Instruction
+    public class PUSH : Mnemonic
     {
-        protected override void AddOpcodes()
+        protected override void AddInstructions()
         {
-            Opcodes.AddRange(new List<Opcode>
+            Instructions.AddRange(new List<Instruction>
             {
-                new Opcode("PUSH BC", 0xC5, (z80) => { Push(z80, z80.BC); return TStates.Count(11); }),
-                new Opcode("PUSH DE", 0xD5, (z80) => { Push(z80, z80.DE); return TStates.Count(11); }),
-                new Opcode("PUSH HL", 0xE5, (z80) => { Push(z80, z80.HL); return TStates.Count(11); }),
-                new Opcode("PUSH AF", 0xF5, (z80) => { Push(z80, z80.AF); return TStates.Count(11); }),
-                new Opcode("PUSH IX", 0xDD, 0xE5, (z80) => { Push(z80, z80.IX); return TStates.Count(15); }),
-                new Opcode("PUSH IY", 0xFD, 0xE5, (z80) => { Push(z80, z80.IY); return TStates.Count(15); }),
+                new Instruction("PUSH BC", 0xC5, (z80) => { Push(z80, z80.BC); return TStates.Count(11); }),
+                new Instruction("PUSH DE", 0xD5, (z80) => { Push(z80, z80.DE); return TStates.Count(11); }),
+                new Instruction("PUSH HL", 0xE5, (z80) => { Push(z80, z80.HL); return TStates.Count(11); }),
+                new Instruction("PUSH AF", 0xF5, (z80) => { Push(z80, z80.AF); return TStates.Count(11); }),
+                new Instruction("PUSH IX", 0xDD, 0xE5, (z80) => { Push(z80, z80.IX); return TStates.Count(15); }),
+                new Instruction("PUSH IY", 0xFD, 0xE5, (z80) => { Push(z80, z80.IY); return TStates.Count(15); }),
             });
         }
 
