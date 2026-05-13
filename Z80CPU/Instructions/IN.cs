@@ -4,12 +4,12 @@ using Z80CPU.Registers;
 
 namespace Z80CPU.Instructions
 {
-    [OperationType(OperationType.Logic)]
-    [Flag(Name.Sign, Affect.DefaultCalculation)]
-    [Flag(Name.Zero, Affect.DefaultCalculation)]
-    [Flag(Name.HalfCarry, Affect.Reset)]
-    [Flag(Name.ParityOrOverflow, Affect.DefaultCalculation)]
-    [Flag(Name.Subraction, Affect.Reset)]
+    [FlagsCalculation(OperationType.Logic,
+        Sign = Affect.DefaultCalculation,
+        Zero = Affect.DefaultCalculation,
+        HalfCarry = Affect.Reset,
+        ParityOrOverflow = Affect.DefaultCalculation,
+        Subtraction = Affect.Reset)]
     public class IN : Mnemonic
     {
         protected override void AddInstructions()

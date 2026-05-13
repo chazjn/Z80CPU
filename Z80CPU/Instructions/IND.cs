@@ -2,11 +2,12 @@
 
 namespace Z80CPU.Instructions
 {
-    [Flag(Name.Sign, Affect.Undefined)]
-    [Flag(Name.Zero, Affect.CalculatedInOpcode)]
-    [Flag(Name.HalfCarry, Affect.Undefined)]
-    [Flag(Name.ParityOrOverflow, Affect.Undefined)]
-    [Flag(Name.Subraction, Affect.Set)]
+    [FlagsCalculation(
+        Sign = Affect.Undefined,
+        Zero = Affect.InstructionCalculation,
+        HalfCarry = Affect.Undefined,
+        ParityOrOverflow = Affect.Undefined,
+        Subtraction = Affect.Set)]
     public class IND : Mnemonic
     {
         protected override void AddInstructions()

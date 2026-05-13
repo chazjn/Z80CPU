@@ -3,11 +3,12 @@ using Z80CPU.Flags;
 
 namespace Z80CPU.Instructions
 {
-    [Flag(Name.Zero, Affect.CalculatedInOpcode)]
-    [Flag(Name.Subraction, Affect.Reset)]
-    [Flag(Name.HalfCarry, Affect.Set)]
-    [Flag(Name.Sign, Affect.Undefined)]
-    [Flag(Name.ParityOrOverflow, Affect.Undefined)]
+    [FlagsCalculation(
+        Zero = Affect.InstructionCalculation,
+        HalfCarry = Affect.Set,
+        Sign = Affect.Undefined,
+        ParityOrOverflow = Affect.Undefined,
+        Subtraction = Affect.Reset)]
     public class BIT : Mnemonic
     {
         protected override void AddInstructions()

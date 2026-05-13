@@ -3,12 +3,12 @@ using Z80CPU.Flags;
 
 namespace Z80CPU.Instructions
 {
-    [OperationType(OperationType.Add)]
-    [Flag(Name.Sign, Affect.DefaultCalculation)]
-    [Flag(Name.Zero, Affect.DefaultCalculation)]
-    [Flag(Name.HalfCarry, Affect.DefaultCalculation)]
-    [Flag(Name.ParityOrOverflow, Affect.DefaultCalculation)]
-    [Flag(Name.Subraction, Affect.Reset)]
+    [FlagsCalculation(OperationType.Add,
+        Sign = Affect.DefaultCalculation,
+        Zero = Affect.DefaultCalculation,
+        HalfCarry = Affect.DefaultCalculation,
+        ParityOrOverflow = Affect.DefaultCalculation,
+        Subtraction = Affect.Reset)]
     public class INC : Mnemonic
     {
         protected override void AddInstructions()

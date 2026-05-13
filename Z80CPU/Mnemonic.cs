@@ -12,8 +12,7 @@ namespace Z80CPU
         {
             Instructions = new List<Instruction>();
             AddInstructions();
-            SetFlagAffects();
-            SetOperationType();
+            SetOperation();
         }
 
         public IList<Instruction> GetMatches(IList<byte> bytes)
@@ -51,36 +50,17 @@ namespace Z80CPU
 
         protected abstract void AddInstructions();
 
-        private void SetFlagAffects()
+        private void SetOperation()
         {
-            var flagAttributes = GetType().GetCustomAttributes(typeof(FlagAttribute), false)
-                .Cast<FlagAttribute>()
-                .ToArray();
-
-            foreach (var instruction in Instructions)
-            {
-                instruction.SignAffect = instruction.SignAffect ?? GetFlagAffect(Name.Sign, flagAttributes);
-                instruction.ZeroAffect = instruction.ZeroAffect ?? GetFlagAffect(Name.Zero, flagAttributes);
-                instruction.HalfCarryAffect = instruction.HalfCarryAffect ?? GetFlagAffect(Name.HalfCarry, flagAttributes);
-                instruction.ParityOrOverflowAffect = instruction.ParityOrOverflowAffect ?? GetFlagAffect(Name.ParityOrOverflow, flagAttributes);
-                instruction.SubtractionAffect = instruction.SubtractionAffect ?? GetFlagAffect(Name.Subraction, flagAttributes);
-                instruction.CarryAffect = instruction.CarryAffect ?? GetFlagAffect(Name.Carry, flagAttributes);
-            }
-        }
-
-        private Affect? GetFlagAffect(Name name, FlagAttribute[] flagAttributes)
-        {
-            return flagAttributes.Where(x => x.Name == name).FirstOrDefault()?.Affect;
-        }
-
-        private void SetOperationType()
-        {
-            var attribute = GetType().GetCustomAttributes(typeof(OperationTypeAttribute), false)
-                .Cast<OperationTypeAttribute>()
+            var attribute = GetType()
+                .GetCustomAttributes(typeof(FlagsCalculationAttribute), false)
+                .Cast<FlagsCalculationAttribute>()
                 .FirstOrDefault();
 
+            if (attribute == null) return;
+
             foreach (var instruction in Instructions)
-                instruction.OperationType = attribute?.OperationType;
+                instruction.Flags = attribute;
         }
     }
 }

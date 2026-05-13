@@ -2,9 +2,10 @@
 
 namespace Z80CPU.Instructions
 {
-    [Flag(Name.HalfCarry, Affect.Reset)]
-    [Flag(Name.ParityOrOverflow, Affect.CalculatedInOpcode)]
-    [Flag(Name.Subraction, Affect.Reset)]
+    [FlagsCalculation(
+        HalfCarry = Affect.Reset,
+        ParityOrOverflow = Affect.InstructionCalculation,
+        Subtraction = Affect.Reset)]
     public class LDI : Mnemonic
     {
         protected override void AddInstructions()

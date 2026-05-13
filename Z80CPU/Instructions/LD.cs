@@ -4,7 +4,6 @@ using Z80CPU.Registers;
 
 namespace Z80CPU.Instructions
 {
-    [Flag(Affect.CalculatedInOpcode)]
     public class LD : Mnemonic
     {
         protected override void AddInstructions()

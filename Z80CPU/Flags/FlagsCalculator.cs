@@ -13,53 +13,55 @@ namespace Z80CPU.Flags
 
         public void SetFlags(Execution execution, Instruction instruction)
         {
-            var op = instruction.OperationType;
+            var flags = instruction.Flags;
+            if (flags == null) return;
+
+            var op = flags.OperationType;
             var before = execution.Register?.PreviousValue;
             var after = execution.Register?.Value;
 
-            Apply(instruction.SignAffect,
-                v => _flags.Sign = v, () => _flags.Sign,
+            Apply(flags.Sign,
+                v => _flags.Sign = v,
                 () => after.HasValue && ComputeSign(after.Value, op));
 
-            Apply(instruction.ZeroAffect,
-                v => _flags.Zero = v, () => _flags.Zero,
+            Apply(flags.Zero,
+                v => _flags.Zero = v,
                 () => after.HasValue && after.Value == 0);
 
-            Apply(instruction.HalfCarryAffect,
-                v => _flags.HalfCarry = v, () => _flags.HalfCarry,
+            Apply(flags.HalfCarry,
+                v => _flags.HalfCarry = v,
                 () => before.HasValue && after.HasValue && ComputeHalfCarry(before.Value, after.Value, op));
 
-            Apply(instruction.ParityOrOverflowAffect,
-                v => _flags.ParityOrOverflow = v, () => _flags.ParityOrOverflow,
+            Apply(flags.ParityOrOverflow,
+                v => _flags.ParityOrOverflow = v,
                 () => before.HasValue && after.HasValue && ComputeParityOrOverflow(before.Value, after.Value, op));
 
-            Apply(instruction.SubtractionAffect,
-                v => _flags.Subtraction = v, () => _flags.Subtraction,
+            Apply(flags.Subtraction,
+                v => _flags.Subtraction = v,
                 () => op == OperationType.Subtract);
 
-            Apply(instruction.CarryAffect,
-                v => _flags.Carry = v, () => _flags.Carry,
+            Apply(flags.Carry,
+                v => _flags.Carry = v,
                 () => before.HasValue && after.HasValue && ComputeCarry(before.Value, after.Value, op));
         }
 
-        private void Apply(Affect? affect, Action<bool> set, Func<bool> get, Func<bool> calculate)
+        private void Apply(Affect affect, Action<bool> set, Func<bool> calculate)
         {
             switch (affect)
             {
                 case Affect.Reset: set(false); break;
                 case Affect.Set: set(true); break;
-                case Affect.Invert: set(!get()); break;
                 case Affect.DefaultCalculation: set(calculate()); break;
                 case Affect.Undefined: set(GetRandomBool()); break;
             }
         }
 
-        private bool ComputeSign(ushort after, OperationType? op)
+        private bool ComputeSign(ushort after, OperationType op)
         {
             return op == OperationType.Add16 ? (after & 0x8000) != 0 : (after & 0x80) != 0;
         }
 
-        private bool ComputeHalfCarry(ushort before, ushort after, OperationType? op)
+        private bool ComputeHalfCarry(ushort before, ushort after, OperationType op)
         {
             switch (op)
             {
@@ -70,7 +72,7 @@ namespace Z80CPU.Flags
             }
         }
 
-        private bool ComputeParityOrOverflow(ushort before, ushort after, OperationType? op)
+        private bool ComputeParityOrOverflow(ushort before, ushort after, OperationType op)
         {
             switch (op)
             {
@@ -90,7 +92,7 @@ namespace Z80CPU.Flags
             }
         }
 
-        private bool ComputeCarry(ushort before, ushort after, OperationType? op)
+        private bool ComputeCarry(ushort before, ushort after, OperationType op)
         {
             switch (op)
             {

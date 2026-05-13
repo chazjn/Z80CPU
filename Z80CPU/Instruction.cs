@@ -4,20 +4,13 @@ using Z80CPU.Flags;
 
 namespace Z80CPU
 {
-    public class Instruction : IFlagAffects
+    public class Instruction
     {
         public string Name { get; set; }
         public IList<EncodingByte> Values { get; }
         public Func<Z80, Execution> Action { get; internal set; }
 
-        public OperationType? OperationType { get; internal set; }
-
-        public Affect? SignAffect { get; internal set; }
-        public Affect? ZeroAffect { get; internal set; }
-        public Affect? HalfCarryAffect { get; internal set; }
-        public Affect? ParityOrOverflowAffect { get; internal set; }
-        public Affect? SubtractionAffect { get; internal set; }
-        public Affect? CarryAffect { get; internal set; }
+        public FlagsCalculationAttribute Flags { get; internal set; }
 
         public Instruction()
         {

@@ -5,6 +5,7 @@ namespace Z80CPU.Flags
         Add,
         Add16,
         Subtract,
-        Logic
+        Logic,
+        None
     }
 }

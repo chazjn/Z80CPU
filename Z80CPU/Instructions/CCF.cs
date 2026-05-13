@@ -2,15 +2,15 @@
 
 namespace Z80CPU.Instructions
 {
-    [Flag(Name.Carry, Affect.Invert)]
-    [Flag(Name.HalfCarry, Affect.Invert)]
-    [Flag(Name.Subraction, Affect.Reset)]
+    [FlagsCalculation(Subtraction = Affect.Reset)]
     public class CCF : Mnemonic
     {
         protected override void AddInstructions()
         {
-            Instructions.Add(new Instruction("CCF", 0x3F, (z80) => 
+            Instructions.Add(new Instruction("CCF", 0x3F, (z80) =>
             {
+                z80.F.HalfCarry = z80.F.Carry;
+                z80.F.Carry = !z80.F.Carry;
                 return Execution.Result(TStates.Count(4));
             }));
         }

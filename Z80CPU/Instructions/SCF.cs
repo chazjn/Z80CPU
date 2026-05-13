@@ -2,9 +2,10 @@
 
 namespace Z80CPU.Instructions
 {
-    [Flag(Name.Carry, Affect.Set)]
-    [Flag(Name.HalfCarry, Affect.Reset)]
-    [Flag(Name.Subraction, Affect.Reset)]
+    [FlagsCalculation(
+        Carry = Affect.Set,
+        HalfCarry = Affect.Reset,
+        Subtraction = Affect.Reset)]
     public class SCF : Mnemonic
     {
         protected override void AddInstructions()

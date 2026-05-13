@@ -4,9 +4,9 @@
     {
         Reset,
         Set,
-        Invert,
         DefaultCalculation,
-        CalculatedInOpcode,
-        Undefined
+        InstructionCalculation,
+        Undefined,
+        NotAffected
     }
 }
