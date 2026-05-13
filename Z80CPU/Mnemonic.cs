@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Z80CPU.Registers;
+using Z80CPU.Flags;
 
 namespace Z80CPU
 {

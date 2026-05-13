@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Z80CPU.Flags;
 using Z80CPU.Registers;
 
 namespace Z80CPU.Instructions

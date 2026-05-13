@@ -1,4 +1,4 @@
-﻿namespace Z80CPU.Registers
+﻿namespace Z80CPU.Flags
 {
     public enum Name
     {

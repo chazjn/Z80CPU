@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Z80CPU.Flags;
 using Z80CPU.Instructions;
 using Z80CPU.Registers;
 
@@ -45,8 +46,8 @@ namespace Z80CPU
 
         public Register16 PC { get; private set; }
         public Register16 SP { get; private set; }
-        public Flags F { get; private set; }
-        public Flags F_ { get; private set; }
+        public FlagsRegister F { get; private set; }
+        public FlagsRegister F_ { get; private set; }
 
         public InterruptMode InteruptMode { get; internal set; }
         public bool InteruptsEnabled { get; internal set;}
@@ -61,8 +62,8 @@ namespace Z80CPU
             Memory = memory;
             Ports = ports;
 
-            F = new Flags();
-            F_ = new Flags();
+            F = new FlagsRegister();
+            F_ = new FlagsRegister();
             PC = new Register16("PC");
             SP = new Register16("SP");
 

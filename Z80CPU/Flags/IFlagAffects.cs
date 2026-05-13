@@ -1,6 +1,4 @@
-﻿using Z80CPU.Registers;
-
-namespace Z80CPU
+﻿namespace Z80CPU.Flags
 {
     public interface IFlagAffects
     {

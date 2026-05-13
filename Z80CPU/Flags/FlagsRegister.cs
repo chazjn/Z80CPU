@@ -1,6 +1,8 @@
-﻿namespace Z80CPU.Registers
+﻿using Z80CPU.Registers;
+
+namespace Z80CPU.Flags
 {
-    public class Flags : Register8
+    public class FlagsRegister : Register8
     {
         /* 7 |  S  | Sign             | 0 = positive, 1 = negative
          * 6 |  Z  | Zero             | 0 = non zero, 1 = zero
@@ -24,7 +26,7 @@
 
         public bool Carry { get { return ByteHelper.IsSet(Value, 0); } set { SetBit(0, value); } }
 
-        public Flags() : base("F")
+        public FlagsRegister() : base("F")
         {
         }
 

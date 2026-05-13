@@ -1,13 +1,12 @@
 using System;
-using Z80CPU.Registers;
 
-namespace Z80CPU
+namespace Z80CPU.Flags
 {
     internal class FlagsCalculator
     {
-        private readonly Flags _flags;
+        private readonly FlagsRegister _flags;
 
-        public FlagsCalculator(Flags flags)
+        public FlagsCalculator(FlagsRegister flags)
         {
             _flags = flags;
         }

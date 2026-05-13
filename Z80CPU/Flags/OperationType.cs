@@ -1,4 +1,4 @@
-namespace Z80CPU
+namespace Z80CPU.Flags
 {
     public enum OperationType
     {
