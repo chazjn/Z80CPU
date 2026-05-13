@@ -16,25 +16,26 @@ namespace Z80CPU.Instructions
                 new Instruction("INC (HL)", 0x34, (z80) =>
                 {
                     var value = z80.Memory.Get(z80.HL);
-                    z80.Memory.Set(z80.HL, ++value);
+                    value++;
+                    z80.Memory.Set(z80.HL, value);
                     return Execution.Result(TStates.Count(11));
                 }),
 
-                new Instruction("INC (IX + d)", 0xDD, 0x34, (z80) =>
+                new Instruction("INC (IX + d)", 0xDD, 0x34, EncodingByte.Variable, (z80) =>
                 {
-                    var offset = z80.GetByte();
-                    var index = (ushort)(z80.IX.Value + offset);
+                    var index = (ushort)(z80.IX.Value + z80.Buffer[2]);
                     var value = z80.Memory.Get(index);
-                    z80.Memory.Set(index, ++value);
+                    value++;
+                    z80.Memory.Set(index, value);
                     return Execution.Result(TStates.Count(23));
                 }),
 
-                new Instruction("INC (IY + d)", 0xFD, 0x34, (z80) =>
+                new Instruction("INC (IY + d)", 0xFD, 0x34, EncodingByte.Variable, (z80) =>
                 {
-                    var offset = z80.GetByte();
-                    var index = (ushort)(z80.IY.Value + offset);
+                    var index = (ushort)(z80.IY.Value + z80.Buffer[2]);
                     var value = z80.Memory.Get(index);
-                    z80.Memory.Set(index, ++value);
+                    value++;
+                    z80.Memory.Set(index, value);
                     return Execution.Result(TStates.Count(23));
                 }),
 

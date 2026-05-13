@@ -148,7 +148,7 @@ namespace Z80CPU
             }
         }
 
-        internal byte GetByte()
+        private byte GetByte()
         {
             var value = Memory.Get(PC.Value);
             PC.Increment();

@@ -11,7 +11,7 @@ namespace Z80CPU.Instructions
                 new Instruction("CALL NZ, pq", 0xC4, EncodingByte.Variable, EncodingByte.Variable, (z80) => { return Call(z80, !z80.F.Zero); }),
                 new Instruction("CALL Z,  pq", 0xCC, EncodingByte.Variable, EncodingByte.Variable, (z80) => { return Call(z80, z80.F.Zero); }),
                 new Instruction("CALL NC, pq", 0xD4, EncodingByte.Variable, EncodingByte.Variable, (z80) => { return Call(z80, !z80.F.Carry); }),
-                new Instruction("CALL C,  pq", 0xE4, EncodingByte.Variable, EncodingByte.Variable, (z80) => { return Call(z80, z80.F.Carry); }),
+                new Instruction("CALL C,  pq", 0xDC, EncodingByte.Variable, EncodingByte.Variable, (z80) => { return Call(z80, z80.F.Carry); }),
                 new Instruction("CALL PO, pq", 0xE4, EncodingByte.Variable, EncodingByte.Variable, (z80) => { return Call(z80, !z80.F.ParityOrOverflow); }),
                 new Instruction("CALL PE, pq", 0xEC, EncodingByte.Variable, EncodingByte.Variable, (z80) => { return Call(z80, z80.F.ParityOrOverflow); }),
                 new Instruction("CALL P,  pq", 0xF4, EncodingByte.Variable, EncodingByte.Variable, (z80) => { return Call(z80, !z80.F.Sign); }),
