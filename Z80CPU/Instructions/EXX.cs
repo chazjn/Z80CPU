@@ -1,8 +1,5 @@
-﻿using Z80CPU.Flags;
-
-namespace Z80CPU.Instructions
+﻿namespace Z80CPU.Instructions
 {
-    [Flag(Affect.None)]
     public class EXX : Mnemonic
     {
         protected override void AddInstructions()
@@ -21,7 +18,7 @@ namespace Z80CPU.Instructions
                 z80.DE_.Value = de;
                 z80.HL_.Value = hl;
 
-                return TStates.Count(4);
+                return Execution.Result(TStates.Count(4));
             }));
         }
     }

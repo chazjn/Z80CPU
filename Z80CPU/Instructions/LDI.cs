@@ -1,4 +1,4 @@
-﻿using Z80CPU.Flags;
+﻿using Z80CPU.Registers;
 
 namespace Z80CPU.Instructions
 {
@@ -19,7 +19,7 @@ namespace Z80CPU.Instructions
                 z80.BC.Value--;
 
                 z80.F.ParityOrOverflow = !z80.BC.Value.IsZero();
-                return TStates.Count(16);
+                return Execution.Result(TStates.Count(16));
             }));
         }
     }

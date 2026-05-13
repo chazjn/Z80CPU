@@ -19,7 +19,7 @@ namespace Z80CPU.Instructions
                     //check if interupt has been received
                     break;
                 }
-                return TStates.Count(0);
+                return Execution.Result(TStates.Count(0));
             }));
         }
     }

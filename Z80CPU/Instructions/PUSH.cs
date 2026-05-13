@@ -9,12 +9,12 @@ namespace Z80CPU.Instructions
         {
             Instructions.AddRange(new List<Instruction>
             {
-                new Instruction("PUSH BC", 0xC5, (z80) => { Push(z80, z80.BC); return TStates.Count(11); }),
-                new Instruction("PUSH DE", 0xD5, (z80) => { Push(z80, z80.DE); return TStates.Count(11); }),
-                new Instruction("PUSH HL", 0xE5, (z80) => { Push(z80, z80.HL); return TStates.Count(11); }),
-                new Instruction("PUSH AF", 0xF5, (z80) => { Push(z80, z80.AF); return TStates.Count(11); }),
-                new Instruction("PUSH IX", 0xDD, 0xE5, (z80) => { Push(z80, z80.IX); return TStates.Count(15); }),
-                new Instruction("PUSH IY", 0xFD, 0xE5, (z80) => { Push(z80, z80.IY); return TStates.Count(15); }),
+                new Instruction("PUSH BC", 0xC5, (z80) => { Push(z80, z80.BC); return Execution.Result(TStates.Count(11)); }),
+                new Instruction("PUSH DE", 0xD5, (z80) => { Push(z80, z80.DE); return Execution.Result(TStates.Count(11)); }),
+                new Instruction("PUSH HL", 0xE5, (z80) => { Push(z80, z80.HL); return Execution.Result(TStates.Count(11)); }),
+                new Instruction("PUSH AF", 0xF5, (z80) => { Push(z80, z80.AF); return Execution.Result(TStates.Count(11)); }),
+                new Instruction("PUSH IX", 0xDD, 0xE5, (z80) => { Push(z80, z80.IX); return Execution.Result(TStates.Count(15)); }),
+                new Instruction("PUSH IY", 0xFD, 0xE5, (z80) => { Push(z80, z80.IY); return Execution.Result(TStates.Count(15)); }),
             });
         }
 

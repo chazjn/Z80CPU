@@ -1,4 +1,4 @@
-﻿using Z80CPU.Flags;
+﻿using Z80CPU.Registers;
 
 namespace Z80CPU.Instructions
 {
@@ -20,13 +20,13 @@ namespace Z80CPU.Instructions
 
                 if (z80.BC.Value.IsZero())
                 {
-                    return TStates.Count(16);
+                    return Execution.Result(TStates.Count(16));
                 }
                 else
                 {
                     z80.PC.Value--;
                     z80.PC.Value--;
-                    return TStates.Count(21);
+                    return Execution.Result(TStates.Count(21));
                 }
             }));
         }

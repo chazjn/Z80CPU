@@ -45,8 +45,8 @@ namespace Z80CPU
 
         public Register16 PC { get; private set; }
         public Register16 SP { get; private set; }
-        public Registers.Flags F { get; private set; }
-        public Registers.Flags F_ { get; private set; }
+        public Flags F { get; private set; }
+        public Flags F_ { get; private set; }
 
         public InterruptMode InteruptMode { get; internal set; }
         public bool InteruptsEnabled { get; internal set;}
@@ -61,8 +61,8 @@ namespace Z80CPU
             Memory = memory;
             Ports = ports;
 
-            F = new Registers.Flags();
-            F_ = new Registers.Flags();
+            F = new Flags();
+            F_ = new Flags();
             PC = new Register16("PC");
             SP = new Register16("SP");
 
@@ -131,17 +131,15 @@ namespace Z80CPU
                 CurrentInstruction.Execute(this);
                 Buffer.Clear();
             }
-            else if (candidateInstructions.Count == 1) 
+            else if (candidateInstructions.Count == 1)
             {
                 // we have enough oprands, let's execute it
                 if (candidateInstructions.First().Values.Count() == Buffer.Count)
                 {
                     CurrentInstruction = candidateInstructions.First();
-                    var cloneOfA = A.Clone();
-
-                    var tStates = CurrentInstruction.Execute(this);
+                    var execution = CurrentInstruction.Execute(this);
                     var flagCalculator = new FlagsCalculator(F);
-                    flagCalculator.SetFlags(cloneOfA, A, CurrentInstruction);
+                    flagCalculator.SetFlags(execution, CurrentInstruction);
 
                     Buffer.Clear();
                 }

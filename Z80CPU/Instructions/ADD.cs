@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
-using Z80CPU.Flags;
+using System.Collections.Generic;
+using Z80CPU.Registers;
 
 namespace Z80CPU.Instructions
 {
+    [OperationType(OperationType.Add)]
     [Flag(Name.Sign, Affect.DefaultCalculation)]
     [Flag(Name.Zero, Affect.DefaultCalculation)]
     [Flag(Name.HalfCarry, Affect.DefaultCalculation)]
@@ -16,37 +17,33 @@ namespace Z80CPU.Instructions
             Instructions.AddRange(new List<Instruction>
             {
                 new Instruction("ADD A, (HL)", 0x86, (z80) => {
-                    var value = z80.Memory.Get(z80.HL);
-                    z80.A.Add(value);
-                    return TStates.Count(7);
+                    z80.A.Add(z80.Memory.Get(z80.HL));
+                    return Execution.Result(TStates.Count(7), z80.A);
                 }),
 
                 new Instruction("ADD A, (IX + d)", 0xDD, 0x86, EncodingByte.Variable, (z80) =>
                 {
-                    var offset = z80.Buffer[2];
-                    var ix_offset = z80.IX.Value + offset;
-                    var value = z80.Memory.Get((ushort)ix_offset);
-                    z80.A.Add(value);
-                    return TStates.Count(17);
+                    z80.A.Add(z80.Memory.Get((ushort)(z80.IX.Value + z80.Buffer[2])));
+                    return Execution.Result(TStates.Count(17), z80.A);
                 }),
 
                 new Instruction("ADD A, (IY + d)", 0xFD, 0x86, EncodingByte.Variable, (z80) =>
                 {
-                    var offset = z80.Buffer[2];
-                    var iy_offset = z80.IY.Value + offset;
-                    var value = z80.Memory.Get((ushort)iy_offset);
-                    z80.A.Add(value);
-                    return TStates.Count(17);
+                    z80.A.Add(z80.Memory.Get((ushort)(z80.IY.Value + z80.Buffer[2])));
+                    return Execution.Result(TStates.Count(17), z80.A);
                 }),
 
-                new Instruction("ADD A, n", 0xC6, EncodingByte.Variable, (z80) => { z80.A.Add(z80.Buffer[1]); return TStates.Count(7); }),
-                new Instruction("ADD A, A", 0x87, (z80) => { z80.A.Add(z80.A.Value); return TStates.Count(4); }),
-                new Instruction("ADD A, B", 0x80, (z80) => { z80.A.Add(z80.B.Value); return TStates.Count(4); }),
-                new Instruction("ADD A, C", 0x81, (z80) => { z80.A.Add(z80.C.Value); return TStates.Count(4); }),
-                new Instruction("ADD A, D", 0x82, (z80) => { z80.A.Add(z80.D.Value); return TStates.Count(4); }),
-                new Instruction("ADD A, E", 0x83, (z80) => { z80.A.Add(z80.E.Value); return TStates.Count(4); }),
-                new Instruction("ADD A, H", 0x84, (z80) => { z80.A.Add(z80.H.Value); return TStates.Count(4); }),
-                new Instruction("ADD A, L", 0x85, (z80) => { z80.A.Add(z80.L.Value); return TStates.Count(4); }),
+                new Instruction("ADD A, n", 0xC6, EncodingByte.Variable, (z80) => {
+                    z80.A.Add(z80.Buffer[1]);
+                    return Execution.Result(TStates.Count(7), z80.A);
+                }),
+                new Instruction("ADD A, A", 0x87, (z80) => { z80.A.Add(z80.A.Value); return Execution.Result(TStates.Count(4), z80.A); }),
+                new Instruction("ADD A, B", 0x80, (z80) => { z80.A.Add(z80.B.Value); return Execution.Result(TStates.Count(4), z80.A); }),
+                new Instruction("ADD A, C", 0x81, (z80) => { z80.A.Add(z80.C.Value); return Execution.Result(TStates.Count(4), z80.A); }),
+                new Instruction("ADD A, D", 0x82, (z80) => { z80.A.Add(z80.D.Value); return Execution.Result(TStates.Count(4), z80.A); }),
+                new Instruction("ADD A, E", 0x83, (z80) => { z80.A.Add(z80.E.Value); return Execution.Result(TStates.Count(4), z80.A); }),
+                new Instruction("ADD A, H", 0x84, (z80) => { z80.A.Add(z80.H.Value); return Execution.Result(TStates.Count(4), z80.A); }),
+                new Instruction("ADD A, L", 0x85, (z80) => { z80.A.Add(z80.L.Value); return Execution.Result(TStates.Count(4), z80.A); }),
 
                 /*
                 new Opcode("ADD HL, BC", 0x09, (z80) => { AddToRegister(z80, z80.HL, z80.BC.Value); }),
@@ -64,7 +61,7 @@ namespace Z80CPU.Instructions
                 new Opcode("ADD IY, IY", 0xFD, 0x29, (z80) => { AddToRegister(z80, z80.IY, z80.IY.Value); }),
                 new Opcode("ADD IY, SP", 0xFD, 0x39, (z80) => { AddToRegister(z80, z80.IY, z80.SP.Value); })
                 */
-            });                
+            });
         }
     }
 }

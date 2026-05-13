@@ -1,9 +1,7 @@
-﻿using System.Collections.Generic;
-using Z80CPU.Flags;
+using System.Collections.Generic;
 
 namespace Z80CPU.Instructions
 {
-    [Flag(Affect.None)]
     public class CALL : Mnemonic
     {
         protected override void AddInstructions()
@@ -23,10 +21,10 @@ namespace Z80CPU.Instructions
             });
         }
 
-        public TStates Call(Z80 z80, bool performCall)
+        public Execution Call(Z80 z80, bool performCall)
         {
-            if(!performCall)
-                return TStates.Count(10);
+            if (!performCall)
+                return Execution.Result(TStates.Count(10));
 
             z80.SP.Decrement();
             z80.Memory.Set(z80.SP.Value, z80.PC.High.Value);
@@ -36,7 +34,7 @@ namespace Z80CPU.Instructions
             z80.PC.Low.Value = z80.Memory.Get((ushort)(z80.PC.Value - 1));
             z80.PC.High.Value = z80.Memory.Get((ushort)(z80.PC.Value - 2));
 
-            return TStates.Count(17);      
+            return Execution.Result(TStates.Count(17));
         }
     }
 }

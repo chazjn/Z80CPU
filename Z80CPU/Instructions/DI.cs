@@ -7,7 +7,7 @@
             Instructions.Add(new Instruction("DI", 0xF3, (z80) => 
             { 
                 z80.InteruptsEnabled = false;
-                return TStates.Count(4);
+                return Execution.Result(TStates.Count(4));
             }));
         }
     }

@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
-using Z80CPU.Flags;
 using Z80CPU.Registers;
 
 namespace Z80CPU.Instructions
 {
-    [Flag(Affect.None)]
     public class EX : Mnemonic
     {
         protected override void AddInstructions()
@@ -20,15 +18,15 @@ namespace Z80CPU.Instructions
             });
         }
 
-        private TStates ExchangeRegisters(Register16 register1, Register16 register2)
+        private Execution ExchangeRegisters(Register16 register1, Register16 register2)
         {
             var register1Value = register1.Value;
             register1.Value = register2.Value;
             register2.Value = register1Value;
-            return TStates.Count(4);
+            return Execution.Result(TStates.Count(4));
         }
 
-        private TStates ExchangeStackPointer(Z80 z80, Register16 register)
+        private Execution ExchangeStackPointer(Z80 z80, Register16 register)
         {
             var low = register.Low.Value;
             var high = register.High.Value;
@@ -40,7 +38,7 @@ namespace Z80CPU.Instructions
             z80.Memory.Set(sp, low);
             z80.Memory.Set((ushort)(sp + 1), high);
 
-            return TStates.Count(19);
+            return Execution.Result(TStates.Count(19));
         }
     }
 }

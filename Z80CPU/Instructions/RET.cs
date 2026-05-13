@@ -8,7 +8,7 @@ namespace Z80CPU.Instructions
         {
             Instructions.AddRange(new List<Instruction>
             {
-                new Instruction("RET",    0xC9, z80 => { Ret(z80, true); return TStates.Count(10); }),
+                new Instruction("RET",    0xC9, z80 => Ret(z80, true)),
                 new Instruction("RET NZ", 0xC0, z80 => { return Ret(z80, !z80.F.Zero); }),
                 new Instruction("RET Z",  0xC8, z80 => { return Ret(z80, z80.F.Zero); }),
                 new Instruction("RET NC", 0xD0, z80 => { return Ret(z80, !z80.F.Carry); }),
@@ -20,9 +20,9 @@ namespace Z80CPU.Instructions
             });
         }
 
-        private TStates Ret(Z80 z80, bool invokeReturn)
+        private Execution Ret(Z80 z80, bool invokeReturn)
         {
-            if(invokeReturn)
+            if (invokeReturn)
             {
                 z80.PC.Low.Value = z80.Memory.Get(z80.SP);
                 z80.PC.High.Value = z80.Memory.Get((ushort)(z80.SP.Value + 1));
@@ -30,10 +30,10 @@ namespace Z80CPU.Instructions
                 z80.SP.Increment();
                 z80.SP.Increment();
 
-                return TStates.Count(11);
+                return Execution.Result(TStates.Count(11));
             }
 
-            return TStates.Count(5);
+            return Execution.Result(TStates.Count(5));
         }
     }
 }

@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
-using Z80CPU.Flags;
 
 namespace Z80CPU.Instructions
 {
-    [Flag(Affect.None)]
     public class JR : Mnemonic
     {
         protected override void AddInstructions()
@@ -18,14 +16,14 @@ namespace Z80CPU.Instructions
             });
         }
 
-        private TStates Jump(Z80 z80, bool performJump)
+        private Execution Jump(Z80 z80, bool performJump)
         {
             if (!performJump)
-                return TStates.Count(7);
-            
+                return Execution.Result(TStates.Count(7));
+
             //TODO: test 2s-complement arithmitic
             z80.PC.Value = (ushort)(z80.PC.Value + z80.Buffer[1]);
-            return TStates.Count(12);
+            return Execution.Result(TStates.Count(12));
         }
     }
 }

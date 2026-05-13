@@ -1,8 +1,7 @@
-﻿namespace Z80CPU.Flags
+﻿namespace Z80CPU.Registers
 {
     public enum Affect
     {
-        None,
         Reset,
         Set,
         Invert,

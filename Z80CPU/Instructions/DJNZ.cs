@@ -13,13 +13,13 @@
                     var offset = z80.Memory.Get(z80.PC.Value);
                     var pc = z80.PC.Value + (sbyte)offset;
                     z80.PC.Value = (ushort)pc;
-                    return TStates.Count(8);
+                    return Execution.Result(TStates.Count(8));
                 }
                 else
                 {
                     //increment PC to skip the offset
                     z80.PC.Increment();
-                    return TStates.Count(13);
+                    return Execution.Result(TStates.Count(13));
                 }
             }));
         }

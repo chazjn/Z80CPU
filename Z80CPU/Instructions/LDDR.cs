@@ -1,4 +1,4 @@
-﻿using Z80CPU.Flags;
+﻿using Z80CPU.Registers;
 
 namespace Z80CPU.Instructions
 {
@@ -22,10 +22,10 @@ namespace Z80CPU.Instructions
                 {
                     z80.PC.Decrement();
                     z80.PC.Decrement();
-                    return TStates.Count(21);
+                    return Execution.Result(TStates.Count(21));
                 }
 
-                return TStates.Count(16);
+                return Execution.Result(TStates.Count(16));
             }));
         }
     }

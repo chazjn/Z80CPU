@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Z80CPU.Flags
+namespace Z80CPU.Registers
 {
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
     public class FlagAttribute : Attribute

@@ -14,37 +14,37 @@ namespace Z80CPU.Instructions
                 new Instruction("POP BC", 0xC1, (z80) =>
                 {
                     Pop(z80, z80.BC);
-                    return TStates.Count(10);
+                    return Execution.Result(TStates.Count(10));
                 }),
 
                 new Instruction("POP DE", 0xD1, (z80) =>
                 {
                     Pop(z80, z80.DE);
-                    return TStates.Count(10);
+                    return Execution.Result(TStates.Count(10));
                 }),
 
                 new Instruction("POP HL", 0xE1, (z80) =>
                 {
                     Pop(z80, z80.HL);
-                    return TStates.Count(10);
+                    return Execution.Result(TStates.Count(10));
                 }),
 
                 new Instruction("POP AF", 0x11, (z80) =>
                 {
                     Pop(z80, z80.AF);
-                    return TStates.Count(10);
+                    return Execution.Result(TStates.Count(10));
                 }),
 
                 new Instruction("POP IX", 0xDD, 0xE1, (z80) =>
                 {
                     Pop(z80, z80.IX);
-                    return TStates.Count(14);
+                    return Execution.Result(TStates.Count(14));
                 }),
 
                 new Instruction("POP IY", 0xDD, 0xE1, (z80) =>
                 {
                     Pop(z80, z80.IY);
-                    return TStates.Count(14);
+                    return Execution.Result(TStates.Count(14));
                 })
             });
         }

@@ -1,10 +1,25 @@
-﻿namespace Z80CPU.Registers
+namespace Z80CPU.Registers
 {
-    public class Register8
+    public class Register8 : IRegisterResult
     {
         public string Name { get; }
 
-        public virtual byte Value { get; set; }
+        private byte _value;
+
+        public byte PreviousValue { get; private set; }
+
+        public byte Value
+        {
+            get => _value;
+            set
+            {
+                PreviousValue = _value;
+                _value = value;
+            }
+        }
+
+        ushort IRegisterResult.PreviousValue => PreviousValue;
+        ushort IRegisterResult.Value => Value;
 
         public Register8(string name)
         {

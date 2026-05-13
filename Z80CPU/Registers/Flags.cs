@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Z80CPU.Registers
+﻿namespace Z80CPU.Registers
 {
     public class Flags : Register8
     {
