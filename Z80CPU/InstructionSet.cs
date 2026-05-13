@@ -12,9 +12,8 @@ namespace Z80CPU
             Mnemonics = new List<Mnemonic>
             {
                 new ADD(),
-                //new BIT(),
-                //new JP(),
-                //new LD()
+                new ADC(),
+                new ADC16(),
             };
         }
 

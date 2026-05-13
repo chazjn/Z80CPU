@@ -7,6 +7,7 @@ namespace Z80CPU.Registers
         private byte _value;
 
         public byte PreviousValue { get; private set; }
+        public int RawSum { get; private set; }
 
         public byte Value
         {
@@ -46,7 +47,14 @@ namespace Z80CPU.Registers
 
         public void Add(byte value)
         {
-            Value = (byte)(Value + value);
+            RawSum = Value + value;
+            Value = (byte)RawSum;
+        }
+
+        public void AddWithCarry(byte operand, bool carry)
+        {
+            RawSum = Value + operand + (carry ? 1 : 0);
+            Value = (byte)RawSum;
         }
     }
 }

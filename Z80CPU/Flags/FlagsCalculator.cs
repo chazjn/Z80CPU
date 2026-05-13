@@ -19,6 +19,7 @@ namespace Z80CPU.Flags
             var op = flags.OperationType;
             var before = execution.Register?.PreviousValue;
             var after = execution.Register?.Value;
+            var rawSum = execution.Register?.RawSum;
 
             Apply(flags.Sign,
                 v => _flags.Sign = v,
@@ -30,11 +31,11 @@ namespace Z80CPU.Flags
 
             Apply(flags.HalfCarry,
                 v => _flags.HalfCarry = v,
-                () => before.HasValue && after.HasValue && ComputeHalfCarry(before.Value, after.Value, op));
+                () => before.HasValue && after.HasValue && ComputeHalfCarry(before.Value, after.Value, rawSum.GetValueOrDefault(), op));
 
             Apply(flags.ParityOrOverflow,
                 v => _flags.ParityOrOverflow = v,
-                () => before.HasValue && after.HasValue && ComputeParityOrOverflow(before.Value, after.Value, op));
+                () => before.HasValue && after.HasValue && ComputeParityOrOverflow(before.Value, after.Value, rawSum.GetValueOrDefault(), op));
 
             Apply(flags.Subtraction,
                 v => _flags.Subtraction = v,
@@ -42,7 +43,7 @@ namespace Z80CPU.Flags
 
             Apply(flags.Carry,
                 v => _flags.Carry = v,
-                () => before.HasValue && after.HasValue && ComputeCarry(before.Value, after.Value, op));
+                () => after.HasValue && ComputeCarry(before.GetValueOrDefault(), after.Value, rawSum.GetValueOrDefault(), op));
         }
 
         private void Apply(Affect affect, Action<bool> set, Func<bool> calculate)
@@ -58,30 +59,37 @@ namespace Z80CPU.Flags
 
         private bool ComputeSign(ushort after, OperationType op)
         {
-            return op == OperationType.Add16 ? (after & 0x8000) != 0 : (after & 0x80) != 0;
+            return (op == OperationType.Add16 || op == OperationType.AddWithCarry16)
+                ? (after & 0x8000) != 0
+                : (after & 0x80) != 0;
         }
 
-        private bool ComputeHalfCarry(ushort before, ushort after, OperationType op)
-        {
-            switch (op)
-            {
-                case OperationType.Add:      return (after & 0x00F) < (before & 0x00F);
-                case OperationType.Add16:    return (after & 0xFFF) < (before & 0xFFF);
-                case OperationType.Subtract: return (after & 0x00F) > (before & 0x00F);
-                default: return false;
-            }
-        }
-
-        private bool ComputeParityOrOverflow(ushort before, ushort after, OperationType op)
+        private bool ComputeHalfCarry(ushort before, ushort after, int rawSum, OperationType op)
         {
             switch (op)
             {
                 case OperationType.Add:
-                    var addend = (ushort)(after - before);
-                    return ((before ^ ~addend) & (before ^ after) & 0x0080) != 0;
+                case OperationType.AddWithCarry:
+                    return ((before ^ (rawSum - before) ^ rawSum) & 0x10) != 0;
                 case OperationType.Add16:
-                    var addend16 = (ushort)(after - before);
-                    return ((before ^ ~addend16) & (before ^ after) & 0x8000) != 0;
+                case OperationType.AddWithCarry16:
+                    return ((before ^ (rawSum - before) ^ rawSum) & 0x1000) != 0;
+                case OperationType.Subtract:
+                    return (after & 0x00F) > (before & 0x00F);
+                default: return false;
+            }
+        }
+
+        private bool ComputeParityOrOverflow(ushort before, ushort after, int rawSum, OperationType op)
+        {
+            switch (op)
+            {
+                case OperationType.Add:
+                case OperationType.AddWithCarry:
+                    return (~(before ^ (rawSum - before)) & (before ^ rawSum) & 0x0080) != 0;
+                case OperationType.Add16:
+                case OperationType.AddWithCarry16:
+                    return (~(before ^ (rawSum - before)) & (before ^ rawSum) & 0x8000) != 0;
                 case OperationType.Subtract:
                     var subtrahend = (ushort)(before - after);
                     return ((before ^ subtrahend) & (before ^ after) & 0x0080) != 0;
@@ -92,13 +100,18 @@ namespace Z80CPU.Flags
             }
         }
 
-        private bool ComputeCarry(ushort before, ushort after, OperationType op)
+        private bool ComputeCarry(ushort before, ushort after, int rawSum, OperationType op)
         {
             switch (op)
             {
                 case OperationType.Add:
-                case OperationType.Add16:    return after < before;
-                case OperationType.Subtract: return after > before;
+                case OperationType.AddWithCarry:
+                    return rawSum > 0xFF;
+                case OperationType.Add16:
+                case OperationType.AddWithCarry16:
+                    return rawSum > 0xFFFF;
+                case OperationType.Subtract:
+                    return after > before;
                 default: return false;
             }
         }

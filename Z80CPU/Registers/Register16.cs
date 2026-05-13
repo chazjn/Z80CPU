@@ -10,6 +10,7 @@ namespace Z80CPU.Registers
         public string Name { get; private set; }
 
         public ushort PreviousValue { get; private set; }
+        public int RawSum { get; private set; }
 
         public ushort Value
         {
@@ -37,6 +38,18 @@ namespace Z80CPU.Registers
             Name = high.Name + low.Name;
             High = high;
             Low = low;
+        }
+
+        public void Add(ushort operand)
+        {
+            RawSum = Value + operand;
+            Value = (ushort)RawSum;
+        }
+
+        public void AddWithCarry(ushort operand, bool carry)
+        {
+            RawSum = Value + operand + (carry ? 1 : 0);
+            Value = (ushort)RawSum;
         }
 
         public void Increment()

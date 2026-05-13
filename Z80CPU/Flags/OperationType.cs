@@ -4,6 +4,8 @@ namespace Z80CPU.Flags
     {
         Add,
         Add16,
+        AddWithCarry,
+        AddWithCarry16,
         Subtract,
         Logic,
         None

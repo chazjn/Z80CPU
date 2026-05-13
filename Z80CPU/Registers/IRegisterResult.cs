@@ -4,5 +4,6 @@ namespace Z80CPU.Registers
     {
         ushort PreviousValue { get; }
         ushort Value { get; }
+        int RawSum { get; }
     }
 }
