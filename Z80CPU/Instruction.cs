@@ -6,16 +6,10 @@ namespace Z80CPU
 {
     public class Instruction
     {
-        public string Name { get; set; }
+        public string Name { get; }
         public IList<EncodingByte> Values { get; }
-        public Func<Z80, Execution> Action { get; internal set; }
-
         public FlagsCalculationAttribute Flags { get; internal set; }
-
-        public Instruction()
-        {
-
-        }
+        public Func<Z80, Execution> Action { get; internal set; }
 
         public Instruction(string name, byte value, Func<Z80, Execution> action)
         {

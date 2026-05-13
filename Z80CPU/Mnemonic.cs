@@ -12,12 +12,12 @@ namespace Z80CPU
         {
             Instructions = new List<Instruction>();
             AddInstructions();
-            SetOperation();
+            SetFlagsCalculationAttribute();
         }
 
         protected abstract void AddInstructions();
 
-        private void SetOperation()
+        private void SetFlagsCalculationAttribute()
         {
             var attribute = GetType()
                 .GetCustomAttributes(typeof(FlagsCalculationAttribute), false)
