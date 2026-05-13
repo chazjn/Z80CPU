@@ -26,7 +26,7 @@ namespace Z80CPU.Instructions
             });
         }
 
-        public Execution SetRegister(Z80 z80, Register8 register)
+        private Execution SetRegister(Z80 z80, Register8 register)
         {
             var address = ByteHelper.CreateUShort(z80.B.Value, z80.C.Value);
             register.Value = z80.Ports.GetByte(address);

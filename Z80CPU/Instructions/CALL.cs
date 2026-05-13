@@ -21,7 +21,7 @@ namespace Z80CPU.Instructions
             });
         }
 
-        public Execution Call(Z80 z80, bool performCall)
+        private Execution Call(Z80 z80, bool performCall)
         {
             if (!performCall)
                 return Execution.Result(TStates.Count(10));

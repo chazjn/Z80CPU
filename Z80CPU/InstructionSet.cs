@@ -24,8 +24,31 @@ namespace Z80CPU
 
             foreach (var mnemonic in Mnemonics)
             {
-                var matches = mnemonic.GetMatches(bytes);
-                candidates.AddRange(matches);
+                foreach (var instruction in mnemonic.Instructions)
+                {
+                    // if we have too many bytes then this will never match
+                    if (bytes.Count > instruction.Values.Count)
+                        continue;
+
+                    // we have less or equal byte so let's check if this is a contender
+                    var match = true;
+                    for (int i = 0; i < bytes.Count; i++)
+                    {
+                        //first check if it is a 'Variable' byte
+                        if (instruction.Values[i].IsVariable)
+                            continue;
+
+                        //second, compare the byte
+                        if (instruction.Values[i].Value != bytes[i])
+                        {
+                            match = false;
+                            break;
+                        }
+                    }
+
+                    if (match)
+                        candidates.Add(instruction);
+                }
             }
 
             return candidates;
