@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using Z80CPU.Flags;
 using Z80CPU.Instructions;
 using Z80CPU.Registers;
@@ -50,7 +52,25 @@ namespace Z80CPU
         public FlagsRegister F_ { get; private set; }
 
         public InterruptMode InteruptMode { get; internal set; }
-        public bool InteruptsEnabled { get; internal set;}
+        public bool InteruptsEnabled { get; internal set; }
+
+        public long TotalTStates { get; private set; }
+        public int ClockFrequency { get; set; } = 3_500_000;
+        public TimeSpan ElapsedTime => TimeSpan.FromSeconds((double)TotalTStates / ClockFrequency);
+
+        private bool _throttleEnabled;
+        private DateTime _wallClockStart = DateTime.UtcNow;
+
+        public bool ThrottleEnabled
+        {
+            get => _throttleEnabled;
+            set
+            {
+                _throttleEnabled = value;
+                if (value)
+                    _wallClockStart = DateTime.UtcNow - ElapsedTime; // re-sync so no catch-up backlog
+            }
+        }
 
         internal InstructionSet InstructionSet { get; private set; }
 
@@ -115,37 +135,54 @@ namespace Z80CPU
             R.Value = 0;
             InteruptsEnabled = false;
             InteruptMode = 0;
+            TotalTStates = 0;
+            _wallClockStart = DateTime.UtcNow;
         }
 
-        public void Tick()
+        public Execution Tick()
         {
-            //Get byte from memory and add to buffer
             var value = GetByte();
             Buffer.Add(value);
 
-            //check if we have have complete command yet
             var candidateInstructions = InstructionSet.GetCandidates(Buffer);
 
-            if (candidateInstructions.Count == 0) //no instruction match - bad byte? excute a nop to skip over it
+            if (candidateInstructions.Count == 0)
             {
                 CurrentInstruction = new NOP().Instructions.First();
-                CurrentInstruction.Execute(this);
+                var execution = CurrentInstruction.Execute(this);
                 Buffer.Clear();
+                return execution;
             }
             else if (candidateInstructions.Count == 1)
             {
-                // we have enough oprands, let's execute it
                 if (candidateInstructions.First().Values.Count() == Buffer.Count)
                 {
                     CurrentInstruction = candidateInstructions.First();
                     var execution = CurrentInstruction.Execute(this);
-                    var flagCalculator = new FlagsCalculator(F);
-                    flagCalculator.SetFlags(execution, CurrentInstruction);
-
+                    new FlagsCalculator(F).SetFlags(execution, CurrentInstruction);
                     Buffer.Clear();
+                    return execution;
                 }
-                //nope, we have a match but we need to get some more bytes from memory
             }
+
+            return null; // mid-instruction, more bytes needed
+        }
+
+        public Execution Step()
+        {
+            Execution execution;
+            do { execution = Tick(); } while (execution == null);
+            TotalTStates += execution.TStates.Value;
+
+            if (_throttleEnabled)
+            {
+                var ahead = ElapsedTime - (DateTime.UtcNow - _wallClockStart);
+                if (ahead > TimeSpan.FromMilliseconds(2))
+                    Thread.Sleep(ahead - TimeSpan.FromMilliseconds(1));
+                while (ElapsedTime > DateTime.UtcNow - _wallClockStart) { } // spin for sub-ms accuracy
+            }
+
+            return execution;
         }
 
         private byte GetByte()
