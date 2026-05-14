@@ -2,7 +2,7 @@
 {
     public static class Extensions
     {
-        public static byte GetBit(this byte value, int position)
+        public static byte Bit(this byte value, int position)
         {
             return (byte)((value >> position) & 1);
         }
