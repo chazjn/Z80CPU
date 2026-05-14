@@ -18,6 +18,11 @@ namespace Z80CPU
             return Get(register.Value);
         }
 
+        public byte Get(Register16 register, sbyte offset)
+        {
+            return Get((ushort)(register.Value + offset));
+        }
+
         public virtual byte Get(ushort index)
         {
             if(index < 0 || index > Bytes.Length - 1)
@@ -31,6 +36,11 @@ namespace Z80CPU
         public void Set(Register16 index, byte value)
         {
             Set(index.Value, value);
+        }
+
+        public void Set(Register16 register, sbyte offset, byte value)
+        {
+            Set((ushort)(register.Value + offset), value);
         }
 
         public abstract void Set(ushort index, byte value);

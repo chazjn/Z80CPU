@@ -23,18 +23,18 @@ namespace Z80CPU.Instructions
 
                 new Instruction("ADD A, (IX + d)", 0xDD, 0x86, EncodingByte.Variable, (z80) =>
                 {
-                    z80.A.Add(z80.Memory.Get((ushort)(z80.IX.Value + z80.Buffer[2])));
+                    z80.A.Add(z80.Memory.Get(z80.IX, z80.Buffer.Displacement));
                     return Execution.Result(TStates.Count(17), z80.A);
                 }),
 
                 new Instruction("ADD A, (IY + d)", 0xFD, 0x86, EncodingByte.Variable, (z80) =>
                 {
-                    z80.A.Add(z80.Memory.Get((ushort)(z80.IY.Value + z80.Buffer[2])));
+                    z80.A.Add(z80.Memory.Get(z80.IY, z80.Buffer.Displacement));
                     return Execution.Result(TStates.Count(17), z80.A);
                 }),
 
                 new Instruction("ADD A, n", 0xC6, EncodingByte.Variable, (z80) => {
-                    z80.A.Add(z80.Buffer[1]);
+                    z80.A.Add(z80.Buffer.Immediate);
                     return Execution.Result(TStates.Count(7), z80.A);
                 }),
                 new Instruction("ADD A, A", 0x87, (z80) => { z80.A.Add(z80.A.Value); return Execution.Result(TStates.Count(4), z80.A); }),

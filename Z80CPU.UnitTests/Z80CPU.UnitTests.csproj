@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="Instructions\ADD_Tests.cs" />
     <Compile Include="Instructions\ADC_Tests.cs" />
+    <Compile Include="Instructions\JR_Tests.cs" />
     <Compile Include="TestComputer.cs" />
     <Compile Include="OpcodeTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

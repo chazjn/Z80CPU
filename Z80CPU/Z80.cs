@@ -54,7 +54,7 @@ namespace Z80CPU
 
         internal InstructionSet InstructionSet { get; private set; }
 
-        internal IList<byte> Buffer { get; }
+        internal InstructionBuffer Buffer { get; }
         internal Instruction CurrentInstruction { get; private set; }
 
         public Z80(Memory memory, Ports ports)
@@ -100,7 +100,7 @@ namespace Z80CPU
 
             InstructionSet = new InstructionSet();
 
-            Buffer = new List<byte>();
+            Buffer = new InstructionBuffer();
 
             PC.Value = 0x0;
             SP.Value = 0XFFFF;

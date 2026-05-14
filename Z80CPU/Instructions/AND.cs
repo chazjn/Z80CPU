@@ -25,7 +25,7 @@ namespace Z80CPU.Instructions
                 new Instruction("AND L", 0xA5, (z80) => { z80.A.Value &= z80.L.Value; return Execution.Result(TStates.Count(4), z80.A); }),
 
                 new Instruction("AND n", 0xE6, EncodingByte.Variable, (z80) => {
-                    z80.A.Value &= z80.Buffer[1];
+                    z80.A.Value &= z80.Buffer.Immediate;
                     return Execution.Result(TStates.Count(7), z80.A);
                 }),
 
@@ -37,13 +37,13 @@ namespace Z80CPU.Instructions
 
                 new Instruction("AND (IX + d)", 0xDD, 0xA6, EncodingByte.Variable, (z80) =>
                 {
-                    z80.A.Value &= z80.Memory.Get((ushort)(z80.IX.Value + z80.Buffer[2]));
+                    z80.A.Value &= z80.Memory.Get(z80.IX, z80.Buffer.Displacement);
                     return Execution.Result(TStates.Count(19), z80.A);
                 }),
 
                 new Instruction("AND (IY + d)", 0xFD, 0xA6, EncodingByte.Variable, (z80) =>
                 {
-                    z80.A.Value &= z80.Memory.Get((ushort)(z80.IY.Value + z80.Buffer[2]));
+                    z80.A.Value &= z80.Memory.Get(z80.IY, z80.Buffer.Displacement);
                     return Execution.Result(TStates.Count(19), z80.A);
                 })
             });

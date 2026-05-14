@@ -21,8 +21,7 @@ namespace Z80CPU.Instructions
             if (!performJump)
                 return Execution.Result(TStates.Count(7));
 
-            //TODO: test 2s-complement arithmitic
-            z80.PC.Value = (ushort)(z80.PC.Value + z80.Buffer[1]);
+            z80.PC.Value = (ushort)(z80.PC.Value + z80.Buffer.Offset);
             return Execution.Result(TStates.Count(12));
         }
     }

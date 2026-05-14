@@ -12,8 +12,10 @@ namespace Z80CPU.UnitTests
         public void IsMatch_MatchedBytes_ReturnsTrue(byte[] bytes)
         {
             var instructionSet = new InstructionSet();
+            var buffer = new InstructionBuffer();
+            foreach (var b in bytes) buffer.Add(b);
 
-            var candidates = instructionSet.GetCandidates(bytes);
+            var candidates = instructionSet.GetCandidates(buffer);
 
             Assert.IsTrue(candidates.Count > 0);
         }

@@ -6,7 +6,7 @@ namespace Z80CPU.Instructions
         {
             Instructions.Add(new Instruction("IN A, (N)", 0xDB, EncodingByte.Variable, (z80) =>
             {
-                var low = z80.Buffer[1];
+                var low = z80.Buffer.Immediate;
                 var address = ByteHelper.CreateUShort(z80.A.Value, low);
                 z80.A.Value = z80.Ports.GetByte(address);
                 return Execution.Result(TStates.Count(11));

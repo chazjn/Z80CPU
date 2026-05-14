@@ -14,10 +14,11 @@ namespace Z80CPU
                 new ADD(),
                 new ADC(),
                 new ADC16(),
+                new JR(),
             };
         }
 
-        public IList<Instruction> GetCandidates(IList<byte> bytes)
+        internal IList<Instruction> GetCandidates(InstructionBuffer buffer)
         {
             var candidates = new List<Instruction>();
 
@@ -26,19 +27,19 @@ namespace Z80CPU
                 foreach (var instruction in mnemonic.Instructions)
                 {
                     // if we have too many bytes then this will never match
-                    if (bytes.Count > instruction.Values.Count)
+                    if (buffer.Count > instruction.Values.Count)
                         continue;
 
                     // we have less or equal byte so let's check if this is a contender
                     var match = true;
-                    for (int i = 0; i < bytes.Count; i++)
+                    for (int i = 0; i < buffer.Count; i++)
                     {
                         //first check if it is a 'Variable' byte
                         if (instruction.Values[i].IsVariable)
                             continue;
 
                         //second, compare the byte
-                        if (instruction.Values[i].Value != bytes[i])
+                        if (instruction.Values[i].Value != buffer[i])
                         {
                             match = false;
                             break;

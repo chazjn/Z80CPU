@@ -24,16 +24,16 @@ namespace Z80CPU.Instructions
                 new Instruction("ADC A, H", 0x8C, z80 => { z80.A.AddWithCarry(z80.H.Value, z80.F.Carry); return Execution.Result(TStates.Count(4), z80.A); }),
                 new Instruction("ADC A, L", 0x8D, z80 => { z80.A.AddWithCarry(z80.L.Value, z80.F.Carry); return Execution.Result(TStates.Count(4), z80.A); }),
 
-                new Instruction("ADC A, n",    0xCE, EncodingByte.Variable, z80 => { z80.A.AddWithCarry(z80.Buffer[1], z80.F.Carry); return Execution.Result(TStates.Count(7), z80.A); }),
+                new Instruction("ADC A, n",    0xCE, EncodingByte.Variable, z80 => { z80.A.AddWithCarry(z80.Buffer.Immediate, z80.F.Carry); return Execution.Result(TStates.Count(7), z80.A); }),
                 new Instruction("ADC A, (HL)", 0x8E,                        z80 => { z80.A.AddWithCarry(z80.Memory.Get(z80.HL), z80.F.Carry); return Execution.Result(TStates.Count(7), z80.A); }),
 
                 new Instruction("ADC A, (IX + d)", 0xDD, 0x8E, EncodingByte.Variable, z80 => {
-                    z80.A.AddWithCarry(z80.Memory.Get((ushort)(z80.IX.Value + z80.Buffer[2])), z80.F.Carry);
+                    z80.A.AddWithCarry(z80.Memory.Get(z80.IX, z80.Buffer.Displacement), z80.F.Carry);
                     return Execution.Result(TStates.Count(19), z80.A);
                 }),
 
                 new Instruction("ADC A, (IY + d)", 0xFD, 0x8E, EncodingByte.Variable, z80 => {
-                    z80.A.AddWithCarry(z80.Memory.Get((ushort)(z80.IY.Value + z80.Buffer[2])), z80.F.Carry);
+                    z80.A.AddWithCarry(z80.Memory.Get(z80.IY, z80.Buffer.Displacement), z80.F.Carry);
                     return Execution.Result(TStates.Count(19), z80.A);
                 }),
             });
