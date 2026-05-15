@@ -9,7 +9,7 @@ namespace Z80CPU
 {
     public class Z80 : IZ80
     {
-        public Memory Memory { get; set; }
+        public IMemory Memory { get; set; }
         public Ports Ports { get; set; }
 
         public Register8 A { get; private set; }
@@ -94,7 +94,7 @@ namespace Z80CPU
         internal InstructionBuffer Buffer { get; }
         internal Instruction CurrentInstruction { get; private set; }
 
-        public Z80(Memory memory, Ports ports)
+        public Z80(IMemory memory, Ports ports)
         {
             Memory = memory;
             Ports = ports;
