@@ -15,6 +15,7 @@ namespace Z80CPU
                 new ADC(),
                 new ADC16(),
                 new JR(),
+                new HALT(),
             };
         }
 

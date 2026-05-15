@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using Z80CPU.Flags;
@@ -8,7 +7,7 @@ using Z80CPU.Registers;
 
 namespace Z80CPU
 {
-    public class Z80
+    public class Z80 : IZ80
     {
         public Memory Memory { get; set; }
         public Ports Ports { get; set; }
@@ -53,6 +52,24 @@ namespace Z80CPU
 
         public InterruptMode InteruptMode { get; internal set; }
         public bool InteruptsEnabled { get; internal set; }
+
+        public bool IsHalted { get; private set; }
+
+        public event EventHandler Halted;
+        public event EventHandler Resumed;
+
+        private bool _intPending;
+        private bool _nmiPending;
+        private bool _iff2;
+
+        public void RaiseINT() => _intPending = true;
+        public void RaiseNMI() => _nmiPending = true;
+
+        public void Halt()
+        {
+            IsHalted = true;
+            Halted?.Invoke(this, EventArgs.Empty);
+        }
 
         public long TotalTStates { get; private set; }
         public int ClockFrequency { get; set; } = 3_500_000;
@@ -137,6 +154,9 @@ namespace Z80CPU
             InteruptMode = 0;
             TotalTStates = 0;
             _wallClockStart = DateTime.UtcNow;
+            IsHalted = false;
+            _intPending = false;
+            _nmiPending = false;
         }
 
         public Execution Tick()
@@ -171,18 +191,89 @@ namespace Z80CPU
         public Execution Step()
         {
             Execution execution;
-            do { execution = Tick(); } while (execution == null);
-            TotalTStates += execution.TStates.Value;
 
-            if (_throttleEnabled)
+            if (IsHalted)
             {
-                var ahead = ElapsedTime - (DateTime.UtcNow - _wallClockStart);
-                if (ahead > TimeSpan.FromMilliseconds(2))
-                    Thread.Sleep(ahead - TimeSpan.FromMilliseconds(1));
-                while (ElapsedTime > DateTime.UtcNow - _wallClockStart) { } // spin for sub-ms accuracy
+                execution = new NOP().Instructions.First().Execute(this);
+                TotalTStates += execution.TStates.Value;
+            }
+            else
+            {
+                do { execution = Tick(); } while (execution == null);
+                TotalTStates += execution.TStates.Value;
             }
 
+            CheckInterrupts();
+            Throttle();
+
             return execution;
+        }
+
+        private void CheckInterrupts()
+        {
+            if (_nmiPending)
+            {
+                _nmiPending = false;
+                ServiceNMI();
+            }
+            else if (_intPending && InteruptsEnabled)
+            {
+                _intPending = false;
+                ServiceINT();
+            }
+        }
+
+        private void ServiceNMI()
+        {
+            _iff2 = InteruptsEnabled;
+            InteruptsEnabled = false;
+            PushPC();
+            PC.Value = 0x0066;
+            TotalTStates += 11;
+            ExitHalt();
+        }
+
+        private void ServiceINT()
+        {
+            InteruptsEnabled = false;
+            PushPC();
+            switch (InteruptMode)
+            {
+                case InterruptMode.Mode2:
+                    var vectorAddr = (ushort)((I.Value << 8) | 0xFF);
+                    PC.Value = (ushort)(Memory.Get(vectorAddr) | (Memory.Get((ushort)(vectorAddr + 1)) << 8));
+                    TotalTStates += 19;
+                    break;
+                default: // Mode0 treated as Mode1
+                    PC.Value = 0x0038;
+                    TotalTStates += 13;
+                    break;
+            }
+            ExitHalt();
+        }
+
+        private void PushPC()
+        {
+            SP.Decrement();
+            Memory.Set(SP, PC.High.Value);
+            SP.Decrement();
+            Memory.Set(SP, PC.Low.Value);
+        }
+
+        private void ExitHalt()
+        {
+            if (!IsHalted) return;
+            IsHalted = false;
+            Resumed?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void Throttle()
+        {
+            if (!_throttleEnabled) return;
+            var ahead = ElapsedTime - (DateTime.UtcNow - _wallClockStart);
+            if (ahead > TimeSpan.FromMilliseconds(2))
+                Thread.Sleep(ahead - TimeSpan.FromMilliseconds(1));
+            while (ElapsedTime > DateTime.UtcNow - _wallClockStart) { }
         }
 
         private byte GetByte()
