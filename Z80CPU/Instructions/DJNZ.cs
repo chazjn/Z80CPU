@@ -8,7 +8,7 @@
             {
                 z80.B.Value--;
 
-                if (z80.B.Value.IsZero())
+                if (z80.B.Value.IsNotZero())
                 {
                     var offset = z80.Memory.Get(z80.PC.Value);
                     var pc = z80.PC.Value + (sbyte)offset;

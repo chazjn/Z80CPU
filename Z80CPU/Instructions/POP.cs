@@ -29,7 +29,7 @@ namespace Z80CPU.Instructions
                     return Execution.Result(TStates.Count(10));
                 }),
 
-                new Instruction("POP AF", 0x11, (z80) =>
+                new Instruction("POP AF", 0xF1, (z80) =>
                 {
                     Pop(z80, z80.AF);
                     return Execution.Result(TStates.Count(10));
@@ -41,7 +41,7 @@ namespace Z80CPU.Instructions
                     return Execution.Result(TStates.Count(14));
                 }),
 
-                new Instruction("POP IY", 0xDD, 0xE1, (z80) =>
+                new Instruction("POP IY", 0xFD, 0xE1, (z80) =>
                 {
                     Pop(z80, z80.IY);
                     return Execution.Result(TStates.Count(14));
