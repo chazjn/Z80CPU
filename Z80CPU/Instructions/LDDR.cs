@@ -19,7 +19,7 @@ namespace Z80CPU.Instructions
                 z80.HL.Decrement();
                 z80.BC.Decrement();
 
-                if (z80.BC.IsNotZero)
+                if (z80.BC.Value.IsNotZero())
                 {
                     z80.PC.Decrement();
                     z80.PC.Decrement();

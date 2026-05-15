@@ -28,7 +28,7 @@ namespace Z80CPU.Instructions
         {
             if (performJump)
             {
-                var address = BitConverter.ToUInt16(new[] { z80.Buffer[2], z80.Buffer[1] }, 0);
+                var address = BitConverter.ToUInt16(new[] { z80.Buffer[1], z80.Buffer[2] }, 0);
                 z80.PC.Value = address;
             }
         }

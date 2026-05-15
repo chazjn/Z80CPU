@@ -31,8 +31,8 @@ namespace Z80CPU.Instructions
             z80.SP.Decrement();
             z80.Memory.Set(z80.SP.Value, z80.PC.Low.Value);
 
-            z80.PC.Low.Value = z80.Memory.Get((ushort)(z80.PC.Value - 1));
-            z80.PC.High.Value = z80.Memory.Get((ushort)(z80.PC.Value - 2));
+            z80.PC.Low.Value = z80.Buffer[1];
+            z80.PC.High.Value = z80.Buffer[2];
 
             return Execution.Result(TStates.Count(17));
         }

@@ -23,9 +23,6 @@ namespace Z80CPU.Registers
             }
         }
 
-        public bool IsZero => Value == 0;
-        public bool IsNotZero => Value != 0;
-
         public Register16(string name)
         {
             Name = name;
