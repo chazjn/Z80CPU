@@ -53,6 +53,7 @@
     <Compile Include="Instructions\ADC_Tests.cs" />
     <Compile Include="Instructions\HALT_Tests.cs" />
     <Compile Include="Instructions\JR_Tests.cs" />
+    <Compile Include="Instructions\SUB_Tests.cs" />
     <Compile Include="TestComputer.cs" />
     <Compile Include="OpcodeTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
