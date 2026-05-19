@@ -41,7 +41,8 @@ namespace Z80CPU
                 new PUSH(),
                 new RET(),
                 new SCF(),
-                new SUB()
+                new SUB(),
+                new XOR()
             };
         }
 
