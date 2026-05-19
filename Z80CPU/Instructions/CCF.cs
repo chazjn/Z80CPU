@@ -2,7 +2,10 @@
 
 namespace Z80CPU.Instructions
 {
-    [FlagsCalculation(Subtraction = Affect.Reset)]
+    [FlagsCalculation(
+        Subtraction = Affect.Reset,
+        HalfCarry = Affect.InstructionCalculation,
+        Carry = Affect.InstructionCalculation)]
     public class CCF : Mnemonic
     {
         protected override void AddInstructions()
